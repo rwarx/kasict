@@ -1,7 +1,16 @@
-// Service worker: offline shell + кэш ответов API (network-first с фолбэком).
-const SHELL_CACHE = 'shell-v2'
+// Service worker: offline shell + кэш ответов (network-first с фолбэком).
+const SHELL_CACHE = 'shell-v3'
 const API_CACHE = 'api-v1'
-const SHELL_ASSETS = ['/', '/index.html', '/manifest.webmanifest']
+
+function resolve(path) {
+  return new URL(path, self.location).href
+}
+
+const SHELL_ASSETS = [
+  resolve('./'),
+  resolve('./index.html'),
+  resolve('./manifest.webmanifest'),
+]
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -28,22 +37,6 @@ self.addEventListener('message', (event) => {
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url)
   if (event.request.method !== 'GET') return
-
-  // API: сеть в приоритете, при офлайне — последний полученный ответ
-  if (url.pathname.startsWith('/api/')) {
-    event.respondWith(
-      fetch(event.request)
-        .then((resp) => {
-          const clone = resp.clone()
-          caches.open(API_CACHE).then((c) => c.put(event.request, clone))
-          return resp
-        })
-        .catch(() => caches.match(event.request).then((r) => r || new Response(
-          JSON.stringify({ detail: 'offline' }), { status: 503, headers: { 'Content-Type': 'application/json' } },
-        ))),
-    )
-    return
-  }
 
   // Оболочка: cache-first с обновлением в фоне
   event.respondWith(

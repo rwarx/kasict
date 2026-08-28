@@ -4,7 +4,7 @@ import type { MetaJSON, ReplacementBlockJSON, ScheduleJSON } from '../parser/typ
 import { createResolverFromBlocks, type ParityResolver } from './parity'
 import { applyDay, type DaySchedule } from './replacementEngine'
 
-const DATA_BASE = '/data'
+const DATA_BASE = './data'
 const CACHE_KEY_PREFIX = 'schedule:'
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000 // 6 часов (как GitHub Actions)
 
