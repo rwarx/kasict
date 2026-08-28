@@ -23,7 +23,7 @@ from app.parsers.replacement_parser import parse_replacements
 from app.parsers.schedule_parser import parse_schedule
 from app.services.parity import ParityResolver
 from app.models.domain import (
-    PAIR_NUMBERS, PAIR_TIMES, BaseSchedule,
+    PAIR_NUMBERS, PAIR_TIMES, BaseSchedule, ReplacementBlock,
 )
 
 OUTPUT_DIR = ROOT / "frontend" / "public" / "data"
@@ -45,6 +45,7 @@ def build_schedule_json(schedule: BaseSchedule, parity_resolver: ParityResolver)
         groups[name] = {"name": info.name, "number": info.number}
 
     lessons = {}
+    teachers: dict[str, list[dict]] = {}
     for group, days in schedule.lessons.items():
         lessons[group] = {}
         for weekday, pairs in days.items():
@@ -57,17 +58,30 @@ def build_schedule_json(schedule: BaseSchedule, parity_resolver: ParityResolver)
                         "teacher": wl.odd.teacher,
                         "classroom": wl.odd.classroom,
                     }
+                    if wl.odd.teacher:
+                        teachers.setdefault(wl.odd.teacher, []).append({
+                            "group": group, "weekday": weekday,
+                            "pair": pair_num, "subject": wl.odd.subject,
+                            "classroom": wl.odd.classroom, "parity": "odd",
+                        })
                 if wl.even and not wl.even.is_empty():
                     entry["even"] = {
                         "subject": wl.even.subject,
                         "teacher": wl.even.teacher,
                         "classroom": wl.even.classroom,
                     }
+                    if wl.even.teacher:
+                        teachers.setdefault(wl.even.teacher, []).append({
+                            "group": group, "weekday": weekday,
+                            "pair": pair_num, "subject": wl.even.subject,
+                            "classroom": wl.even.classroom, "parity": "even",
+                        })
                 lessons[group][str(weekday)][str(pair_num)] = entry
 
     return {
         "groups": groups,
         "lessons": lessons,
+        "teachers": dict(sorted(teachers.items())),
         "pair_times": {str(k): list(v) for k, v in PAIR_TIMES.items()},
         "pair_numbers": list(PAIR_NUMBERS),
     }

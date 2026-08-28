@@ -1,5 +1,4 @@
-// Service worker: offline shell + кэш ответов (network-first с фолбэком).
-const SHELL_CACHE = 'shell-v3'
+const SHELL_CACHE = 'shell-v4'
 const API_CACHE = 'api-v1'
 
 function resolve(path) {
@@ -12,9 +11,17 @@ const SHELL_ASSETS = [
   resolve('./manifest.webmanifest'),
 ]
 
+const DATA_ASSETS = [
+  resolve('./data/schedule.json'),
+  resolve('./data/replacements.json'),
+  resolve('./data/meta.json'),
+]
+
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(SHELL_CACHE).then((cache) => cache.addAll(SHELL_ASSETS)).then(() => self.skipWaiting()),
+    caches.open(SHELL_CACHE).then((cache) =>
+      cache.addAll([...SHELL_ASSETS, ...DATA_ASSETS]),
+    ).then(() => self.skipWaiting()),
   )
 })
 
@@ -38,7 +45,23 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url)
   if (event.request.method !== 'GET') return
 
-  // Оболочка: cache-first с обновлением в фоне
+  // For data files: network-first (fresh data when online, cache when offline)
+  if (url.pathname.includes('/data/')) {
+    event.respondWith(
+      fetch(event.request)
+        .then((resp) => {
+          if (resp.ok) {
+            const clone = resp.clone()
+            caches.open(SHELL_CACHE).then((c) => c.put(event.request, clone))
+          }
+          return resp
+        })
+        .catch(() => caches.match(event.request)),
+    )
+    return
+  }
+
+  // Shell: cache-first with background update
   event.respondWith(
     caches.match(event.request).then((cached) => {
       const fetched = fetch(event.request)

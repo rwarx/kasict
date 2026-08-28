@@ -97,6 +97,11 @@ export function getMeta(): MetaJSON | null {
   return _meta
 }
 
+export function getTeachers(): Record<string, import('../parser/types').TeacherEntry[]> {
+  if (!_schedule) return {}
+  return _schedule.teachers ?? {}
+}
+
 export function getStaleMeta(): MetaJSON | null {
   // Return meta even if cache expired
   try {

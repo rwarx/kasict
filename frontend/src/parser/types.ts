@@ -11,9 +11,19 @@ export interface PairData {
   even?: LessonData
 }
 
+export interface TeacherEntry {
+  group: string
+  weekday: number
+  pair: number
+  subject: string
+  classroom: string
+  parity: string
+}
+
 export interface ScheduleJSON {
   groups: Record<string, { name: string; number: number }>
   lessons: Record<string, Record<string, Record<string, PairData>>>
+  teachers: Record<string, TeacherEntry[]>
   pair_times: Record<string, [string, string]>
   pair_numbers: number[]
 }
