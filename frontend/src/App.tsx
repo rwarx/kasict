@@ -4,7 +4,7 @@ import type { DaySchedule, LessonView } from './services/replacementEngine'
 import type { TeacherEntry } from './parser/types'
 
 const GROUP_KEY = 'schedule:group'
-const NOTIF_KEY = 'schedule:notifications'
+const ONBOARDING_KEY = 'schedule:onboarded'
 
 function todayISO(): string {
   const d = new Date()
@@ -17,17 +17,47 @@ function shiftISO(iso: string, days: number): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
-function formatDateRU(iso: string): string {
+function getWeekDays(centerISO: string): string[] {
+  const d = new Date(centerISO + 'T12:00:00')
+  const dayOfWeek = (d.getDay() + 6) % 7
+  const monday = new Date(d)
+  monday.setDate(d.getDate() - dayOfWeek)
+  const days: string[] = []
+  for (let i = 0; i < 7; i++) {
+    const day = new Date(monday)
+    day.setDate(monday.getDate() + i)
+    days.push(`${day.getFullYear()}-${String(day.getMonth() + 1).padStart(2, '0')}-${String(day.getDate()).padStart(2, '0')}`)
+  }
+  return days
+}
+
+function formatDateFull(iso: string): string {
   const d = new Date(iso + 'T12:00:00')
-  return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })
+  return d.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' })
+}
+
+function formatDateShort(iso: string): { name: string; num: number } {
+  const d = new Date(iso + 'T12:00:00')
+  const names = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб']
+  return { name: names[d.getDay()], num: d.getDate() }
+}
+
+function getGreeting(): string {
+  const hour = new Date().getHours()
+  if (hour < 6) return 'Доброй ночи'
+  if (hour < 12) return 'Доброе утро'
+  if (hour < 18) return 'Добрый день'
+  return 'Добрый вечер'
 }
 
 const DAY_NAMES = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']
+const DAY_NAMES_FULL = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье']
 
-type Screen = 'schedule' | 'teachers' | 'settings'
+type Screen = 'schedule' | 'week' | 'settings'
 
 export default function App() {
   const [group, setGroup] = useState<string | null>(() => localStorage.getItem(GROUP_KEY))
+  const [onboarded, setOnboarded] = useState(() => localStorage.getItem(ONBOARDING_KEY) === 'true')
   const [dateISO, setDateISO] = useState(todayISO())
   const [screen, setScreen] = useState<Screen>('schedule')
   const [loading, setLoading] = useState(true)
@@ -39,63 +69,120 @@ export default function App() {
       .catch(() => { setError('Не удалось загрузить данные'); setLoading(false) })
   }, [])
 
+  const completeOnboarding = (selectedGroup: string) => {
+    localStorage.setItem(GROUP_KEY, selectedGroup)
+    localStorage.setItem(ONBOARDING_KEY, 'true')
+    setGroup(selectedGroup)
+    setOnboarded(true)
+  }
+
+  const changeGroup = (newGroup: string) => {
+    localStorage.setItem(GROUP_KEY, newGroup)
+    setGroup(newGroup)
+  }
+
+  if (!onboarded && !group) {
+    return <OnboardingFlow onComplete={completeOnboarding} loading={loading} error={error} />
+  }
+
   if (loading) {
-    return (
-      <div className="main-content">
-        <div className="loading">
-          <div className="spinner" />
-          Загрузка…
-        </div>
-      </div>
-    )
+    return <LoadingScreen />
   }
 
   if (error) {
-    return (
-      <div className="main-content">
-        <div className="header"><h1>Расписание</h1></div>
-        <p className="error">{error}</p>
-      </div>
-    )
+    return <ErrorScreen error={error} onRetry={() => window.location.reload()} />
   }
 
   return (
     <>
       <div className="main-content">
-        {screen === 'schedule' && (
-          group
-            ? <ScheduleScreen group={group} dateISO={dateISO} setDateISO={setDateISO}
-                              onChangeGroup={() => { localStorage.removeItem(GROUP_KEY); setGroup(null) }} />
-            : <GroupPicker onPick={(g) => { localStorage.setItem(GROUP_KEY, g); setGroup(g) }} />
-        )}
-        {screen === 'teachers' && <TeachersScreen />}
-        {screen === 'settings' && <SettingsScreen />}
+        <div className="container">
+          {screen === 'schedule' && group && (
+            <ScheduleScreen group={group} dateISO={dateISO} setDateISO={setDateISO} />
+          )}
+          {screen === 'week' && group && (
+            <WeekScreen group={group} dateISO={dateISO} setDateISO={setDateISO} />
+          )}
+          {screen === 'settings' && (
+            <SettingsScreen group={group} onChangeGroup={changeGroup} />
+          )}
+        </div>
       </div>
 
       <nav className="bottom-nav">
-        <button className={`nav-item ${screen === 'schedule' ? 'active' : ''}`}
-                onClick={() => setScreen('schedule')}>
-          <span className="nav-icon">📅</span>
-          Расписание
-        </button>
-        <button className={`nav-item ${screen === 'teachers' ? 'active' : ''}`}
-                onClick={() => setScreen('teachers')}>
-          <span className="nav-icon">👨‍🏫</span>
-          Учителя
-        </button>
-        <button className={`nav-item ${screen === 'settings' ? 'active' : ''}`}
-                onClick={() => setScreen('settings')}>
-          <span className="nav-icon">⚙️</span>
-          Настройки
-        </button>
+        <div className="nav-inner">
+          <button className={`nav-item ${screen === 'schedule' ? 'active' : ''}`}
+                  onClick={() => setScreen('schedule')}>
+            <span className="nav-icon">📅</span>
+            Сегодня
+          </button>
+          <button className={`nav-item ${screen === 'week' ? 'active' : ''}`}
+                  onClick={() => setScreen('week')}>
+            <span className="nav-icon">📆</span>
+            Неделя
+          </button>
+          <button className={`nav-item ${screen === 'settings' ? 'active' : ''}`}
+                  onClick={() => setScreen('settings')}>
+            <span className="nav-icon">⚙️</span>
+            Настройки
+          </button>
+        </div>
       </nav>
     </>
   )
 }
 
-/* ==================== GROUP PICKER ==================== */
+/* ==================== ONBOARDING ==================== */
 
-function GroupPicker({ onPick }: { onPick: (g: string) => void }) {
+function OnboardingFlow({ onComplete, loading, error }: {
+  onComplete: (group: string) => void; loading: boolean; error: string
+}) {
+  const [step, setStep] = useState<'welcome' | 'select' | 'success'>('welcome')
+  const [selectedGroup, setSelectedGroup] = useState<string | null>(null)
+
+  if (loading) return <LoadingScreen />
+  if (error) return <ErrorScreen error={error} onRetry={() => window.location.reload()} />
+
+  if (step === 'welcome') {
+    return (
+      <div className="onboarding">
+        <div className="onboarding-content">
+          <div className="onboarding-icon">👋</div>
+          <h1 className="onboarding-title">Привет!</h1>
+          <p className="onboarding-text">
+            Давай настроим твоё расписание.<br />
+            Это займёт буквально пару секунд.
+          </p>
+          <button className="onboarding-btn" onClick={() => setStep('select')}>
+            Продолжить
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  if (step === 'select') {
+    return (
+      <GroupSelectScreen
+        onSelect={(g) => { setSelectedGroup(g); setStep('success') }}
+        onBack={() => setStep('welcome')}
+      />
+    )
+  }
+
+  return (
+    <div className="success-screen">
+      <div className="success-icon">✓</div>
+      <h1 className="success-title">{selectedGroup}</h1>
+      <p className="success-text">Отлично! Теперь это твоя группа.</p>
+      <button className="onboarding-btn" onClick={() => onComplete(selectedGroup!)}>
+        Посмотреть расписание
+      </button>
+    </div>
+  )
+}
+
+function GroupSelectScreen({ onSelect, onBack }: { onSelect: (g: string) => void; onBack?: () => void }) {
   const [query, setQuery] = useState('')
   const groups = useMemo(() => getGroups(), [])
 
@@ -104,305 +191,498 @@ function GroupPicker({ onPick }: { onPick: (g: string) => void }) {
     [groups, query],
   )
 
+  const popular = useMemo(() => groups.slice(0, 5), [groups])
+
   return (
-    <>
-      <div className="header">
-        <h1>Расписание</h1>
-        <p className="header-sub">Выберите группу</p>
+    <div className="group-select">
+      <div className="group-select-header">
+        <h1 className="group-select-title">Выбери группу</h1>
+        <p className="group-select-subtitle">Найди свою группу в списке</p>
       </div>
-      <input className="search" placeholder="Поиск группы…" value={query}
-             onChange={e => setQuery(e.target.value)} autoFocus />
+
+      <input
+        className="search-input"
+        placeholder="🔍 Поиск группы..."
+        value={query}
+        onChange={e => setQuery(e.target.value)}
+        autoFocus
+      />
+
+      {!query && (
+        <>
+          <div className="group-section-title">Популярные</div>
+          <ul className="group-list" style={{ marginBottom: 16 }}>
+            {popular.map(g => (
+              <li key={g.name}>
+                <button className="group-btn" onClick={() => onSelect(g.name)}>{g.name}</button>
+              </li>
+            ))}
+          </ul>
+          <div className="group-section-title">Все группы</div>
+        </>
+      )}
+
       <ul className="group-list">
         {filtered.map(g => (
           <li key={g.name}>
-            <button className="group-btn" onClick={() => onPick(g.name)}>{g.name}</button>
+            <button className="group-btn" onClick={() => onSelect(g.name)}>{g.name}</button>
           </li>
         ))}
+        {filtered.length === 0 && (
+          <div className="empty-state" style={{ padding: '32px 0' }}>
+            <div className="empty-text">Группа не найдена</div>
+          </div>
+        )}
       </ul>
-    </>
+    </div>
+  )
+}
+
+/* ==================== LOADING & ERROR ==================== */
+
+function LoadingScreen() {
+  return (
+    <div className="main-content">
+      <div className="container">
+        <div style={{ padding: '24px 0' }}>
+          <div className="skeleton skeleton-line w-50" style={{ height: 28, marginBottom: 8 }} />
+          <div className="skeleton skeleton-line w-30" style={{ height: 16 }} />
+        </div>
+        <div style={{ marginBottom: 20 }}>
+          <div className="skeleton" style={{ height: 48, borderRadius: 12 }} />
+        </div>
+        {[1, 2, 3].map(i => (
+          <div key={i} className="skeleton-card">
+            <div className="skeleton skeleton-line w-30" />
+            <div className="skeleton skeleton-line w-70" />
+            <div className="skeleton skeleton-line w-50" />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function ErrorScreen({ error, onRetry }: { error: string; onRetry: () => void }) {
+  return (
+    <div className="main-content">
+      <div className="container">
+        <div className="error-state">
+          <div className="error-icon">😕</div>
+          <h2 className="error-title">Не удалось загрузить</h2>
+          <p className="error-text">
+            Похоже, сайт колледжа временно недоступен.<br />
+            Попробуйте обновить страницу.
+          </p>
+          <button className="error-btn" onClick={onRetry}>Повторить</button>
+        </div>
+      </div>
+    </div>
   )
 }
 
 /* ==================== SCHEDULE SCREEN ==================== */
 
-function ScheduleScreen({ group, dateISO, setDateISO, onChangeGroup }: {
-  group: string; dateISO: string; setDateISO: (s: string) => void; onChangeGroup: () => void
+function ScheduleScreen({ group, dateISO, setDateISO }: {
+  group: string; dateISO: string; setDateISO: (s: string) => void
 }) {
   const [day, setDay] = useState<DaySchedule | null>(null)
-  const [expanded, setExpanded] = useState<number | null>(null)
+  const [sheetLesson, setSheetLesson] = useState<LessonView | null>(null)
 
   useEffect(() => {
     setDay(getDay(group, new Date(dateISO + 'T12:00:00')))
-    setExpanded(null)
   }, [group, dateISO])
 
   const isToday = dateISO === todayISO()
+  const weekDays = useMemo(() => getWeekDays(dateISO), [dateISO])
   const visible = day?.lessons.filter(l => l.status === 'cancelled' || l.subject) ?? []
 
   return (
     <>
       <div className="header">
-        <div className="group-selector" onClick={onChangeGroup}>
-          <span className="group-name">{group}</span>
-          <span className="group-label">изменить</span>
+        <h1 className="header-greeting">{getGreeting()} 👋</h1>
+        <div className="header-group">
+          <span>{group}</span>
         </div>
       </div>
 
-      <div className="date-nav">
-        <button className="date-btn" onClick={() => setDateISO(shiftISO(dateISO, -1))}>←</button>
-        <div className="date-center">
-          <div className="date-weekday">{day?.weekday}</div>
-          <div className="date-full">{formatDateRU(dateISO)}</div>
-          {!isToday && <button className="date-today-btn" onClick={() => setDateISO(todayISO())}>Сегодня</button>}
-        </div>
-        <button className="date-btn" onClick={() => setDateISO(shiftISO(dateISO, 1))}>→</button>
+      <div className="date-header">
+        <div className="date-main">{formatDateFull(dateISO)}</div>
+        {day?.parity && (
+          <span className={`parity-chip ${day.parity}`}>
+            {day.parity === 'odd' ? 'Нечётная неделя' : 'Чётная неделя'}
+          </span>
+        )}
       </div>
-      <input type="date" className="date-picker" value={dateISO}
-             onChange={e => e.target.value && setDateISO(e.target.value)} />
 
-      {day?.parity && (
-        <span className={`parity-badge ${day.parity}`}>{day.parity_label}</span>
+      <div className="date-strip">
+        <button className="date-nav-btn" onClick={() => setDateISO(shiftISO(dateISO, -7))}>‹</button>
+        <div className="date-days">
+          {weekDays.map(d => {
+            const { name, num } = formatDateShort(d)
+            const selected = d === dateISO
+            const today = d === todayISO()
+            return (
+              <button
+                key={d}
+                className={`date-day ${selected ? 'selected' : ''} ${today ? 'today' : ''}`}
+                onClick={() => setDateISO(d)}
+              >
+                <div className="date-day-name">{name}</div>
+                <div className="date-day-num">{num}</div>
+              </button>
+            )
+          })}
+        </div>
+        <button className="date-nav-btn" onClick={() => setDateISO(shiftISO(dateISO, 7))}>›</button>
+      </div>
+
+      {!isToday && (
+        <button className="today-btn" onClick={() => setDateISO(todayISO())}>
+          Сегодня
+        </button>
       )}
 
-      {day?.day_note && <div className="day-note">📌 {day.day_note}</div>}
+      {day?.day_note && (
+        <div className="alert-banner info">
+          <span className="alert-banner-icon">📌</span>
+          {day.day_note}
+        </div>
+      )}
+
       {day?.has_replacements && !day.day_note && (
-        <div className="day-note warn">⚠ Есть замены</div>
-      )}
-      {day?.warnings.map((w, i) => <p key={i} className="warning">{w}</p>)}
-
-      {visible.length === 0 && (
-        <div className="empty">
-          <div className="empty-icon">🎉</div>
-          Пар нет
+        <div className="alert-banner warn">
+          <span className="alert-banner-icon">⚠️</span>
+          Есть замены на этот день
         </div>
       )}
 
-      <div className="lessons">
-        {visible.map(l => (
-          <LessonCard key={l.number} lesson={l}
-                      expanded={expanded === l.number}
-                      onToggle={() => setExpanded(expanded === l.number ? null : l.number)} />
-        ))}
-      </div>
+      {visible.length === 0 ? (
+        <div className="empty-state animate-in">
+          <div className="empty-icon">🎉</div>
+          <h2 className="empty-title">Пар нет</h2>
+          <p className="empty-text">Можно отдыхать</p>
+        </div>
+      ) : (
+        <div className="lessons animate-in">
+          {visible.map(l => (
+            <LessonCard
+              key={l.number}
+              lesson={l}
+              onClick={() => l.status !== 'normal' && setSheetLesson(l)}
+            />
+          ))}
+        </div>
+      )}
 
       {day?.updated_at && (
-        <p className="muted small footer">
-          Обновлено: {new Date(day.updated_at).toLocaleString('ru-RU')}
-        </p>
+        <div className="footer-info">
+          Обновлено: {new Date(day.updated_at).toLocaleString('ru-RU', { hour: '2-digit', minute: '2-digit' })}
+        </div>
+      )}
+
+      {sheetLesson && (
+        <ChangeSheet lesson={sheetLesson} onClose={() => setSheetLesson(null)} />
       )}
     </>
   )
 }
 
-function LessonCard({ lesson, expanded, onToggle }: {
-  lesson: LessonView; expanded: boolean; onToggle: () => void
-}) {
+function LessonCard({ lesson, onClick }: { lesson: LessonView; onClick: () => void }) {
   const hasChange = lesson.status !== 'normal'
+  const isCancelled = lesson.status === 'cancelled'
+
   return (
-    <div className={`lesson ${lesson.status} ${hasChange ? 'lesson-clickable' : ''}`}
-         onClick={hasChange ? onToggle : undefined}>
-      <div className="lesson-head">
-        <span className="pair-num">{lesson.number}</span>
-        <span className="pair-time">{lesson.time_start} — {lesson.time_end}</span>
-        {lesson.status === 'cancelled' && <span className="badge cancel">Отмена</span>}
-        {lesson.status === 'added' && <span className="badge added">+ Доп. пара</span>}
-        {lesson.status === 'replaced' && <span className="badge replaced">Замена</span>}
-        {lesson.status === 'teacher_changed' && <span className="badge teacher">Учитель</span>}
-        {lesson.status === 'room_changed' && <span className="badge room">Кабинет</span>}
+    <div
+      className={`lesson-card ${lesson.status} ${hasChange ? 'clickable' : ''}`}
+      onClick={hasChange ? onClick : undefined}
+    >
+      <div className="lesson-header">
+        <span className="lesson-num">{lesson.number}</span>
+        <span className="lesson-time">{lesson.time_start} — {lesson.time_end}</span>
+        {lesson.status === 'cancelled' && <span className="lesson-badge cancel">Отмена</span>}
+        {lesson.status === 'added' && <span className="lesson-badge added">Доп. пара</span>}
+        {lesson.status === 'replaced' && <span className="lesson-badge replaced">Замена</span>}
+        {lesson.status === 'teacher_changed' && <span className="lesson-badge teacher">Учитель</span>}
+        {lesson.status === 'room_changed' && <span className="lesson-badge room">Кабинет</span>}
       </div>
-      {lesson.status !== 'cancelled' && (
+
+      {isCancelled ? (
+        <div className="lesson-cancelled-text">Пара отменена</div>
+      ) : (
         <>
-          <div className="subject">{lesson.subject || '—'}</div>
-          <div className="meta">
-            {lesson.is_remote ? '💻 Дистанционно' : lesson.classroom && `Каб. ${lesson.classroom}`}
-            {lesson.teacher && ` · ${lesson.teacher}`}
+          <div className="lesson-subject">{lesson.subject || '—'}</div>
+          <div className="lesson-meta">
+            {lesson.teacher && (
+              <span className="lesson-meta-item">{lesson.teacher}</span>
+            )}
+            {lesson.is_remote ? (
+              <span className="lesson-meta-item">💻 Дистанционно</span>
+            ) : lesson.classroom && (
+              <span className="lesson-meta-item">📍 {lesson.classroom} каб.</span>
+            )}
           </div>
         </>
-      )}
-      {expanded && hasChange && lesson.original && (
-        <div className="original">
-          <div className="orig-title">Изменение</div>
-          <div className="orig-block">
-            <div className="muted small">Было:</div>
-            <div>{lesson.original.subject || '—'}{lesson.original.classroom && ` · каб. ${lesson.original.classroom}`}{lesson.original.teacher && ` · ${lesson.original.teacher}`}</div>
-            <div className="muted small">Стало:</div>
-            <div>{lesson.subject || '—'}{lesson.classroom && ` · каб. ${lesson.classroom}`}{lesson.teacher && ` · ${lesson.teacher}`}</div>
-          </div>
-        </div>
       )}
     </div>
   )
 }
 
-/* ==================== TEACHERS SCREEN ==================== */
-
-function TeachersScreen() {
-  const [query, setQuery] = useState('')
-  const [selected, setSelected] = useState<string | null>(null)
-  const teachers = useMemo(() => getTeachers(), [])
-
-  const names = useMemo(() => Object.keys(teachers).sort(), [teachers])
-
-  const filtered = useMemo(
-    () => names.filter(n => n.toLowerCase().includes(query.toLowerCase())),
-    [names, query],
-  )
-
-  if (selected) {
-    return <TeacherSchedule name={selected} entries={teachers[selected] || []} onBack={() => setSelected(null)} />
-  }
-
+function ChangeSheet({ lesson, onClose }: { lesson: LessonView; onClose: () => void }) {
   return (
     <>
-      <div className="header">
-        <h1>Учителя</h1>
-        <p className="header-sub">{names.length} преподавателей</p>
+      <div className="sheet-overlay" onClick={onClose} />
+      <div className="sheet">
+        <div className="sheet-handle" />
+        <h2 className="sheet-title">
+          {lesson.status === 'cancelled' ? 'Отмена' :
+           lesson.status === 'added' ? 'Дополнительная пара' : 'Замена'}
+        </h2>
+        <div className="sheet-pair-info">
+          {lesson.number} пара · {lesson.time_start} — {lesson.time_end}
+        </div>
+
+        {lesson.original && (
+          <div className="sheet-change">
+            <div className="sheet-block">
+              <div className="sheet-block-label">Было</div>
+              <div className="sheet-block-subject">{lesson.original.subject || '—'}</div>
+              <div className="sheet-block-meta">
+                {lesson.original.teacher && <span>{lesson.original.teacher}</span>}
+                {lesson.original.classroom && <span> · {lesson.original.classroom} каб.</span>}
+              </div>
+            </div>
+            <div className="sheet-arrow">↓</div>
+            <div className="sheet-block">
+              <div className="sheet-block-label">Стало</div>
+              {lesson.status === 'cancelled' ? (
+                <div className="sheet-block-subject" style={{ color: 'var(--red)' }}>Отменено</div>
+              ) : (
+                <>
+                  <div className="sheet-block-subject">{lesson.subject}</div>
+                  <div className="sheet-block-meta">
+                    {lesson.teacher && <span>{lesson.teacher}</span>}
+                    {lesson.classroom && <span> · {lesson.classroom} каб.</span>}
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+
+        <button className="sheet-btn" onClick={onClose}>Понятно</button>
       </div>
-      <input className="search" placeholder="Поиск учителя…" value={query}
-             onChange={e => setQuery(e.target.value)} />
-      <ul className="teacher-list">
-        {filtered.map(name => (
-          <li key={name}>
-            <button className="teacher-btn" onClick={() => setSelected(name)}>
-              <span className="teacher-avatar">{name.charAt(0)}</span>
-              <span className="teacher-info">
-                <span className="teacher-name">{name}</span>
-                <span className="teacher-count">{teachers[name].length} пар</span>
-              </span>
-            </button>
-          </li>
-        ))}
-      </ul>
     </>
   )
 }
 
-function TeacherSchedule({ name, entries, onBack }: {
-  name: string; entries: TeacherEntry[]; onBack: () => void
+/* ==================== WEEK SCREEN ==================== */
+
+function WeekScreen({ group, dateISO, setDateISO }: {
+  group: string; dateISO: string; setDateISO: (s: string) => void
 }) {
-  const grouped = useMemo(() => {
-    const map: Record<number, TeacherEntry[]> = {}
-    for (const e of entries) {
-      (map[e.weekday] ??= []).push(e)
-    }
-    return map
-  }, [entries])
+  const weekDays = useMemo(() => getWeekDays(dateISO), [dateISO])
+  const today = todayISO()
+
+  const weekData = useMemo(() => {
+    return weekDays.map(d => ({
+      date: d,
+      day: getDay(group, new Date(d + 'T12:00:00')),
+      isToday: d === today
+    }))
+  }, [weekDays, group, today])
+
+  const weekStart = new Date(weekDays[0] + 'T12:00:00')
+  const weekLabel = `${weekStart.getDate()} ${weekStart.toLocaleDateString('ru-RU', { month: 'long' })}`
 
   return (
     <>
-      <div className="header">
-        <button className="date-today-btn" onClick={onBack}>← Назад</button>
-        <h1 style={{ marginTop: 8 }}>{name}</h1>
-        <p className="header-sub">{entries.length} пар в неделю</p>
+      <div className="week-header">
+        <h1 className="week-title">Неделя</h1>
       </div>
-      {[0, 1, 2, 3, 4, 5].map(wd => {
-        const dayEntries = grouped[wd]
-        if (!dayEntries?.length) return null
-        return (
-          <div key={wd}>
-            <div className="teacher-day-header">{DAY_NAMES[wd]}</div>
-            <div className="lessons">
-              {dayEntries.sort((a, b) => a.pair - b.pair).map((e, i) => (
-                <div key={i} className="lesson">
-                  <div className="lesson-head">
-                    <span className="pair-num">{e.pair}</span>
-                    <span className="pair-time">{e.subject}</span>
-                  </div>
-                  <div className="meta">
-                    {e.group} · каб. {e.classroom} · {e.parity === 'odd' ? 'числ.' : 'знам.'}
-                  </div>
+
+      <div className="week-nav">
+        <button className="week-nav-btn" onClick={() => setDateISO(shiftISO(dateISO, -7))}>‹</button>
+        <span className="week-nav-label">{weekLabel}</span>
+        <button className="week-nav-btn" onClick={() => setDateISO(shiftISO(dateISO, 7))}>›</button>
+      </div>
+
+      {weekData[0]?.day?.parity && (
+        <span className={`parity-chip ${weekData[0].day.parity}`}>
+          {weekData[0].day.parity === 'odd' ? 'Нечётная неделя' : 'Чётная неделя'}
+        </span>
+      )}
+
+      <div className="animate-in">
+        {weekData.map(({ date, day, isToday }) => {
+          const visible = day?.lessons.filter(l => l.status === 'cancelled' || l.subject) ?? []
+          const weekdayNum = (new Date(date + 'T12:00:00').getDay() + 6) % 7
+
+          return (
+            <div key={date} className="week-day">
+              <div className="week-day-header">
+                <span className="week-day-date">
+                  {DAY_NAMES_FULL[weekdayNum]}, {new Date(date + 'T12:00:00').getDate()}
+                </span>
+                {isToday && <span className="week-day-badge">Сегодня</span>}
+              </div>
+
+              {visible.length === 0 ? (
+                <div style={{ padding: '12px 0', color: 'var(--text-tertiary)', fontSize: 14 }}>
+                  Пар нет
                 </div>
-              ))}
+              ) : (
+                visible.map(l => (
+                  <div key={l.number} className="week-lesson">
+                    <span className="week-lesson-num">{l.number}</span>
+                    <div className="week-lesson-info">
+                      <div className="week-lesson-subject">
+                        {l.status === 'cancelled' ? <s>{l.original?.subject || '—'}</s> : l.subject}
+                      </div>
+                      <div className="week-lesson-meta">
+                        {l.status === 'cancelled' ? 'Отменено' : (
+                          <>
+                            {l.classroom && `${l.classroom} каб.`}
+                            {l.teacher && ` · ${l.teacher}`}
+                          </>
+                        )}
+                      </div>
+                    </div>
+                    {l.status === 'replaced' && (
+                      <span className="week-lesson-badge replaced">Замена</span>
+                    )}
+                  </div>
+                ))
+              )}
             </div>
-          </div>
-        )
-      })}
+          )
+        })}
+      </div>
     </>
   )
 }
 
 /* ==================== SETTINGS SCREEN ==================== */
 
-function SettingsScreen() {
-  const [notifEnabled, setNotifEnabled] = useState(() => {
-    return localStorage.getItem(NOTIF_KEY) === 'true'
-  })
-
+function SettingsScreen({ group, onChangeGroup }: {
+  group: string | null; onChangeGroup: (g: string) => void
+}) {
+  const [showGroupSelect, setShowGroupSelect] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
   const meta = getMeta()
 
-  const toggleNotif = async () => {
-    if (!notifEnabled) {
-      const perm = await Notification.requestPermission()
-      if (perm !== 'granted') return
-      localStorage.setItem(NOTIF_KEY, 'true')
-      setNotifEnabled(true)
-    } else {
-      localStorage.removeItem(NOTIF_KEY)
-      setNotifEnabled(false)
-    }
+  const handleChangeGroup = () => {
+    setShowConfirm(true)
+  }
+
+  const confirmChange = () => {
+    setShowConfirm(false)
+    setShowGroupSelect(true)
+  }
+
+  if (showGroupSelect) {
+    return (
+      <div style={{ margin: '-16px -16px 0', minHeight: '100vh' }}>
+        <GroupSelectScreen
+          onSelect={(g) => { onChangeGroup(g); setShowGroupSelect(false) }}
+        />
+      </div>
+    )
   }
 
   return (
     <>
-      <div className="header">
-        <h1>Настройки</h1>
+      <div className="settings-header">
+        <h1 className="settings-title">Настройки</h1>
       </div>
 
       <div className="settings-section">
-        <div className="settings-title">Уведомления</div>
+        <div className="settings-section-title">Группа</div>
         <div className="settings-card">
-          <div className="settings-row">
-            <div>
-              <div className="settings-label">Напоминание о парах</div>
-              <div className="settings-desc">За 30 минут до первой пары</div>
+          <div className="settings-row" onClick={handleChangeGroup}>
+            <div className="settings-row-info">
+              <div className="settings-row-label">Моя группа</div>
+              <div className="settings-row-value">{group || 'Не выбрана'}</div>
             </div>
-            <label className="toggle">
-              <input type="checkbox" checked={notifEnabled} onChange={toggleNotif} />
-              <span className="toggle-slider" />
-            </label>
+            <span className="settings-row-arrow">›</span>
           </div>
         </div>
       </div>
 
       <div className="settings-section">
-        <div className="settings-title">Информация</div>
-        <div className="info-card">
+        <div className="settings-section-title">Данные</div>
+        <div className="settings-card">
           <div className="info-row">
-            <span className="info-label">Групп</span>
+            <span className="info-label">Групп в системе</span>
             <span className="info-value">{meta?.groups_count ?? '—'}</span>
           </div>
           <div className="info-row">
-            <span className="info-label">Обновлено</span>
+            <span className="info-label">Последнее обновление</span>
             <span className="info-value">
-              {meta?.updated_at ? new Date(meta.updated_at).toLocaleString('ru-RU') : '—'}
+              {meta?.updated_at
+                ? new Date(meta.updated_at).toLocaleString('ru-RU', {
+                    day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
+                  })
+                : '—'}
             </span>
           </div>
           <div className="info-row">
-            <span className="info-label">Замены на</span>
+            <span className="info-label">Замены доступны на</span>
             <span className="info-value">
-              {meta?.replacement_dates?.join(', ') || 'нет'}
+              {meta?.replacement_dates?.length
+                ? meta.replacement_dates.map(d => {
+                    const date = new Date(d + 'T12:00:00')
+                    return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' })
+                  }).join(', ')
+                : 'нет'}
             </span>
           </div>
+        </div>
+      </div>
+
+      <div className="settings-section">
+        <div className="settings-section-title">Приложение</div>
+        <div className="settings-card">
           <div className="info-row">
-            <span className="info-label">Источник</span>
+            <span className="info-label">Версия</span>
+            <span className="info-value">2.0.0</span>
+          </div>
+          <div className="info-row">
+            <span className="info-label">Источник данных</span>
             <span className="info-value">kasict.ru</span>
           </div>
         </div>
       </div>
 
-      <div className="settings-section">
-        <div className="settings-title">Приложение</div>
-        <div className="info-card">
-          <div className="info-row">
-            <span className="info-label">Версия</span>
-            <span className="info-value">1.0.0</span>
-          </div>
-          <div className="info-row">
-            <span className="info-label">PWA</span>
-            <span className="info-value">Установлено</span>
-          </div>
+      <button className="update-btn" onClick={() => window.location.reload()}>
+        ↻ Обновить данные
+      </button>
+
+      {showConfirm && (
+        <ConfirmDialog
+          title="Изменить группу?"
+          text="Расписание будет обновлено для новой группы."
+          onCancel={() => setShowConfirm(false)}
+          onConfirm={confirmChange}
+        />
+      )}
+    </>
+  )
+}
+
+function ConfirmDialog({ title, text, onCancel, onConfirm }: {
+  title: string; text: string; onCancel: () => void; onConfirm: () => void
+}) {
+  return (
+    <div className="dialog-overlay" onClick={onCancel}>
+      <div className="dialog" onClick={e => e.stopPropagation()}>
+        <h3 className="dialog-title">{title}</h3>
+        <p className="dialog-text">{text}</p>
+        <div className="dialog-buttons">
+          <button className="dialog-btn cancel" onClick={onCancel}>Отмена</button>
+          <button className="dialog-btn confirm" onClick={onConfirm}>Изменить</button>
         </div>
       </div>
-    </>
+    </div>
   )
 }
