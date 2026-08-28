@@ -394,13 +394,49 @@
         "2": {
           "odd": {
             "subject": "ин.яз.",
-            "teacher": "",
+            "teacher": "Петруня",
             "classroom": "404"
           },
           "even": {
             "subject": "ин.яз.",
-            "teacher": "",
+            "teacher": "Петруня",
             "classroom": "404"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "общ.",
+            "teacher": "Курликова",
+            "classroom": "202"
+          },
+          "even": {
+            "subject": "лит.",
+            "teacher": "Кизимова",
+            "classroom": "202"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "геогр.",
+            "teacher": "Баранова",
+            "classroom": "208"
+          },
+          "even": {
+            "subject": "геогр.",
+            "teacher": "Баранова",
+            "classroom": "208"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "лит.",
+            "teacher": "Кизимова",
+            "classroom": "202"
+          },
+          "even": {
+            "subject": "лит.",
+            "teacher": "Кизимова",
+            "classroom": "202"
           }
         }
       }
@@ -625,6 +661,30 @@
             "teacher": "Владимирова",
             "classroom": ""
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Владимирова",
+            "classroom": "201"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Владимирова",
+            "classroom": "201"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "",
+            "teacher": "",
+            "classroom": "201"
+          },
+          "even": {
+            "subject": "лит.",
+            "teacher": "Захарова",
+            "classroom": "201"
+          }
         }
       }
     },
@@ -823,6 +883,56 @@
             "classroom": "212"
           }
         }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "лит.",
+            "teacher": "Захарова",
+            "classroom": "218"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Деменцова",
+            "classroom": "218"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "геогр.",
+            "teacher": "Лисьев",
+            "classroom": "011"
+          },
+          "even": {
+            "subject": "геогр.",
+            "teacher": "Лисьев",
+            "classroom": "011"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "русск.",
+            "teacher": "Захарова",
+            "classroom": "201"
+          },
+          "even": {
+            "subject": "русск.",
+            "teacher": "Захарова",
+            "classroom": "201"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "ист.",
+            "teacher": "Мельчакова",
+            "classroom": "212"
+          },
+          "even": {
+            "subject": "ист.",
+            "teacher": "Мельчакова",
+            "classroom": "212"
+          }
+        }
       }
     },
     "СЗС 25-3": {
@@ -1011,6 +1121,44 @@
             "subject": "мат.",
             "teacher": "Сырова",
             "classroom": ""
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Сырова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Сырова",
+            "classroom": ""
+          }
+        }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "инф.",
+            "teacher": "Красильникова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "инф.",
+            "teacher": "Красильникова",
+            "classroom": ""
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "лит.",
+            "teacher": "Кизимова",
+            "classroom": "208"
+          },
+          "even": {
+            "subject": "биолог.",
+            "teacher": "Баранова",
+            "classroom": "208"
           }
         },
         "4": {
@@ -1239,6 +1387,56 @@
             "classroom": "203"
           }
         }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Сырова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Сырова",
+            "classroom": ""
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "инф.",
+            "teacher": "Титова",
+            "classroom": "214"
+          },
+          "even": {
+            "subject": "инф.",
+            "teacher": "Титова",
+            "classroom": "214"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "лит.",
+            "teacher": "Кизимова",
+            "classroom": "202"
+          },
+          "even": {
+            "subject": "лит.",
+            "teacher": "Кизимова",
+            "classroom": "202"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Сырова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Сырова",
+            "classroom": ""
+          }
+        }
       }
     },
     "ПСК 25-1": {
@@ -1460,6 +1658,44 @@
             "classroom": ""
           }
         }
+      },
+      "4": {
+        "3": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Белокрылова",
+            "classroom": "213"
+          },
+          "even": {
+            "subject": "общ.",
+            "teacher": "Харитонова",
+            "classroom": "213"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "ист.",
+            "teacher": "Ушаков",
+            "classroom": "420"
+          },
+          "even": {
+            "subject": "ист.",
+            "teacher": "Ушаков",
+            "classroom": "420"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Белокрылова",
+            "classroom": "423"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Белокрылова",
+            "classroom": "423"
+          }
+        }
       }
     },
     "Э 25-1": {
@@ -1670,6 +1906,42 @@
             "teacher": "Захарова",
             "classroom": "201"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Пастух",
+            "classroom": "225"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Пастух",
+            "classroom": "225"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "лит.",
+            "teacher": "Захарова",
+            "classroom": "422"
+          },
+          "even": {
+            "subject": "ист.",
+            "teacher": "Курликова",
+            "classroom": "422"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Кириченко",
+            "classroom": "223"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Кириченко",
+            "classroom": "223"
+          }
         }
       }
     },
@@ -1873,6 +2145,42 @@
             "subject": "физ-ра",
             "teacher": "Плюснин",
             "classroom": "226"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "геогр.",
+            "teacher": "Никонорова",
+            "classroom": "213"
+          },
+          "even": {
+            "subject": "общ.",
+            "teacher": "Харитонова",
+            "classroom": "213"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "биолог.",
+            "teacher": "Никонорова",
+            "classroom": "421"
+          },
+          "even": {
+            "subject": "биолог.",
+            "teacher": "Никонорова",
+            "classroom": "421"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "инф.",
+            "teacher": "Титова",
+            "classroom": "214"
+          },
+          "even": {
+            "subject": "инф.",
+            "teacher": "Титова",
+            "classroom": "214"
           }
         }
       }
@@ -2102,6 +2410,30 @@
             "teacher": "Пастух",
             "classroom": "225"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Николаев",
+            "classroom": "119"
+          },
+          "even": {
+            "subject": "физ.",
+            "teacher": "Нургалиева",
+            "classroom": "119"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Горячев",
+            "classroom": "402"
+          },
+          "even": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Горячев",
+            "classroom": "402"
+          }
         }
       }
     },
@@ -2325,6 +2657,30 @@
             "teacher": "Черкасова",
             "classroom": "115"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "",
+            "teacher": "",
+            "classroom": "208"
+          },
+          "even": {
+            "subject": "биолог.",
+            "teacher": "Баранова",
+            "classroom": "208"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Пастух",
+            "classroom": "225"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Пастух",
+            "classroom": "225"
+          }
         }
       }
     },
@@ -2536,6 +2892,42 @@
             "teacher": "Лоскутова",
             "classroom": ""
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "",
+            "teacher": "",
+            "classroom": "204"
+          },
+          "even": {
+            "subject": "биолог.",
+            "teacher": "Лобанева",
+            "classroom": "204"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Иванова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Иванова",
+            "classroom": ""
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Митькин",
+            "classroom": "002"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Митькин",
+            "classroom": "002"
+          }
         }
       }
     },
@@ -2737,6 +3129,44 @@
             "subject": "геогр.",
             "teacher": "Лисьев",
             "classroom": "011"
+          }
+        }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Плюснин",
+            "classroom": "226"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Плюснин",
+            "classroom": "226"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Владимирова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Владимирова",
+            "classroom": ""
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "общ.",
+            "teacher": "Курликова",
+            "classroom": "422"
+          },
+          "even": {
+            "subject": "общ.",
+            "teacher": "Курликова",
+            "classroom": "422"
           }
         }
       }
@@ -2941,6 +3371,44 @@
             "classroom": "201"
           }
         }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Кириченко",
+            "classroom": "223"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Кириченко",
+            "classroom": "223"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "тех.мех.",
+            "teacher": "Сапожникова",
+            "classroom": "219"
+          },
+          "even": {
+            "subject": "тех.мех.",
+            "teacher": "Сапожникова",
+            "classroom": "219"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "тех.проц.",
+            "teacher": "Сапожникова",
+            "classroom": "219"
+          },
+          "even": {
+            "subject": "тех.проц.",
+            "teacher": "Сапожникова",
+            "classroom": "219"
+          }
+        }
       }
     },
     "Д 25-1": {
@@ -3141,6 +3609,51 @@
             "subject": "лит.",
             "teacher": "Захарова",
             "classroom": "201"
+          }
+        }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "геогр.",
+            "teacher": "Лисьев",
+            "classroom": "421"
+          },
+          "even": {
+            "subject": "биолог.",
+            "teacher": "Никонорова",
+            "classroom": "421"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "физ.",
+            "teacher": "Нургалиева",
+            "classroom": "119"
+          },
+          "even": {
+            "subject": "физ.",
+            "teacher": "Нургалиева",
+            "classroom": "119"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Белокрылова",
+            "classroom": "423"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Белокрылова",
+            "classroom": "423"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "ин.яз",
+            "teacher": "Карпова",
+            "classroom": ""
           }
         }
       }
@@ -3346,6 +3859,42 @@
             "teacher": "Деменцова",
             "classroom": "218"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "общ.",
+            "teacher": "Курилова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "общ.",
+            "teacher": "Курилова",
+            "classroom": ""
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "геогр.",
+            "teacher": "Баранова",
+            "classroom": "423"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Белокрылова",
+            "classroom": "423"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "ист.",
+            "teacher": "Курилова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "ин.яз.",
+            "teacher": "Ясюкевич",
+            "classroom": ""
+          }
         }
       }
     },
@@ -3543,6 +4092,42 @@
           "odd": {
             "subject": "геогр.",
             "teacher": "Лисьев",
+            "classroom": "421"
+          },
+          "even": {
+            "subject": "биолог.",
+            "teacher": "Никонорова",
+            "classroom": "421"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Белокрылова",
+            "classroom": "423"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Белокрылова",
+            "classroom": "423"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "общ.",
+            "teacher": "Ушаков",
+            "classroom": "420"
+          },
+          "even": {
+            "subject": "общ.",
+            "teacher": "Ушаков",
+            "classroom": "420"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "биолог.",
+            "teacher": "Никонорова",
             "classroom": "421"
           },
           "even": {
@@ -3773,6 +4358,42 @@
             "teacher": "Назарова",
             "classroom": "313"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "отпс",
+            "teacher": "Кандиранда",
+            "classroom": "315"
+          },
+          "even": {
+            "subject": "отпс",
+            "teacher": "Кандиранда",
+            "classroom": "315"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "уктп",
+            "teacher": "Зуевская",
+            "classroom": "320"
+          },
+          "even": {
+            "subject": "уктп",
+            "teacher": "Зуевская",
+            "classroom": "320"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "",
+            "teacher": "",
+            "classroom": "320"
+          },
+          "even": {
+            "subject": "уктп",
+            "teacher": "Зуевская",
+            "classroom": "320"
+          }
         }
       }
     },
@@ -3976,6 +4597,54 @@
             "subject": "ин.яз.",
             "teacher": "Петруня",
             "classroom": "404"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "итпд",
+            "teacher": "Сулеков",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "итпд",
+            "teacher": "Сулеков",
+            "classroom": ""
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Митькин",
+            "classroom": "002"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Митькин",
+            "classroom": "002"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "пзс",
+            "teacher": "Матькова",
+            "classroom": "311"
+          },
+          "even": {
+            "subject": "пзс",
+            "teacher": "Матькова",
+            "classroom": "311"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Баранова",
+            "classroom": "208"
+          },
+          "even": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Баранова",
+            "classroom": "208"
           }
         }
       }
@@ -4190,6 +4859,30 @@
       },
       "4": {
         "1": {
+          "odd": {
+            "subject": "нап",
+            "teacher": "Булычева",
+            "classroom": "304"
+          },
+          "even": {
+            "subject": "нап",
+            "teacher": "Булычева",
+            "classroom": "304"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "врпф",
+            "teacher": "Саблина",
+            "classroom": "306"
+          },
+          "even": {
+            "subject": "врпф",
+            "teacher": "Саблина",
+            "classroom": "306"
+          }
+        },
+        "3": {
           "odd": {
             "subject": "нап",
             "teacher": "Булычева",
@@ -4415,6 +5108,30 @@
             "subject": "ин.яз.",
             "teacher": "Карпова",
             "classroom": "407"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "ототр",
+            "teacher": "Алпеев",
+            "classroom": "118"
+          },
+          "even": {
+            "subject": "ототр",
+            "teacher": "Алпеев",
+            "classroom": "118"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "от",
+            "teacher": "Алпеев",
+            "classroom": "118"
+          },
+          "even": {
+            "subject": "от",
+            "teacher": "Алпеев",
+            "classroom": "118"
           }
         }
       }
@@ -4644,6 +5361,18 @@
             "teacher": "Харитонова",
             "classroom": "213"
           }
+        },
+        "3": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Фомичев",
+            "classroom": "004"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Фомичев",
+            "classroom": "004"
+          }
         }
       }
     },
@@ -4859,6 +5588,46 @@
             "classroom": "415"
           }
         }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "оф",
+            "teacher": "Мельчакова",
+            "classroom": ""
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "сис",
+            "teacher": "Юнусов",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "сис",
+            "teacher": "Юнусов",
+            "classroom": ""
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "оф",
+            "teacher": "Мельчакова",
+            "classroom": "212"
+          },
+          "even": {
+            "subject": "оф",
+            "teacher": "Мельчакова",
+            "classroom": "212"
+          }
+        },
+        "5": {
+          "even": {
+            "subject": "итпс",
+            "teacher": "Михайлов",
+            "classroom": ""
+          }
+        }
       }
     },
     "М 24-1П": {
@@ -5071,6 +5840,44 @@
             "subject": "врпсв",
             "teacher": "Сапожникова",
             "classroom": "219"
+          }
+        }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "бж",
+            "teacher": "Иванова",
+            "classroom": "008"
+          },
+          "even": {
+            "subject": "бж",
+            "teacher": "Иванова",
+            "classroom": "008"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "ин.яз.",
+            "teacher": "Карпова",
+            "classroom": "407"
+          },
+          "even": {
+            "subject": "ин.яз.",
+            "teacher": "Карпова",
+            "classroom": "407"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "омр",
+            "teacher": "Щетинина",
+            "classroom": "111"
+          },
+          "even": {
+            "subject": "омр",
+            "teacher": "Щетинина",
+            "classroom": "111"
           }
         }
       }
@@ -5288,6 +6095,30 @@
             "teacher": "Сапожникова",
             "classroom": "219"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "врпр",
+            "teacher": "Сапожникова",
+            "classroom": "219"
+          },
+          "even": {
+            "subject": "врпр",
+            "teacher": "Сапожникова",
+            "classroom": "219"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "бж",
+            "teacher": "Иванов",
+            "classroom": "012"
+          },
+          "even": {
+            "subject": "бж",
+            "teacher": "Иванов",
+            "classroom": "012"
+          }
         }
       }
     },
@@ -5477,6 +6308,56 @@
             "subject": "бж",
             "teacher": "Иванова",
             "classroom": "008"
+          }
+        }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "лэ",
+            "teacher": "Старцева",
+            "classroom": "417"
+          },
+          "even": {
+            "subject": "лэ",
+            "teacher": "Старцева",
+            "classroom": "417"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "бж",
+            "teacher": "Иванова",
+            "classroom": "008"
+          },
+          "even": {
+            "subject": "бж",
+            "teacher": "Иванова",
+            "classroom": "008"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "оэ",
+            "teacher": "Бибин",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "оэ",
+            "teacher": "Бибин",
+            "classroom": ""
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "иг",
+            "teacher": "Черкасова",
+            "classroom": "115"
+          },
+          "even": {
+            "subject": "иг",
+            "teacher": "Черкасова",
+            "classroom": "115"
           }
         }
       }
@@ -5689,6 +6570,42 @@
             "teacher": "Иванова",
             "classroom": "008"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "оэ",
+            "teacher": "Бибин",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "оэ",
+            "teacher": "Бибин",
+            "classroom": ""
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "оа",
+            "teacher": "Бибин",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "оа",
+            "teacher": "Бибин",
+            "classroom": ""
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Плюснин",
+            "classroom": "226"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Плюснин",
+            "classroom": "226"
+          }
         }
       }
     },
@@ -5892,6 +6809,44 @@
             "classroom": "304"
           }
         }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "нап",
+            "teacher": "Булычева",
+            "classroom": "304"
+          },
+          "even": {
+            "subject": "нап",
+            "teacher": "Булычева",
+            "classroom": "304"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "оэап",
+            "teacher": "Постнова",
+            "classroom": "408"
+          },
+          "even": {
+            "subject": "оэап",
+            "teacher": "Постнова",
+            "classroom": "408"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "огп",
+            "teacher": "Булычева",
+            "classroom": "301"
+          },
+          "even": {
+            "subject": "огп",
+            "teacher": "Булычева",
+            "classroom": "301"
+          }
+        }
       }
     },
     "А 23-2": {
@@ -6083,6 +7038,44 @@
           }
         },
         "4": {
+          "odd": {
+            "subject": "огп",
+            "teacher": "Булычева",
+            "classroom": "304"
+          },
+          "even": {
+            "subject": "огп",
+            "teacher": "Булычева",
+            "classroom": "304"
+          }
+        }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "оэап",
+            "teacher": "Постнова",
+            "classroom": "408"
+          },
+          "even": {
+            "subject": "оэап",
+            "teacher": "Постнова",
+            "classroom": "408"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "ин.яз.",
+            "teacher": "Карпова",
+            "classroom": "407"
+          },
+          "even": {
+            "subject": "ин.яз.",
+            "teacher": "Карпова",
+            "classroom": "407"
+          }
+        },
+        "5": {
           "odd": {
             "subject": "огп",
             "teacher": "Булычева",
@@ -6297,6 +7290,42 @@
             "teacher": "Фомичев",
             "classroom": "004"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "вдп",
+            "teacher": "Рудых",
+            "classroom": "303"
+          },
+          "even": {
+            "subject": "вдп",
+            "teacher": "Рудых",
+            "classroom": "303"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "ист.диз.",
+            "teacher": "Саблина",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "ист.диз.",
+            "teacher": "Саблина",
+            "classroom": ""
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "ист.диз.",
+            "teacher": "Саблина",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "ист.диз.",
+            "teacher": "Саблина",
+            "classroom": ""
+          }
         }
       }
     },
@@ -6498,6 +7527,56 @@
             "subject": "оруп",
             "teacher": "Яковлева",
             "classroom": "419"
+          }
+        }
+      },
+      "4": {
+        "3": {
+          "odd": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Нургалиева",
+            "classroom": "119"
+          },
+          "even": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Нургалиева",
+            "classroom": "119"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "ото",
+            "teacher": "Алпеев",
+            "classroom": "118"
+          },
+          "even": {
+            "subject": "ото",
+            "teacher": "Алпеев",
+            "classroom": "118"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "от",
+            "teacher": "Алпеев",
+            "classroom": "118"
+          },
+          "even": {
+            "subject": "от",
+            "teacher": "Алпеев",
+            "classroom": "118"
+          }
+        },
+        "6": {
+          "odd": {
+            "subject": "уат",
+            "teacher": "Алпеев",
+            "classroom": "118"
+          },
+          "even": {
+            "subject": "уат",
+            "teacher": "Алпеев",
+            "classroom": "118"
           }
         }
       }
@@ -6710,6 +7789,42 @@
             "teacher": "Куранова",
             "classroom": ""
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "вис",
+            "teacher": "Огнева",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "вис",
+            "teacher": "Огнева",
+            "classroom": ""
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "тис",
+            "teacher": "Качалкова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "тис",
+            "teacher": "Качалкова",
+            "classroom": ""
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "сис",
+            "teacher": "Качалкова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "мапо",
+            "teacher": "Качалкова",
+            "classroom": ""
+          }
         }
       }
     },
@@ -6913,6 +8028,42 @@
             "subject": "мат.",
             "teacher": "Сырова",
             "classroom": ""
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "физ.",
+            "teacher": "Нургалиева",
+            "classroom": "201"
+          },
+          "even": {
+            "subject": "лит.",
+            "teacher": "Захарова",
+            "classroom": "201"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Плюснин",
+            "classroom": "226"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Плюснин",
+            "classroom": "226"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "биолог.",
+            "teacher": "Лобанева",
+            "classroom": "204"
+          },
+          "even": {
+            "subject": "биолог.",
+            "teacher": "Лобанева",
+            "classroom": "204"
           }
         }
       }
@@ -7137,6 +8288,30 @@
             "teacher": "Лисьев",
             "classroom": "011"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "общ.",
+            "teacher": "Курликова",
+            "classroom": "422"
+          },
+          "even": {
+            "subject": "общ.",
+            "teacher": "Курликова",
+            "classroom": "422"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "биолог.",
+            "teacher": "Лобанева",
+            "classroom": "204"
+          },
+          "even": {
+            "subject": "биолог.",
+            "teacher": "Лобанева",
+            "classroom": "204"
+          }
         }
       }
     },
@@ -7340,6 +8515,30 @@
             "subject": "ист.",
             "teacher": "Курликова",
             "classroom": "422"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "биолог.",
+            "teacher": "Баранова",
+            "classroom": "011"
+          },
+          "even": {
+            "subject": "геогр.",
+            "teacher": "Лисьев",
+            "classroom": "011"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Кириченко",
+            "classroom": "223"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Кириченко",
+            "classroom": "223"
           }
         }
       }
@@ -7557,6 +8756,42 @@
             "teacher": "Мельчакова",
             "classroom": "212"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "инф.",
+            "teacher": "Горячев",
+            "classroom": "402"
+          },
+          "even": {
+            "subject": "инф.",
+            "teacher": "Горячев",
+            "classroom": "402"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "общ.",
+            "teacher": "Мельчакова",
+            "classroom": "212"
+          },
+          "even": {
+            "subject": "общ.",
+            "teacher": "Мельчакова",
+            "classroom": "212"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "",
+            "teacher": "",
+            "classroom": "407"
+          },
+          "even": {
+            "subject": "",
+            "teacher": "",
+            "classroom": "407"
+          }
         }
       }
     },
@@ -7772,6 +9007,30 @@
             "subject": "геогр.",
             "teacher": "Баранова",
             "classroom": "208"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "лит.",
+            "teacher": "Кизимова",
+            "classroom": "212"
+          },
+          "even": {
+            "subject": "ист.",
+            "teacher": "Мельчакова",
+            "classroom": "212"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Николаев",
+            "classroom": "222"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Николаев",
+            "classroom": "222"
           }
         }
       }
@@ -7989,6 +9248,42 @@
             "teacher": "Кандиранда",
             "classroom": "315"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "пзс",
+            "teacher": "Назарова",
+            "classroom": "313"
+          },
+          "even": {
+            "subject": "пзс",
+            "teacher": "Назарова",
+            "classroom": "313"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "отпс",
+            "teacher": "Кандиранда",
+            "classroom": "315"
+          },
+          "even": {
+            "subject": "отпс",
+            "teacher": "Кандиранда",
+            "classroom": "315"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "итпд",
+            "teacher": "Сулеков",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "итпд",
+            "teacher": "Сулеков",
+            "classroom": ""
+          }
         }
       }
     },
@@ -8199,6 +9494,44 @@
             "classroom": ""
           }
         }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "",
+            "teacher": "",
+            "classroom": "115"
+          },
+          "even": {
+            "subject": "тпсник",
+            "teacher": "Черкасова",
+            "classroom": "115"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "осп",
+            "teacher": "Черкасова",
+            "classroom": "115"
+          },
+          "even": {
+            "subject": "осп",
+            "teacher": "Черкасова",
+            "classroom": "115"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "тпнсик",
+            "teacher": "Черкасова",
+            "classroom": "115"
+          },
+          "even": {
+            "subject": "тпнсик",
+            "teacher": "Черкасова",
+            "classroom": "115"
+          }
+        }
       }
     },
     "ИС 24-1": {
@@ -8393,6 +9726,44 @@
           "odd": {
             "subject": "оап",
             "teacher": "Леликов",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "оф",
+            "teacher": "Киселева",
+            "classroom": ""
+          }
+        }
+      },
+      "4": {
+        "3": {
+          "odd": {
+            "subject": "сис",
+            "teacher": "Куранова",
+            "classroom": "415"
+          },
+          "even": {
+            "subject": "сис",
+            "teacher": "Куранова",
+            "classroom": "415"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "уабд",
+            "teacher": "Логинова",
+            "classroom": "403"
+          },
+          "even": {
+            "subject": "уабд",
+            "teacher": "Логинова",
+            "classroom": "403"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "оф",
+            "teacher": "Киселева",
             "classroom": ""
           },
           "even": {
@@ -8616,6 +9987,30 @@
             "teacher": "Сулеков",
             "classroom": ""
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "исрпо",
+            "teacher": "Хлудова",
+            "classroom": "212"
+          },
+          "even": {
+            "subject": "исрпо",
+            "teacher": "Хлудова",
+            "classroom": "212"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "уабд",
+            "teacher": "Логинова",
+            "classroom": "403"
+          },
+          "even": {
+            "subject": "уабд",
+            "teacher": "Логинова",
+            "classroom": "403"
+          }
         }
       }
     },
@@ -8819,6 +10214,44 @@
             "classroom": "303"
           }
         }
+      },
+      "4": {
+        "3": {
+          "odd": {
+            "subject": "вдп",
+            "teacher": "Рудых",
+            "classroom": "303"
+          },
+          "even": {
+            "subject": "вдп",
+            "teacher": "Рудых",
+            "classroom": "303"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "ин.яз.",
+            "teacher": "Келлер",
+            "classroom": "412"
+          },
+          "even": {
+            "subject": "ин.яз.",
+            "teacher": "Келлер",
+            "classroom": "412"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "роп",
+            "teacher": "Кабурнеева",
+            "classroom": "307"
+          },
+          "even": {
+            "subject": "роп",
+            "teacher": "Кабурнеева",
+            "classroom": "307"
+          }
+        }
       }
     },
     "ПСК 23-1": {
@@ -9019,6 +10452,56 @@
             "subject": "менедж.",
             "teacher": "Яковлева",
             "classroom": "419"
+          }
+        }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "оатп",
+            "teacher": "Сигарева",
+            "classroom": "318"
+          },
+          "even": {
+            "subject": "оатп",
+            "teacher": "Сигарева",
+            "classroom": "318"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "тп",
+            "teacher": "Кучко",
+            "classroom": "001"
+          },
+          "even": {
+            "subject": "тп",
+            "teacher": "Кучко",
+            "classroom": "001"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "это",
+            "teacher": "Кучко",
+            "classroom": "001"
+          },
+          "even": {
+            "subject": "это",
+            "teacher": "Кучко",
+            "classroom": "001"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "рнт",
+            "teacher": "Кучко",
+            "classroom": "001"
+          },
+          "even": {
+            "subject": "рнт",
+            "teacher": "Кучко",
+            "classroom": "001"
           }
         }
       }
@@ -9236,6 +10719,30 @@
             "teacher": "Куранова",
             "classroom": "415"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "кс",
+            "teacher": "Куранова",
+            "classroom": "415"
+          },
+          "even": {
+            "subject": "кс",
+            "teacher": "Куранова",
+            "classroom": "415"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "исрпо",
+            "teacher": "Хлудова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "исрпо",
+            "teacher": "Хлудова",
+            "classroom": ""
+          }
         }
       }
     },
@@ -9439,6 +10946,42 @@
             "subject": "тзи",
             "teacher": "Горячев",
             "classroom": "402"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Фомичев",
+            "classroom": "004"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Фомичев",
+            "classroom": "004"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Гаан",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Гаан",
+            "classroom": ""
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "экс",
+            "teacher": "Куранова",
+            "classroom": "415"
+          },
+          "even": {
+            "subject": "экс",
+            "teacher": "Куранова",
+            "classroom": "415"
           }
         }
       }
@@ -9656,6 +11199,30 @@
             "teacher": "Старцева",
             "classroom": "417"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "эр",
+            "teacher": "Евсеев",
+            "classroom": "411"
+          },
+          "even": {
+            "subject": "эр",
+            "teacher": "Евсеев",
+            "classroom": "411"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "нэо",
+            "teacher": "Евсеев",
+            "classroom": "411"
+          },
+          "even": {
+            "subject": "нэо",
+            "teacher": "Евсеев",
+            "classroom": "411"
+          }
         }
       }
     },
@@ -9872,6 +11439,37 @@
             "teacher": "Зуевская",
             "classroom": "320"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "пзс",
+            "teacher": "Матькова",
+            "classroom": "311"
+          },
+          "even": {
+            "subject": "пзс",
+            "teacher": "Матькова",
+            "classroom": "311"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "пзс",
+            "teacher": "Матькова",
+            "classroom": "311"
+          },
+          "even": {
+            "subject": "пзс",
+            "teacher": "Матькова",
+            "classroom": "311"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "уктп",
+            "teacher": "Зуевская",
+            "classroom": ""
+          }
         }
       }
     },
@@ -10076,6 +11674,42 @@
             "teacher": "Саблина",
             "classroom": "306"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "мв",
+            "teacher": "Кабурнеева",
+            "classroom": "307"
+          },
+          "even": {
+            "subject": "мв",
+            "teacher": "Кабурнеева",
+            "classroom": "307"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "оф",
+            "teacher": "Киселева",
+            "classroom": "212"
+          },
+          "even": {
+            "subject": "оф",
+            "teacher": "Киселева",
+            "classroom": "212"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "мв",
+            "teacher": "Кабурнеева",
+            "classroom": "307"
+          },
+          "even": {
+            "subject": "мв",
+            "teacher": "Кабурнеева",
+            "classroom": "307"
+          }
         }
       }
     },
@@ -10279,6 +11913,42 @@
             "subject": "мв",
             "teacher": "Кабурнеева",
             "classroom": "307"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "ин.яз.",
+            "teacher": "Карпова",
+            "classroom": "407"
+          },
+          "even": {
+            "subject": "ин.яз.",
+            "teacher": "Карпова",
+            "classroom": "407"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "врпд",
+            "teacher": "Кабурнеева",
+            "classroom": "307"
+          },
+          "even": {
+            "subject": "врпд",
+            "teacher": "Кабурнеева",
+            "classroom": "307"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Терскова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Терскова",
+            "classroom": ""
           }
         }
       }
