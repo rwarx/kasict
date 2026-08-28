@@ -394,13 +394,49 @@
         "2": {
           "odd": {
             "subject": "ин.яз.",
-            "teacher": "",
+            "teacher": "Петруня",
             "classroom": "404"
           },
           "even": {
             "subject": "ин.яз.",
-            "teacher": "",
+            "teacher": "Петруня",
             "classroom": "404"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "общ.",
+            "teacher": "Курликова",
+            "classroom": "202"
+          },
+          "even": {
+            "subject": "лит.",
+            "teacher": "Кизимова",
+            "classroom": "202"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "геогр.",
+            "teacher": "Баранова",
+            "classroom": "208"
+          },
+          "even": {
+            "subject": "геогр.",
+            "teacher": "Баранова",
+            "classroom": "208"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "лит.",
+            "teacher": "Кизимова",
+            "classroom": "202"
+          },
+          "even": {
+            "subject": "лит.",
+            "teacher": "Кизимова",
+            "classroom": "202"
           }
         }
       }
@@ -625,6 +661,30 @@
             "teacher": "Владимирова",
             "classroom": ""
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Владимирова",
+            "classroom": "201"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Владимирова",
+            "classroom": "201"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "",
+            "teacher": "",
+            "classroom": "201"
+          },
+          "even": {
+            "subject": "лит.",
+            "teacher": "Захарова",
+            "classroom": "201"
+          }
         }
       }
     },
@@ -823,6 +883,56 @@
             "classroom": "212"
           }
         }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "лит.",
+            "teacher": "Захарова",
+            "classroom": "218"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Деменцова",
+            "classroom": "218"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "геогр.",
+            "teacher": "Лисьев",
+            "classroom": "011"
+          },
+          "even": {
+            "subject": "геогр.",
+            "teacher": "Лисьев",
+            "classroom": "011"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "русск.",
+            "teacher": "Захарова",
+            "classroom": "201"
+          },
+          "even": {
+            "subject": "русск.",
+            "teacher": "Захарова",
+            "classroom": "201"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "ист.",
+            "teacher": "Мельчакова",
+            "classroom": "212"
+          },
+          "even": {
+            "subject": "ист.",
+            "teacher": "Мельчакова",
+            "classroom": "212"
+          }
+        }
       }
     },
     "СЗС 25-3": {
@@ -1011,6 +1121,44 @@
             "subject": "мат.",
             "teacher": "Сырова",
             "classroom": ""
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Сырова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Сырова",
+            "classroom": ""
+          }
+        }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "инф.",
+            "teacher": "Красильникова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "инф.",
+            "teacher": "Красильникова",
+            "classroom": ""
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "лит.",
+            "teacher": "Кизимова",
+            "classroom": "208"
+          },
+          "even": {
+            "subject": "биолог.",
+            "teacher": "Баранова",
+            "classroom": "208"
           }
         },
         "4": {
@@ -1239,6 +1387,56 @@
             "classroom": "203"
           }
         }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Сырова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Сырова",
+            "classroom": ""
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "инф.",
+            "teacher": "Титова",
+            "classroom": "214"
+          },
+          "even": {
+            "subject": "инф.",
+            "teacher": "Титова",
+            "classroom": "214"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "лит.",
+            "teacher": "Кизимова",
+            "classroom": "202"
+          },
+          "even": {
+            "subject": "лит.",
+            "teacher": "Кизимова",
+            "classroom": "202"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Сырова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Сырова",
+            "classroom": ""
+          }
+        }
       }
     },
     "ПСК 25-1": {
@@ -1460,6 +1658,44 @@
             "classroom": ""
           }
         }
+      },
+      "4": {
+        "3": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Белокрылова",
+            "classroom": "213"
+          },
+          "even": {
+            "subject": "общ.",
+            "teacher": "Харитонова",
+            "classroom": "213"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "ист.",
+            "teacher": "Ушаков",
+            "classroom": "420"
+          },
+          "even": {
+            "subject": "ист.",
+            "teacher": "Ушаков",
+            "classroom": "420"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Белокрылова",
+            "classroom": "423"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Белокрылова",
+            "classroom": "423"
+          }
+        }
       }
     },
     "Э 25-1": {
@@ -1670,6 +1906,42 @@
             "teacher": "Захарова",
             "classroom": "201"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Пастух",
+            "classroom": "225"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Пастух",
+            "classroom": "225"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "лит.",
+            "teacher": "Захарова",
+            "classroom": "422"
+          },
+          "even": {
+            "subject": "ист.",
+            "teacher": "Курликова",
+            "classroom": "422"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Кириченко",
+            "classroom": "223"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Кириченко",
+            "classroom": "223"
+          }
         }
       }
     },
@@ -1873,6 +2145,42 @@
             "subject": "физ-ра",
             "teacher": "Плюснин",
             "classroom": "226"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "геогр.",
+            "teacher": "Никонорова",
+            "classroom": "213"
+          },
+          "even": {
+            "subject": "общ.",
+            "teacher": "Харитонова",
+            "classroom": "213"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "биолог.",
+            "teacher": "Никонорова",
+            "classroom": "421"
+          },
+          "even": {
+            "subject": "биолог.",
+            "teacher": "Никонорова",
+            "classroom": "421"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "инф.",
+            "teacher": "Титова",
+            "classroom": "214"
+          },
+          "even": {
+            "subject": "инф.",
+            "teacher": "Титова",
+            "classroom": "214"
           }
         }
       }
@@ -2102,6 +2410,30 @@
             "teacher": "Пастух",
             "classroom": "225"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Николаев",
+            "classroom": "119"
+          },
+          "even": {
+            "subject": "физ.",
+            "teacher": "Нургалиева",
+            "classroom": "119"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Горячев",
+            "classroom": "402"
+          },
+          "even": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Горячев",
+            "classroom": "402"
+          }
         }
       }
     },
@@ -2325,6 +2657,30 @@
             "teacher": "Черкасова",
             "classroom": "115"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "",
+            "teacher": "",
+            "classroom": "208"
+          },
+          "even": {
+            "subject": "биолог.",
+            "teacher": "Баранова",
+            "classroom": "208"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Пастух",
+            "classroom": "225"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Пастух",
+            "classroom": "225"
+          }
         }
       }
     },
@@ -2536,6 +2892,42 @@
             "teacher": "Лоскутова",
             "classroom": ""
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "",
+            "teacher": "",
+            "classroom": "204"
+          },
+          "even": {
+            "subject": "биолог.",
+            "teacher": "Лобанева",
+            "classroom": "204"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Иванова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Иванова",
+            "classroom": ""
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Митькин",
+            "classroom": "002"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Митькин",
+            "classroom": "002"
+          }
         }
       }
     },
@@ -2737,6 +3129,44 @@
             "subject": "геогр.",
             "teacher": "Лисьев",
             "classroom": "011"
+          }
+        }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Плюснин",
+            "classroom": "226"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Плюснин",
+            "classroom": "226"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Владимирова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Владимирова",
+            "classroom": ""
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "общ.",
+            "teacher": "Курликова",
+            "classroom": "422"
+          },
+          "even": {
+            "subject": "общ.",
+            "teacher": "Курликова",
+            "classroom": "422"
           }
         }
       }
@@ -2941,6 +3371,44 @@
             "classroom": "201"
           }
         }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Кириченко",
+            "classroom": "223"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Кириченко",
+            "classroom": "223"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "тех.мех.",
+            "teacher": "Сапожникова",
+            "classroom": "219"
+          },
+          "even": {
+            "subject": "тех.мех.",
+            "teacher": "Сапожникова",
+            "classroom": "219"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "тех.проц.",
+            "teacher": "Сапожникова",
+            "classroom": "219"
+          },
+          "even": {
+            "subject": "тех.проц.",
+            "teacher": "Сапожникова",
+            "classroom": "219"
+          }
+        }
       }
     },
     "Д 25-1": {
@@ -3141,6 +3609,51 @@
             "subject": "лит.",
             "teacher": "Захарова",
             "classroom": "201"
+          }
+        }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "геогр.",
+            "teacher": "Лисьев",
+            "classroom": "421"
+          },
+          "even": {
+            "subject": "биолог.",
+            "teacher": "Никонорова",
+            "classroom": "421"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "физ.",
+            "teacher": "Нургалиева",
+            "classroom": "119"
+          },
+          "even": {
+            "subject": "физ.",
+            "teacher": "Нургалиева",
+            "classroom": "119"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Белокрылова",
+            "classroom": "423"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Белокрылова",
+            "classroom": "423"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "ин.яз",
+            "teacher": "Карпова",
+            "classroom": ""
           }
         }
       }
@@ -3346,6 +3859,42 @@
             "teacher": "Деменцова",
             "classroom": "218"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "общ.",
+            "teacher": "Курилова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "общ.",
+            "teacher": "Курилова",
+            "classroom": ""
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "геогр.",
+            "teacher": "Баранова",
+            "classroom": "423"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Белокрылова",
+            "classroom": "423"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "ист.",
+            "teacher": "Курилова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "ин.яз.",
+            "teacher": "Ясюкевич",
+            "classroom": ""
+          }
         }
       }
     },
@@ -3543,6 +4092,42 @@
           "odd": {
             "subject": "геогр.",
             "teacher": "Лисьев",
+            "classroom": "421"
+          },
+          "even": {
+            "subject": "биолог.",
+            "teacher": "Никонорова",
+            "classroom": "421"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Белокрылова",
+            "classroom": "423"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Белокрылова",
+            "classroom": "423"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "общ.",
+            "teacher": "Ушаков",
+            "classroom": "420"
+          },
+          "even": {
+            "subject": "общ.",
+            "teacher": "Ушаков",
+            "classroom": "420"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "биолог.",
+            "teacher": "Никонорова",
             "classroom": "421"
           },
           "even": {
@@ -3773,6 +4358,42 @@
             "teacher": "Назарова",
             "classroom": "313"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "отпс",
+            "teacher": "Кандиранда",
+            "classroom": "315"
+          },
+          "even": {
+            "subject": "отпс",
+            "teacher": "Кандиранда",
+            "classroom": "315"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "уктп",
+            "teacher": "Зуевская",
+            "classroom": "320"
+          },
+          "even": {
+            "subject": "уктп",
+            "teacher": "Зуевская",
+            "classroom": "320"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "",
+            "teacher": "",
+            "classroom": "320"
+          },
+          "even": {
+            "subject": "уктп",
+            "teacher": "Зуевская",
+            "classroom": "320"
+          }
         }
       }
     },
@@ -3976,6 +4597,54 @@
             "subject": "ин.яз.",
             "teacher": "Петруня",
             "classroom": "404"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "итпд",
+            "teacher": "Сулеков",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "итпд",
+            "teacher": "Сулеков",
+            "classroom": ""
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Митькин",
+            "classroom": "002"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Митькин",
+            "classroom": "002"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "пзс",
+            "teacher": "Матькова",
+            "classroom": "311"
+          },
+          "even": {
+            "subject": "пзс",
+            "teacher": "Матькова",
+            "classroom": "311"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Баранова",
+            "classroom": "208"
+          },
+          "even": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Баранова",
+            "classroom": "208"
           }
         }
       }
@@ -4190,6 +4859,30 @@
       },
       "4": {
         "1": {
+          "odd": {
+            "subject": "нап",
+            "teacher": "Булычева",
+            "classroom": "304"
+          },
+          "even": {
+            "subject": "нап",
+            "teacher": "Булычева",
+            "classroom": "304"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "врпф",
+            "teacher": "Саблина",
+            "classroom": "306"
+          },
+          "even": {
+            "subject": "врпф",
+            "teacher": "Саблина",
+            "classroom": "306"
+          }
+        },
+        "3": {
           "odd": {
             "subject": "нап",
             "teacher": "Булычева",
@@ -4415,6 +5108,30 @@
             "subject": "ин.яз.",
             "teacher": "Карпова",
             "classroom": "407"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "ототр",
+            "teacher": "Алпеев",
+            "classroom": "118"
+          },
+          "even": {
+            "subject": "ототр",
+            "teacher": "Алпеев",
+            "classroom": "118"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "от",
+            "teacher": "Алпеев",
+            "classroom": "118"
+          },
+          "even": {
+            "subject": "от",
+            "teacher": "Алпеев",
+            "classroom": "118"
           }
         }
       }
@@ -4644,6 +5361,18 @@
             "teacher": "Харитонова",
             "classroom": "213"
           }
+        },
+        "3": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Фомичев",
+            "classroom": "004"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Фомичев",
+            "classroom": "004"
+          }
         }
       }
     },
@@ -4859,6 +5588,46 @@
             "classroom": "415"
           }
         }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "оф",
+            "teacher": "Мельчакова",
+            "classroom": ""
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "сис",
+            "teacher": "Юнусов",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "сис",
+            "teacher": "Юнусов",
+            "classroom": ""
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "оф",
+            "teacher": "Мельчакова",
+            "classroom": "212"
+          },
+          "even": {
+            "subject": "оф",
+            "teacher": "Мельчакова",
+            "classroom": "212"
+          }
+        },
+        "5": {
+          "even": {
+            "subject": "итпс",
+            "teacher": "Михайлов",
+            "classroom": ""
+          }
+        }
       }
     },
     "М 24-1П": {
@@ -5071,6 +5840,44 @@
             "subject": "врпсв",
             "teacher": "Сапожникова",
             "classroom": "219"
+          }
+        }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "бж",
+            "teacher": "Иванова",
+            "classroom": "008"
+          },
+          "even": {
+            "subject": "бж",
+            "teacher": "Иванова",
+            "classroom": "008"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "ин.яз.",
+            "teacher": "Карпова",
+            "classroom": "407"
+          },
+          "even": {
+            "subject": "ин.яз.",
+            "teacher": "Карпова",
+            "classroom": "407"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "омр",
+            "teacher": "Щетинина",
+            "classroom": "111"
+          },
+          "even": {
+            "subject": "омр",
+            "teacher": "Щетинина",
+            "classroom": "111"
           }
         }
       }
@@ -5288,6 +6095,30 @@
             "teacher": "Сапожникова",
             "classroom": "219"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "врпр",
+            "teacher": "Сапожникова",
+            "classroom": "219"
+          },
+          "even": {
+            "subject": "врпр",
+            "teacher": "Сапожникова",
+            "classroom": "219"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "бж",
+            "teacher": "Иванов",
+            "classroom": "012"
+          },
+          "even": {
+            "subject": "бж",
+            "teacher": "Иванов",
+            "classroom": "012"
+          }
         }
       }
     },
@@ -5477,6 +6308,56 @@
             "subject": "бж",
             "teacher": "Иванова",
             "classroom": "008"
+          }
+        }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "лэ",
+            "teacher": "Старцева",
+            "classroom": "417"
+          },
+          "even": {
+            "subject": "лэ",
+            "teacher": "Старцева",
+            "classroom": "417"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "бж",
+            "teacher": "Иванова",
+            "classroom": "008"
+          },
+          "even": {
+            "subject": "бж",
+            "teacher": "Иванова",
+            "classroom": "008"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "оэ",
+            "teacher": "Бибин",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "оэ",
+            "teacher": "Бибин",
+            "classroom": ""
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "иг",
+            "teacher": "Черкасова",
+            "classroom": "115"
+          },
+          "even": {
+            "subject": "иг",
+            "teacher": "Черкасова",
+            "classroom": "115"
           }
         }
       }
@@ -5689,6 +6570,42 @@
             "teacher": "Иванова",
             "classroom": "008"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "оэ",
+            "teacher": "Бибин",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "оэ",
+            "teacher": "Бибин",
+            "classroom": ""
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "оа",
+            "teacher": "Бибин",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "оа",
+            "teacher": "Бибин",
+            "classroom": ""
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Плюснин",
+            "classroom": "226"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Плюснин",
+            "classroom": "226"
+          }
         }
       }
     },
@@ -5892,6 +6809,44 @@
             "classroom": "304"
           }
         }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "нап",
+            "teacher": "Булычева",
+            "classroom": "304"
+          },
+          "even": {
+            "subject": "нап",
+            "teacher": "Булычева",
+            "classroom": "304"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "оэап",
+            "teacher": "Постнова",
+            "classroom": "408"
+          },
+          "even": {
+            "subject": "оэап",
+            "teacher": "Постнова",
+            "classroom": "408"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "огп",
+            "teacher": "Булычева",
+            "classroom": "301"
+          },
+          "even": {
+            "subject": "огп",
+            "teacher": "Булычева",
+            "classroom": "301"
+          }
+        }
       }
     },
     "А 23-2": {
@@ -6083,6 +7038,44 @@
           }
         },
         "4": {
+          "odd": {
+            "subject": "огп",
+            "teacher": "Булычева",
+            "classroom": "304"
+          },
+          "even": {
+            "subject": "огп",
+            "teacher": "Булычева",
+            "classroom": "304"
+          }
+        }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "оэап",
+            "teacher": "Постнова",
+            "classroom": "408"
+          },
+          "even": {
+            "subject": "оэап",
+            "teacher": "Постнова",
+            "classroom": "408"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "ин.яз.",
+            "teacher": "Карпова",
+            "classroom": "407"
+          },
+          "even": {
+            "subject": "ин.яз.",
+            "teacher": "Карпова",
+            "classroom": "407"
+          }
+        },
+        "5": {
           "odd": {
             "subject": "огп",
             "teacher": "Булычева",
@@ -6297,6 +7290,42 @@
             "teacher": "Фомичев",
             "classroom": "004"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "вдп",
+            "teacher": "Рудых",
+            "classroom": "303"
+          },
+          "even": {
+            "subject": "вдп",
+            "teacher": "Рудых",
+            "classroom": "303"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "ист.диз.",
+            "teacher": "Саблина",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "ист.диз.",
+            "teacher": "Саблина",
+            "classroom": ""
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "ист.диз.",
+            "teacher": "Саблина",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "ист.диз.",
+            "teacher": "Саблина",
+            "classroom": ""
+          }
         }
       }
     },
@@ -6498,6 +7527,56 @@
             "subject": "оруп",
             "teacher": "Яковлева",
             "classroom": "419"
+          }
+        }
+      },
+      "4": {
+        "3": {
+          "odd": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Нургалиева",
+            "classroom": "119"
+          },
+          "even": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Нургалиева",
+            "classroom": "119"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "ото",
+            "teacher": "Алпеев",
+            "classroom": "118"
+          },
+          "even": {
+            "subject": "ото",
+            "teacher": "Алпеев",
+            "classroom": "118"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "от",
+            "teacher": "Алпеев",
+            "classroom": "118"
+          },
+          "even": {
+            "subject": "от",
+            "teacher": "Алпеев",
+            "classroom": "118"
+          }
+        },
+        "6": {
+          "odd": {
+            "subject": "уат",
+            "teacher": "Алпеев",
+            "classroom": "118"
+          },
+          "even": {
+            "subject": "уат",
+            "teacher": "Алпеев",
+            "classroom": "118"
           }
         }
       }
@@ -6710,6 +7789,42 @@
             "teacher": "Куранова",
             "classroom": ""
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "вис",
+            "teacher": "Огнева",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "вис",
+            "teacher": "Огнева",
+            "classroom": ""
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "тис",
+            "teacher": "Качалкова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "тис",
+            "teacher": "Качалкова",
+            "classroom": ""
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "сис",
+            "teacher": "Качалкова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "мапо",
+            "teacher": "Качалкова",
+            "classroom": ""
+          }
         }
       }
     },
@@ -6913,6 +8028,42 @@
             "subject": "мат.",
             "teacher": "Сырова",
             "classroom": ""
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "физ.",
+            "teacher": "Нургалиева",
+            "classroom": "201"
+          },
+          "even": {
+            "subject": "лит.",
+            "teacher": "Захарова",
+            "classroom": "201"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Плюснин",
+            "classroom": "226"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Плюснин",
+            "classroom": "226"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "биолог.",
+            "teacher": "Лобанева",
+            "classroom": "204"
+          },
+          "even": {
+            "subject": "биолог.",
+            "teacher": "Лобанева",
+            "classroom": "204"
           }
         }
       }
@@ -7137,6 +8288,30 @@
             "teacher": "Лисьев",
             "classroom": "011"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "общ.",
+            "teacher": "Курликова",
+            "classroom": "422"
+          },
+          "even": {
+            "subject": "общ.",
+            "teacher": "Курликова",
+            "classroom": "422"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "биолог.",
+            "teacher": "Лобанева",
+            "classroom": "204"
+          },
+          "even": {
+            "subject": "биолог.",
+            "teacher": "Лобанева",
+            "classroom": "204"
+          }
         }
       }
     },
@@ -7340,6 +8515,30 @@
             "subject": "ист.",
             "teacher": "Курликова",
             "classroom": "422"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "биолог.",
+            "teacher": "Баранова",
+            "classroom": "011"
+          },
+          "even": {
+            "subject": "геогр.",
+            "teacher": "Лисьев",
+            "classroom": "011"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Кириченко",
+            "classroom": "223"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Кириченко",
+            "classroom": "223"
           }
         }
       }
@@ -7557,6 +8756,42 @@
             "teacher": "Мельчакова",
             "classroom": "212"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "инф.",
+            "teacher": "Горячев",
+            "classroom": "402"
+          },
+          "even": {
+            "subject": "инф.",
+            "teacher": "Горячев",
+            "classroom": "402"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "общ.",
+            "teacher": "Мельчакова",
+            "classroom": "212"
+          },
+          "even": {
+            "subject": "общ.",
+            "teacher": "Мельчакова",
+            "classroom": "212"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "",
+            "teacher": "",
+            "classroom": "407"
+          },
+          "even": {
+            "subject": "",
+            "teacher": "",
+            "classroom": "407"
+          }
         }
       }
     },
@@ -7772,6 +9007,30 @@
             "subject": "геогр.",
             "teacher": "Баранова",
             "classroom": "208"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "лит.",
+            "teacher": "Кизимова",
+            "classroom": "212"
+          },
+          "even": {
+            "subject": "ист.",
+            "teacher": "Мельчакова",
+            "classroom": "212"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "мат.",
+            "teacher": "Николаев",
+            "classroom": "222"
+          },
+          "even": {
+            "subject": "мат.",
+            "teacher": "Николаев",
+            "classroom": "222"
           }
         }
       }
@@ -7989,6 +9248,42 @@
             "teacher": "Кандиранда",
             "classroom": "315"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "пзс",
+            "teacher": "Назарова",
+            "classroom": "313"
+          },
+          "even": {
+            "subject": "пзс",
+            "teacher": "Назарова",
+            "classroom": "313"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "отпс",
+            "teacher": "Кандиранда",
+            "classroom": "315"
+          },
+          "even": {
+            "subject": "отпс",
+            "teacher": "Кандиранда",
+            "classroom": "315"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "итпд",
+            "teacher": "Сулеков",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "итпд",
+            "teacher": "Сулеков",
+            "classroom": ""
+          }
         }
       }
     },
@@ -8199,6 +9494,44 @@
             "classroom": ""
           }
         }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "",
+            "teacher": "",
+            "classroom": "115"
+          },
+          "even": {
+            "subject": "тпсник",
+            "teacher": "Черкасова",
+            "classroom": "115"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "осп",
+            "teacher": "Черкасова",
+            "classroom": "115"
+          },
+          "even": {
+            "subject": "осп",
+            "teacher": "Черкасова",
+            "classroom": "115"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "тпнсик",
+            "teacher": "Черкасова",
+            "classroom": "115"
+          },
+          "even": {
+            "subject": "тпнсик",
+            "teacher": "Черкасова",
+            "classroom": "115"
+          }
+        }
       }
     },
     "ИС 24-1": {
@@ -8393,6 +9726,44 @@
           "odd": {
             "subject": "оап",
             "teacher": "Леликов",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "оф",
+            "teacher": "Киселева",
+            "classroom": ""
+          }
+        }
+      },
+      "4": {
+        "3": {
+          "odd": {
+            "subject": "сис",
+            "teacher": "Куранова",
+            "classroom": "415"
+          },
+          "even": {
+            "subject": "сис",
+            "teacher": "Куранова",
+            "classroom": "415"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "уабд",
+            "teacher": "Логинова",
+            "classroom": "403"
+          },
+          "even": {
+            "subject": "уабд",
+            "teacher": "Логинова",
+            "classroom": "403"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "оф",
+            "teacher": "Киселева",
             "classroom": ""
           },
           "even": {
@@ -8616,6 +9987,30 @@
             "teacher": "Сулеков",
             "classroom": ""
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "исрпо",
+            "teacher": "Хлудова",
+            "classroom": "212"
+          },
+          "even": {
+            "subject": "исрпо",
+            "teacher": "Хлудова",
+            "classroom": "212"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "уабд",
+            "teacher": "Логинова",
+            "classroom": "403"
+          },
+          "even": {
+            "subject": "уабд",
+            "teacher": "Логинова",
+            "classroom": "403"
+          }
         }
       }
     },
@@ -8819,6 +10214,44 @@
             "classroom": "303"
           }
         }
+      },
+      "4": {
+        "3": {
+          "odd": {
+            "subject": "вдп",
+            "teacher": "Рудых",
+            "classroom": "303"
+          },
+          "even": {
+            "subject": "вдп",
+            "teacher": "Рудых",
+            "classroom": "303"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "ин.яз.",
+            "teacher": "Келлер",
+            "classroom": "412"
+          },
+          "even": {
+            "subject": "ин.яз.",
+            "teacher": "Келлер",
+            "classroom": "412"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "роп",
+            "teacher": "Кабурнеева",
+            "classroom": "307"
+          },
+          "even": {
+            "subject": "роп",
+            "teacher": "Кабурнеева",
+            "classroom": "307"
+          }
+        }
       }
     },
     "ПСК 23-1": {
@@ -9019,6 +10452,56 @@
             "subject": "менедж.",
             "teacher": "Яковлева",
             "classroom": "419"
+          }
+        }
+      },
+      "4": {
+        "2": {
+          "odd": {
+            "subject": "оатп",
+            "teacher": "Сигарева",
+            "classroom": "318"
+          },
+          "even": {
+            "subject": "оатп",
+            "teacher": "Сигарева",
+            "classroom": "318"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "тп",
+            "teacher": "Кучко",
+            "classroom": "001"
+          },
+          "even": {
+            "subject": "тп",
+            "teacher": "Кучко",
+            "classroom": "001"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "это",
+            "teacher": "Кучко",
+            "classroom": "001"
+          },
+          "even": {
+            "subject": "это",
+            "teacher": "Кучко",
+            "classroom": "001"
+          }
+        },
+        "5": {
+          "odd": {
+            "subject": "рнт",
+            "teacher": "Кучко",
+            "classroom": "001"
+          },
+          "even": {
+            "subject": "рнт",
+            "teacher": "Кучко",
+            "classroom": "001"
           }
         }
       }
@@ -9236,6 +10719,30 @@
             "teacher": "Куранова",
             "classroom": "415"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "кс",
+            "teacher": "Куранова",
+            "classroom": "415"
+          },
+          "even": {
+            "subject": "кс",
+            "teacher": "Куранова",
+            "classroom": "415"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "исрпо",
+            "teacher": "Хлудова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "исрпо",
+            "teacher": "Хлудова",
+            "classroom": ""
+          }
         }
       }
     },
@@ -9439,6 +10946,42 @@
             "subject": "тзи",
             "teacher": "Горячев",
             "classroom": "402"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "физ-ра",
+            "teacher": "Фомичев",
+            "classroom": "004"
+          },
+          "even": {
+            "subject": "физ-ра",
+            "teacher": "Фомичев",
+            "classroom": "004"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Гаан",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Гаан",
+            "classroom": ""
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "экс",
+            "teacher": "Куранова",
+            "classroom": "415"
+          },
+          "even": {
+            "subject": "экс",
+            "teacher": "Куранова",
+            "classroom": "415"
           }
         }
       }
@@ -9656,6 +11199,30 @@
             "teacher": "Старцева",
             "classroom": "417"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "эр",
+            "teacher": "Евсеев",
+            "classroom": "411"
+          },
+          "even": {
+            "subject": "эр",
+            "teacher": "Евсеев",
+            "classroom": "411"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "нэо",
+            "teacher": "Евсеев",
+            "classroom": "411"
+          },
+          "even": {
+            "subject": "нэо",
+            "teacher": "Евсеев",
+            "classroom": "411"
+          }
         }
       }
     },
@@ -9872,6 +11439,37 @@
             "teacher": "Зуевская",
             "classroom": "320"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "пзс",
+            "teacher": "Матькова",
+            "classroom": "311"
+          },
+          "even": {
+            "subject": "пзс",
+            "teacher": "Матькова",
+            "classroom": "311"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "пзс",
+            "teacher": "Матькова",
+            "classroom": "311"
+          },
+          "even": {
+            "subject": "пзс",
+            "teacher": "Матькова",
+            "classroom": "311"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "уктп",
+            "teacher": "Зуевская",
+            "classroom": ""
+          }
         }
       }
     },
@@ -10075,6 +11673,42 @@
             "subject": "врпф",
             "teacher": "Саблина",
             "classroom": "306"
+          }
+        },
+        "2": {
+          "odd": {
+            "subject": "мв",
+            "teacher": "Кабурнеева",
+            "classroom": "307"
+          },
+          "even": {
+            "subject": "мв",
+            "teacher": "Кабурнеева",
+            "classroom": "307"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "оф",
+            "teacher": "Киселева",
+            "classroom": "212"
+          },
+          "even": {
+            "subject": "оф",
+            "teacher": "Киселева",
+            "classroom": "212"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "мв",
+            "teacher": "Кабурнеева",
+            "classroom": "307"
+          },
+          "even": {
+            "subject": "мв",
+            "teacher": "Кабурнеева",
+            "classroom": "307"
           }
         }
       }
@@ -10280,6 +11914,42 @@
             "teacher": "Кабурнеева",
             "classroom": "307"
           }
+        },
+        "2": {
+          "odd": {
+            "subject": "ин.яз.",
+            "teacher": "Карпова",
+            "classroom": "407"
+          },
+          "even": {
+            "subject": "ин.яз.",
+            "teacher": "Карпова",
+            "classroom": "407"
+          }
+        },
+        "3": {
+          "odd": {
+            "subject": "врпд",
+            "teacher": "Кабурнеева",
+            "classroom": "307"
+          },
+          "even": {
+            "subject": "врпд",
+            "teacher": "Кабурнеева",
+            "classroom": "307"
+          }
+        },
+        "4": {
+          "odd": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Терскова",
+            "classroom": ""
+          },
+          "even": {
+            "subject": "кл.час \"Разг. о важн.\"",
+            "teacher": "Терскова",
+            "classroom": ""
+          }
         }
       }
     }
@@ -10333,6 +12003,38 @@
         "weekday": 3,
         "pair": 4,
         "subject": "уат",
+        "classroom": "118",
+        "parity": "even"
+      },
+      {
+        "group": "ТЭСМО 24-1П",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "ототр",
+        "classroom": "118",
+        "parity": "odd"
+      },
+      {
+        "group": "ТЭСМО 24-1П",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "ототр",
+        "classroom": "118",
+        "parity": "even"
+      },
+      {
+        "group": "ТЭСМО 24-1П",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "от",
+        "classroom": "118",
+        "parity": "odd"
+      },
+      {
+        "group": "ТЭСМО 24-1П",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "от",
         "classroom": "118",
         "parity": "even"
       },
@@ -10487,6 +12189,54 @@
         "subject": "ото",
         "classroom": "118",
         "parity": "even"
+      },
+      {
+        "group": "ТЭСМО 23-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "ото",
+        "classroom": "118",
+        "parity": "odd"
+      },
+      {
+        "group": "ТЭСМО 23-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "ото",
+        "classroom": "118",
+        "parity": "even"
+      },
+      {
+        "group": "ТЭСМО 23-1",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "от",
+        "classroom": "118",
+        "parity": "odd"
+      },
+      {
+        "group": "ТЭСМО 23-1",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "от",
+        "classroom": "118",
+        "parity": "even"
+      },
+      {
+        "group": "ТЭСМО 23-1",
+        "weekday": 4,
+        "pair": 6,
+        "subject": "уат",
+        "classroom": "118",
+        "parity": "odd"
+      },
+      {
+        "group": "ТЭСМО 23-1",
+        "weekday": 4,
+        "pair": 6,
+        "subject": "уат",
+        "classroom": "118",
+        "parity": "even"
       }
     ],
     "Баранова": [
@@ -10494,6 +12244,22 @@
         "group": "А 25-1",
         "weekday": 2,
         "pair": 1,
+        "subject": "геогр.",
+        "classroom": "208",
+        "parity": "even"
+      },
+      {
+        "group": "А 25-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "геогр.",
+        "classroom": "208",
+        "parity": "odd"
+      },
+      {
+        "group": "А 25-1",
+        "weekday": 4,
+        "pair": 4,
         "subject": "геогр.",
         "classroom": "208",
         "parity": "even"
@@ -10549,6 +12315,14 @@
       {
         "group": "СЗС 25-3",
         "weekday": 2,
+        "pair": 3,
+        "subject": "биолог.",
+        "classroom": "208",
+        "parity": "even"
+      },
+      {
+        "group": "СЗС 25-3",
+        "weekday": 4,
         "pair": 3,
         "subject": "биолог.",
         "classroom": "208",
@@ -10643,6 +12417,14 @@
         "parity": "even"
       },
       {
+        "group": "М 25-1П",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "биолог.",
+        "classroom": "208",
+        "parity": "even"
+      },
+      {
         "group": "СП 25-1П",
         "weekday": 1,
         "pair": 2,
@@ -10683,6 +12465,30 @@
         "parity": "even"
       },
       {
+        "group": "Д 25-3",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "геогр.",
+        "classroom": "423",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 24-4",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "кл.час \"Разг. о важн.\"",
+        "classroom": "208",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 24-4",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "кл.час \"Разг. о важн.\"",
+        "classroom": "208",
+        "parity": "even"
+      },
+      {
         "group": "ТЭСМО 25-1П",
         "weekday": 1,
         "pair": 3,
@@ -10697,6 +12503,14 @@
         "subject": "биолог.",
         "classroom": "208",
         "parity": "even"
+      },
+      {
+        "group": "ТЭСМО 25-1П",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "биолог.",
+        "classroom": "011",
+        "parity": "odd"
       },
       {
         "group": "Д 25-2",
@@ -10773,6 +12587,30 @@
         "parity": "even"
       },
       {
+        "group": "ПСК 25-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "мат.",
+        "classroom": "213",
+        "parity": "odd"
+      },
+      {
+        "group": "ПСК 25-1",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "мат.",
+        "classroom": "423",
+        "parity": "odd"
+      },
+      {
+        "group": "ПСК 25-1",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "мат.",
+        "classroom": "423",
+        "parity": "even"
+      },
+      {
         "group": "Д 25-1",
         "weekday": 0,
         "pair": 1,
@@ -10813,6 +12651,22 @@
         "parity": "odd"
       },
       {
+        "group": "Д 25-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "мат.",
+        "classroom": "423",
+        "parity": "odd"
+      },
+      {
+        "group": "Д 25-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "мат.",
+        "classroom": "423",
+        "parity": "even"
+      },
+      {
         "group": "Д 25-3",
         "weekday": 0,
         "pair": 2,
@@ -10856,6 +12710,14 @@
         "group": "Д 25-3",
         "weekday": 2,
         "pair": 2,
+        "subject": "мат.",
+        "classroom": "423",
+        "parity": "even"
+      },
+      {
+        "group": "Д 25-3",
+        "weekday": 4,
+        "pair": 3,
         "subject": "мат.",
         "classroom": "423",
         "parity": "even"
@@ -10912,6 +12774,22 @@
         "group": "ЭК 25-1",
         "weekday": 3,
         "pair": 3,
+        "subject": "мат.",
+        "classroom": "423",
+        "parity": "even"
+      },
+      {
+        "group": "ЭК 25-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "мат.",
+        "classroom": "423",
+        "parity": "odd"
+      },
+      {
+        "group": "ЭК 25-1",
+        "weekday": 4,
+        "pair": 2,
         "subject": "мат.",
         "classroom": "423",
         "parity": "even"
@@ -11095,6 +12973,22 @@
         "parity": "odd"
       },
       {
+        "group": "Э 24-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "оэ",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "Э 24-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "оэ",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
         "group": "Э 24-2",
         "weekday": 1,
         "pair": 4,
@@ -11138,6 +13032,38 @@
         "group": "Э 24-2",
         "weekday": 3,
         "pair": 5,
+        "subject": "оа",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
+        "group": "Э 24-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "оэ",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "Э 24-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "оэ",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
+        "group": "Э 24-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "оа",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "Э 24-2",
+        "weekday": 4,
+        "pair": 3,
         "subject": "оа",
         "classroom": "",
         "parity": "even"
@@ -11307,6 +13233,22 @@
         "parity": "even"
       },
       {
+        "group": "А 24-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "нап",
+        "classroom": "304",
+        "parity": "odd"
+      },
+      {
+        "group": "А 24-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "нап",
+        "classroom": "304",
+        "parity": "even"
+      },
+      {
         "group": "А 23-1",
         "weekday": 0,
         "pair": 2,
@@ -11411,6 +13353,38 @@
         "parity": "even"
       },
       {
+        "group": "А 23-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "нап",
+        "classroom": "304",
+        "parity": "odd"
+      },
+      {
+        "group": "А 23-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "нап",
+        "classroom": "304",
+        "parity": "even"
+      },
+      {
+        "group": "А 23-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "огп",
+        "classroom": "301",
+        "parity": "odd"
+      },
+      {
+        "group": "А 23-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "огп",
+        "classroom": "301",
+        "parity": "even"
+      },
+      {
         "group": "А 23-2",
         "weekday": 0,
         "pair": 3,
@@ -11454,6 +13428,22 @@
         "group": "А 23-2",
         "weekday": 3,
         "pair": 4,
+        "subject": "огп",
+        "classroom": "304",
+        "parity": "even"
+      },
+      {
+        "group": "А 23-2",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "огп",
+        "classroom": "304",
+        "parity": "odd"
+      },
+      {
+        "group": "А 23-2",
+        "weekday": 4,
+        "pair": 5,
         "subject": "огп",
         "classroom": "304",
         "parity": "even"
@@ -11695,6 +13685,22 @@
         "parity": "even"
       },
       {
+        "group": "А 25-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "мат.",
+        "classroom": "201",
+        "parity": "odd"
+      },
+      {
+        "group": "А 25-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "мат.",
+        "classroom": "201",
+        "parity": "even"
+      },
+      {
         "group": "СП 25-1П",
         "weekday": 0,
         "pair": 4,
@@ -11738,6 +13744,22 @@
         "group": "СП 25-1П",
         "weekday": 3,
         "pair": 2,
+        "subject": "мат.",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
+        "group": "СП 25-1П",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "мат.",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "СП 25-1П",
+        "weekday": 4,
+        "pair": 3,
         "subject": "мат.",
         "classroom": "",
         "parity": "even"
@@ -12017,6 +14039,24 @@
         "parity": "even"
       }
     ],
+    "Гаан": [
+      {
+        "group": "ИБ 23-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "кл.час \"Разг. о важн.\"",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "ИБ 23-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "кл.час \"Разг. о важн.\"",
+        "classroom": "",
+        "parity": "even"
+      }
+    ],
     "Голубева": [
       {
         "group": "СЗС 25-3",
@@ -12133,6 +14173,22 @@
         "parity": "odd"
       },
       {
+        "group": "ИС 25-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "кл.час \"Разг. о важн.\"",
+        "classroom": "402",
+        "parity": "odd"
+      },
+      {
+        "group": "ИС 25-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "кл.час \"Разг. о важн.\"",
+        "classroom": "402",
+        "parity": "even"
+      },
+      {
         "group": "М 25-2П",
         "weekday": 1,
         "pair": 2,
@@ -12160,6 +14216,22 @@
         "group": "СП 25-2П",
         "weekday": 1,
         "pair": 3,
+        "subject": "инф.",
+        "classroom": "402",
+        "parity": "even"
+      },
+      {
+        "group": "ТЭСМО 25-2П",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "инф.",
+        "classroom": "402",
+        "parity": "odd"
+      },
+      {
+        "group": "ТЭСМО 25-2П",
+        "weekday": 4,
+        "pair": 2,
         "subject": "инф.",
         "classroom": "402",
         "parity": "even"
@@ -12311,6 +14383,14 @@
         "subject": "инф.",
         "classroom": "212",
         "parity": "odd"
+      },
+      {
+        "group": "СЗС 25-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "мат.",
+        "classroom": "218",
+        "parity": "even"
       },
       {
         "group": "Э 25-1",
@@ -12595,6 +14675,38 @@
         "parity": "even"
       },
       {
+        "group": "Э 23-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "эр",
+        "classroom": "411",
+        "parity": "odd"
+      },
+      {
+        "group": "Э 23-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "эр",
+        "classroom": "411",
+        "parity": "even"
+      },
+      {
+        "group": "Э 23-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "нэо",
+        "classroom": "411",
+        "parity": "odd"
+      },
+      {
+        "group": "Э 23-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "нэо",
+        "classroom": "411",
+        "parity": "even"
+      },
+      {
         "group": "СЗС 24-2",
         "weekday": 2,
         "pair": 3,
@@ -12727,6 +14839,14 @@
         "parity": "even"
       },
       {
+        "group": "А 25-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "лит.",
+        "classroom": "201",
+        "parity": "even"
+      },
+      {
         "group": "СЗС 25-1",
         "weekday": 0,
         "pair": 1,
@@ -12739,6 +14859,30 @@
         "weekday": 0,
         "pair": 1,
         "subject": "лит.",
+        "classroom": "201",
+        "parity": "even"
+      },
+      {
+        "group": "СЗС 25-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "лит.",
+        "classroom": "218",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 25-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "русск.",
+        "classroom": "201",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 25-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "русск.",
         "classroom": "201",
         "parity": "even"
       },
@@ -12773,6 +14917,14 @@
         "subject": "русск.",
         "classroom": "201",
         "parity": "even"
+      },
+      {
+        "group": "Э 25-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "лит.",
+        "classroom": "422",
+        "parity": "odd"
       },
       {
         "group": "М 25-1П",
@@ -12899,6 +15051,14 @@
         "weekday": 3,
         "pair": 1,
         "subject": "русск.",
+        "classroom": "201",
+        "parity": "even"
+      },
+      {
+        "group": "СЗС 25-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "лит.",
         "classroom": "201",
         "parity": "even"
       },
@@ -13051,6 +15211,30 @@
     ],
     "Зуевская": [
       {
+        "group": "СЗС 24-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "уктп",
+        "classroom": "320",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 24-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "уктп",
+        "classroom": "320",
+        "parity": "even"
+      },
+      {
+        "group": "СЗС 24-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "уктп",
+        "classroom": "320",
+        "parity": "even"
+      },
+      {
         "group": "СЗС 24-2",
         "weekday": 4,
         "pair": 1,
@@ -13065,6 +15249,14 @@
         "subject": "уктп",
         "classroom": "320",
         "parity": "even"
+      },
+      {
+        "group": "СЗС 24-2",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "уктп",
+        "classroom": "",
+        "parity": "odd"
       }
     ],
     "Иванов": [
@@ -13112,6 +15304,22 @@
         "group": "СП 24-1П",
         "weekday": 0,
         "pair": 4,
+        "subject": "бж",
+        "classroom": "012",
+        "parity": "even"
+      },
+      {
+        "group": "СП 24-1П",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "бж",
+        "classroom": "012",
+        "parity": "odd"
+      },
+      {
+        "group": "СП 24-1П",
+        "weekday": 4,
+        "pair": 3,
         "subject": "бж",
         "classroom": "012",
         "parity": "even"
@@ -13174,6 +15382,22 @@
       }
     ],
     "Иванова": [
+      {
+        "group": "М 25-2П",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "кл.час \"Разг. о важн.\"",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "М 25-2П",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "кл.час \"Разг. о важн.\"",
+        "classroom": "",
+        "parity": "even"
+      },
       {
         "group": "А 24-1",
         "weekday": 2,
@@ -13311,6 +15535,22 @@
         "parity": "odd"
       },
       {
+        "group": "М 24-1П",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "бж",
+        "classroom": "008",
+        "parity": "odd"
+      },
+      {
+        "group": "М 24-1П",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "бж",
+        "classroom": "008",
+        "parity": "even"
+      },
+      {
         "group": "Э 24-1",
         "weekday": 0,
         "pair": 2,
@@ -13330,6 +15570,22 @@
         "group": "Э 24-1",
         "weekday": 3,
         "pair": 5,
+        "subject": "бж",
+        "classroom": "008",
+        "parity": "even"
+      },
+      {
+        "group": "Э 24-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "бж",
+        "classroom": "008",
+        "parity": "odd"
+      },
+      {
+        "group": "Э 24-1",
+        "weekday": 4,
+        "pair": 3,
         "subject": "бж",
         "classroom": "008",
         "parity": "even"
@@ -13593,6 +15849,22 @@
         "parity": "even"
       },
       {
+        "group": "Д 23-1",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "роп",
+        "classroom": "307",
+        "parity": "odd"
+      },
+      {
+        "group": "Д 23-1",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "роп",
+        "classroom": "307",
+        "parity": "even"
+      },
+      {
         "group": "Д 24-1",
         "weekday": 0,
         "pair": 3,
@@ -13661,6 +15933,38 @@
         "weekday": 3,
         "pair": 5,
         "subject": "врпд",
+        "classroom": "307",
+        "parity": "even"
+      },
+      {
+        "group": "Д 24-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "мв",
+        "classroom": "307",
+        "parity": "odd"
+      },
+      {
+        "group": "Д 24-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "мв",
+        "classroom": "307",
+        "parity": "even"
+      },
+      {
+        "group": "Д 24-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "мв",
+        "classroom": "307",
+        "parity": "odd"
+      },
+      {
+        "group": "Д 24-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "мв",
         "classroom": "307",
         "parity": "even"
       },
@@ -13749,6 +16053,22 @@
         "weekday": 4,
         "pair": 1,
         "subject": "мв",
+        "classroom": "307",
+        "parity": "even"
+      },
+      {
+        "group": "Д 24-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "врпд",
+        "classroom": "307",
+        "parity": "odd"
+      },
+      {
+        "group": "Д 24-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "врпд",
         "classroom": "307",
         "parity": "even"
       }
@@ -13811,6 +16131,22 @@
         "subject": "отпс",
         "classroom": "313",
         "parity": "odd"
+      },
+      {
+        "group": "СЗС 24-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "отпс",
+        "classroom": "315",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 24-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "отпс",
+        "classroom": "315",
+        "parity": "even"
       },
       {
         "group": "СЗС 24-4",
@@ -13941,6 +16277,22 @@
         "parity": "even"
       },
       {
+        "group": "СЗС 24-3",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "отпс",
+        "classroom": "315",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 24-3",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "отпс",
+        "classroom": "315",
+        "parity": "even"
+      },
+      {
         "group": "СЗС 24-2",
         "weekday": 0,
         "pair": 3,
@@ -14007,6 +16359,14 @@
         "parity": "even"
       },
       {
+        "group": "Д 25-1",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "ин.яз",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
         "group": "ЭК 25-1",
         "weekday": 0,
         "pair": 2,
@@ -14063,6 +16423,22 @@
         "parity": "even"
       },
       {
+        "group": "М 24-1П",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "ин.яз.",
+        "classroom": "407",
+        "parity": "odd"
+      },
+      {
+        "group": "М 24-1П",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "ин.яз.",
+        "classroom": "407",
+        "parity": "even"
+      },
+      {
         "group": "СП 24-1П",
         "weekday": 2,
         "pair": 2,
@@ -14127,6 +16503,22 @@
         "parity": "even"
       },
       {
+        "group": "А 23-2",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "ин.яз.",
+        "classroom": "407",
+        "parity": "odd"
+      },
+      {
+        "group": "А 23-2",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "ин.яз.",
+        "classroom": "407",
+        "parity": "even"
+      },
+      {
         "group": "Д 23-2",
         "weekday": 3,
         "pair": 3,
@@ -14186,12 +16578,60 @@
         "group": "Э 23-1",
         "weekday": 2,
         "pair": 5,
+        "subject": "ин.яз.",
+        "classroom": "407",
+        "parity": "even"
+      },
+      {
+        "group": "Д 24-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "ин.яз.",
+        "classroom": "407",
+        "parity": "odd"
+      },
+      {
+        "group": "Д 24-2",
+        "weekday": 4,
+        "pair": 2,
         "subject": "ин.яз.",
         "classroom": "407",
         "parity": "even"
       }
     ],
     "Качалкова": [
+      {
+        "group": "ИС 23-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "тис",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "ИС 23-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "тис",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
+        "group": "ИС 23-2",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "сис",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "ИС 23-2",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "мапо",
+        "classroom": "",
+        "parity": "even"
+      },
       {
         "group": "ИС 25-2",
         "weekday": 2,
@@ -14299,6 +16739,22 @@
         "parity": "even"
       },
       {
+        "group": "Д 23-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "ин.яз.",
+        "classroom": "412",
+        "parity": "odd"
+      },
+      {
+        "group": "Д 23-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "ин.яз.",
+        "classroom": "412",
+        "parity": "even"
+      },
+      {
         "group": "ПСК 23-1",
         "weekday": 3,
         "pair": 1,
@@ -14381,6 +16837,30 @@
         "parity": "even"
       },
       {
+        "group": "А 25-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "лит.",
+        "classroom": "202",
+        "parity": "even"
+      },
+      {
+        "group": "А 25-1",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "лит.",
+        "classroom": "202",
+        "parity": "odd"
+      },
+      {
+        "group": "А 25-1",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "лит.",
+        "classroom": "202",
+        "parity": "even"
+      },
+      {
         "group": "СЗС 25-3",
         "weekday": 0,
         "pair": 5,
@@ -14411,6 +16891,14 @@
         "subject": "русск.",
         "classroom": "202",
         "parity": "even"
+      },
+      {
+        "group": "СЗС 25-3",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "лит.",
+        "classroom": "208",
+        "parity": "odd"
       },
       {
         "group": "СЗС 25-4",
@@ -14433,6 +16921,22 @@
         "weekday": 3,
         "pair": 3,
         "subject": "русск.",
+        "classroom": "202",
+        "parity": "even"
+      },
+      {
+        "group": "СЗС 25-4",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "лит.",
+        "classroom": "202",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 25-4",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "лит.",
         "classroom": "202",
         "parity": "even"
       },
@@ -14597,6 +17101,14 @@
         "parity": "even"
       },
       {
+        "group": "Д 25-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "лит.",
+        "classroom": "212",
+        "parity": "odd"
+      },
+      {
         "group": "ИС 24-2",
         "weekday": 0,
         "pair": 4,
@@ -14671,6 +17183,22 @@
         "parity": "even"
       },
       {
+        "group": "Э 25-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "мат.",
+        "classroom": "223",
+        "parity": "odd"
+      },
+      {
+        "group": "Э 25-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "мат.",
+        "classroom": "223",
+        "parity": "even"
+      },
+      {
         "group": "Э 25-2",
         "weekday": 0,
         "pair": 4,
@@ -14775,6 +17303,22 @@
         "parity": "even"
       },
       {
+        "group": "СП 25-2П",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "мат.",
+        "classroom": "223",
+        "parity": "odd"
+      },
+      {
+        "group": "СП 25-2П",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "мат.",
+        "classroom": "223",
+        "parity": "even"
+      },
+      {
         "group": "ТЭСМО 25-1П",
         "weekday": 0,
         "pair": 3,
@@ -14802,6 +17346,22 @@
         "group": "ТЭСМО 25-1П",
         "weekday": 3,
         "pair": 2,
+        "subject": "мат.",
+        "classroom": "223",
+        "parity": "even"
+      },
+      {
+        "group": "ТЭСМО 25-1П",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "мат.",
+        "classroom": "223",
+        "parity": "odd"
+      },
+      {
+        "group": "ТЭСМО 25-1П",
+        "weekday": 4,
+        "pair": 3,
         "subject": "мат.",
         "classroom": "223",
         "parity": "even"
@@ -14865,6 +17425,22 @@
         "parity": "even"
       },
       {
+        "group": "ИС 24-1",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "оф",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "ИС 24-1",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "оф",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
         "group": "ИС 24-2",
         "weekday": 0,
         "pair": 3,
@@ -14917,6 +17493,22 @@
         "weekday": 3,
         "pair": 6,
         "subject": "псих.",
+        "classroom": "212",
+        "parity": "even"
+      },
+      {
+        "group": "Д 24-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "оф",
+        "classroom": "212",
+        "parity": "odd"
+      },
+      {
+        "group": "Д 24-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "оф",
         "classroom": "212",
         "parity": "even"
       },
@@ -15148,6 +17740,22 @@
       }
     ],
     "Красильникова": [
+      {
+        "group": "СЗС 25-3",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "инф.",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 25-3",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "инф.",
+        "classroom": "",
+        "parity": "even"
+      },
       {
         "group": "ПСК 25-1",
         "weekday": 1,
@@ -15931,6 +18539,22 @@
         "parity": "even"
       },
       {
+        "group": "ИС 24-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "сис",
+        "classroom": "415",
+        "parity": "odd"
+      },
+      {
+        "group": "ИС 24-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "сис",
+        "classroom": "415",
+        "parity": "even"
+      },
+      {
         "group": "ИС 24-2",
         "weekday": 3,
         "pair": 1,
@@ -15963,6 +18587,22 @@
         "parity": "even"
       },
       {
+        "group": "ИС 23-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "кс",
+        "classroom": "415",
+        "parity": "odd"
+      },
+      {
+        "group": "ИС 23-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "кс",
+        "classroom": "415",
+        "parity": "even"
+      },
+      {
         "group": "ИБ 23-1",
         "weekday": 1,
         "pair": 1,
@@ -16014,6 +18654,22 @@
         "group": "ИБ 23-1",
         "weekday": 3,
         "pair": 2,
+        "subject": "экс",
+        "classroom": "415",
+        "parity": "even"
+      },
+      {
+        "group": "ИБ 23-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "экс",
+        "classroom": "415",
+        "parity": "odd"
+      },
+      {
+        "group": "ИБ 23-1",
+        "weekday": 4,
+        "pair": 4,
         "subject": "экс",
         "classroom": "415",
         "parity": "even"
@@ -16051,6 +18707,30 @@
         "subject": "ист.",
         "classroom": "",
         "parity": "even"
+      },
+      {
+        "group": "Д 25-3",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "общ.",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "Д 25-3",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "общ.",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
+        "group": "Д 25-3",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "ист.",
+        "classroom": "",
+        "parity": "odd"
       },
       {
         "group": "Д 23-2",
@@ -16127,6 +18807,14 @@
         "parity": "even"
       },
       {
+        "group": "А 25-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "общ.",
+        "classroom": "202",
+        "parity": "odd"
+      },
+      {
         "group": "Э 25-1",
         "weekday": 1,
         "pair": 3,
@@ -16137,6 +18825,14 @@
       {
         "group": "Э 25-1",
         "weekday": 1,
+        "pair": 3,
+        "subject": "ист.",
+        "classroom": "422",
+        "parity": "even"
+      },
+      {
+        "group": "Э 25-1",
+        "weekday": 4,
         "pair": 3,
         "subject": "ист.",
         "classroom": "422",
@@ -16183,6 +18879,22 @@
         "parity": "odd"
       },
       {
+        "group": "СП 25-1П",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "общ.",
+        "classroom": "422",
+        "parity": "odd"
+      },
+      {
+        "group": "СП 25-1П",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "общ.",
+        "classroom": "422",
+        "parity": "even"
+      },
+      {
         "group": "СП 25-2П",
         "weekday": 0,
         "pair": 3,
@@ -16227,6 +18939,22 @@
         "weekday": 3,
         "pair": 2,
         "subject": "ист.",
+        "classroom": "422",
+        "parity": "even"
+      },
+      {
+        "group": "ИС 25-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "общ.",
+        "classroom": "422",
+        "parity": "odd"
+      },
+      {
+        "group": "ИС 25-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "общ.",
         "classroom": "422",
         "parity": "even"
       },
@@ -16563,6 +19291,54 @@
         "parity": "even"
       },
       {
+        "group": "ПСК 23-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "тп",
+        "classroom": "001",
+        "parity": "odd"
+      },
+      {
+        "group": "ПСК 23-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "тп",
+        "classroom": "001",
+        "parity": "even"
+      },
+      {
+        "group": "ПСК 23-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "это",
+        "classroom": "001",
+        "parity": "odd"
+      },
+      {
+        "group": "ПСК 23-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "это",
+        "classroom": "001",
+        "parity": "even"
+      },
+      {
+        "group": "ПСК 23-1",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "рнт",
+        "classroom": "001",
+        "parity": "odd"
+      },
+      {
+        "group": "ПСК 23-1",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "рнт",
+        "classroom": "001",
+        "parity": "even"
+      },
+      {
         "group": "СЗС 24-2",
         "weekday": 2,
         "pair": 4,
@@ -16851,6 +19627,22 @@
     ],
     "Лисьев": [
       {
+        "group": "СЗС 25-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "геогр.",
+        "classroom": "011",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 25-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "геогр.",
+        "classroom": "011",
+        "parity": "even"
+      },
+      {
         "group": "СЗС 25-4",
         "weekday": 0,
         "pair": 4,
@@ -16945,6 +19737,14 @@
         "subject": "геогр.",
         "classroom": "011",
         "parity": "even"
+      },
+      {
+        "group": "Д 25-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "геогр.",
+        "classroom": "421",
+        "parity": "odd"
       },
       {
         "group": "ЭК 25-1",
@@ -17053,6 +19853,14 @@
       {
         "group": "ТЭСМО 25-1П",
         "weekday": 2,
+        "pair": 2,
+        "subject": "геогр.",
+        "classroom": "011",
+        "parity": "even"
+      },
+      {
+        "group": "ТЭСМО 25-1П",
+        "weekday": 4,
         "pair": 2,
         "subject": "геогр.",
         "classroom": "011",
@@ -17237,6 +20045,14 @@
         "parity": "even"
       },
       {
+        "group": "М 25-2П",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "биолог.",
+        "classroom": "204",
+        "parity": "even"
+      },
+      {
         "group": "Д 25-3",
         "weekday": 1,
         "pair": 3,
@@ -17269,9 +20085,41 @@
         "parity": "odd"
       },
       {
+        "group": "СЗС 25-2",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "биолог.",
+        "classroom": "204",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 25-2",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "биолог.",
+        "classroom": "204",
+        "parity": "even"
+      },
+      {
         "group": "ИС 25-2",
         "weekday": 1,
         "pair": 2,
+        "subject": "биолог.",
+        "classroom": "204",
+        "parity": "even"
+      },
+      {
+        "group": "ИС 25-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "биолог.",
+        "classroom": "204",
+        "parity": "odd"
+      },
+      {
+        "group": "ИС 25-2",
+        "weekday": 4,
+        "pair": 3,
         "subject": "биолог.",
         "classroom": "204",
         "parity": "even"
@@ -17423,6 +20271,22 @@
         "parity": "even"
       },
       {
+        "group": "ИС 24-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "уабд",
+        "classroom": "403",
+        "parity": "odd"
+      },
+      {
+        "group": "ИС 24-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "уабд",
+        "classroom": "403",
+        "parity": "even"
+      },
+      {
         "group": "ИС 24-2",
         "weekday": 0,
         "pair": 2,
@@ -17461,6 +20325,22 @@
         "subject": "уабд",
         "classroom": "",
         "parity": "odd"
+      },
+      {
+        "group": "ИС 24-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "уабд",
+        "classroom": "403",
+        "parity": "odd"
+      },
+      {
+        "group": "ИС 24-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "уабд",
+        "classroom": "403",
+        "parity": "even"
       },
       {
         "group": "ИС 23-1",
@@ -17589,6 +20469,22 @@
         "parity": "odd"
       },
       {
+        "group": "СЗС 24-4",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "пзс",
+        "classroom": "311",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 24-4",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "пзс",
+        "classroom": "311",
+        "parity": "even"
+      },
+      {
         "group": "А 24-1",
         "weekday": 1,
         "pair": 3,
@@ -17739,6 +20635,38 @@
         "subject": "кл.час \"Разг. о важн.\"",
         "classroom": "311",
         "parity": "even"
+      },
+      {
+        "group": "СЗС 24-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "пзс",
+        "classroom": "311",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 24-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "пзс",
+        "classroom": "311",
+        "parity": "even"
+      },
+      {
+        "group": "СЗС 24-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "пзс",
+        "classroom": "311",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 24-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "пзс",
+        "classroom": "311",
+        "parity": "even"
       }
     ],
     "Мельчакова": [
@@ -17767,6 +20695,22 @@
         "parity": "even"
       },
       {
+        "group": "СЗС 25-1",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "ист.",
+        "classroom": "212",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 25-1",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "ист.",
+        "classroom": "212",
+        "parity": "even"
+      },
+      {
         "group": "СЗС 24-4",
         "weekday": 1,
         "pair": 4,
@@ -17789,6 +20733,30 @@
         "subject": "ист.",
         "classroom": "",
         "parity": "odd"
+      },
+      {
+        "group": "ИС 24-3",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "оф",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "ИС 24-3",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "оф",
+        "classroom": "212",
+        "parity": "odd"
+      },
+      {
+        "group": "ИС 24-3",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "оф",
+        "classroom": "212",
+        "parity": "even"
       },
       {
         "group": "СЗС 25-2",
@@ -17823,6 +20791,22 @@
         "parity": "even"
       },
       {
+        "group": "ТЭСМО 25-2П",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "общ.",
+        "classroom": "212",
+        "parity": "odd"
+      },
+      {
+        "group": "ТЭСМО 25-2П",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "общ.",
+        "classroom": "212",
+        "parity": "even"
+      },
+      {
         "group": "Д 25-2",
         "weekday": 1,
         "pair": 2,
@@ -17867,6 +20851,14 @@
         "weekday": 3,
         "pair": 3,
         "subject": "общ.",
+        "classroom": "212",
+        "parity": "even"
+      },
+      {
+        "group": "Д 25-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "ист.",
         "classroom": "212",
         "parity": "even"
       },
@@ -17916,6 +20908,38 @@
         "group": "СЗС 25-4",
         "weekday": 0,
         "pair": 2,
+        "subject": "физ-ра",
+        "classroom": "002",
+        "parity": "even"
+      },
+      {
+        "group": "М 25-2П",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "физ-ра",
+        "classroom": "002",
+        "parity": "odd"
+      },
+      {
+        "group": "М 25-2П",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "физ-ра",
+        "classroom": "002",
+        "parity": "even"
+      },
+      {
+        "group": "СЗС 24-4",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "физ-ра",
+        "classroom": "002",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 24-4",
+        "weekday": 4,
+        "pair": 3,
         "subject": "физ-ра",
         "classroom": "002",
         "parity": "even"
@@ -18045,6 +21069,14 @@
       {
         "group": "ИС 24-3",
         "weekday": 2,
+        "pair": 5,
+        "subject": "итпс",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
+        "group": "ИС 24-3",
+        "weekday": 4,
         "pair": 5,
         "subject": "итпс",
         "classroom": "",
@@ -18413,6 +21445,22 @@
         "subject": "пзс",
         "classroom": "315",
         "parity": "odd"
+      },
+      {
+        "group": "СЗС 24-3",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "пзс",
+        "classroom": "313",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 24-3",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "пзс",
+        "classroom": "313",
+        "parity": "even"
       }
     ],
     "Николаев": [
@@ -18479,6 +21527,14 @@
         "subject": "мат.",
         "classroom": "222",
         "parity": "even"
+      },
+      {
+        "group": "ИС 25-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "мат.",
+        "classroom": "119",
+        "parity": "odd"
       },
       {
         "group": "М 25-1П",
@@ -18639,6 +21695,22 @@
         "subject": "мат.",
         "classroom": "222",
         "parity": "even"
+      },
+      {
+        "group": "Д 25-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "мат.",
+        "classroom": "222",
+        "parity": "odd"
+      },
+      {
+        "group": "Д 25-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "мат.",
+        "classroom": "222",
+        "parity": "even"
       }
     ],
     "Никонорова": [
@@ -18703,6 +21775,30 @@
         "weekday": 3,
         "pair": 3,
         "subject": "геогр.",
+        "classroom": "421",
+        "parity": "even"
+      },
+      {
+        "group": "Э 25-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "геогр.",
+        "classroom": "213",
+        "parity": "odd"
+      },
+      {
+        "group": "Э 25-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "биолог.",
+        "classroom": "421",
+        "parity": "odd"
+      },
+      {
+        "group": "Э 25-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "биолог.",
         "classroom": "421",
         "parity": "even"
       },
@@ -18811,9 +21907,33 @@
         "parity": "even"
       },
       {
+        "group": "Д 25-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "биолог.",
+        "classroom": "421",
+        "parity": "even"
+      },
+      {
         "group": "ЭК 25-1",
         "weekday": 4,
         "pair": 1,
+        "subject": "биолог.",
+        "classroom": "421",
+        "parity": "even"
+      },
+      {
+        "group": "ЭК 25-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "биолог.",
+        "classroom": "421",
+        "parity": "odd"
+      },
+      {
+        "group": "ЭК 25-1",
+        "weekday": 4,
+        "pair": 4,
         "subject": "биолог.",
         "classroom": "421",
         "parity": "even"
@@ -18933,6 +22053,14 @@
         "parity": "even"
       },
       {
+        "group": "ИС 25-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "физ.",
+        "classroom": "119",
+        "parity": "even"
+      },
+      {
         "group": "СП 25-2П",
         "weekday": 2,
         "pair": 3,
@@ -18949,6 +22077,22 @@
         "parity": "odd"
       },
       {
+        "group": "Д 25-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "физ.",
+        "classroom": "119",
+        "parity": "odd"
+      },
+      {
+        "group": "Д 25-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "физ.",
+        "classroom": "119",
+        "parity": "even"
+      },
+      {
         "group": "ЭК 25-1",
         "weekday": 2,
         "pair": 2,
@@ -18973,6 +22117,22 @@
         "parity": "even"
       },
       {
+        "group": "ТЭСМО 23-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "кл.час \"Разг. о важн.\"",
+        "classroom": "119",
+        "parity": "odd"
+      },
+      {
+        "group": "ТЭСМО 23-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "кл.час \"Разг. о важн.\"",
+        "classroom": "119",
+        "parity": "even"
+      },
+      {
         "group": "СЗС 25-2",
         "weekday": 3,
         "pair": 3,
@@ -18987,6 +22147,14 @@
         "subject": "физ.",
         "classroom": "119",
         "parity": "even"
+      },
+      {
+        "group": "СЗС 25-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "физ.",
+        "classroom": "201",
+        "parity": "odd"
       },
       {
         "group": "ТЭСМО 25-2П",
@@ -19059,6 +22227,22 @@
       {
         "group": "ИС 23-2",
         "weekday": 2,
+        "pair": 2,
+        "subject": "вис",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
+        "group": "ИС 23-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "вис",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "ИС 23-2",
+        "weekday": 4,
         "pair": 2,
         "subject": "вис",
         "classroom": "",
@@ -19301,6 +22485,22 @@
         "parity": "even"
       },
       {
+        "group": "Э 25-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "физ-ра",
+        "classroom": "225",
+        "parity": "odd"
+      },
+      {
+        "group": "Э 25-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "физ-ра",
+        "classroom": "225",
+        "parity": "even"
+      },
+      {
         "group": "ИС 25-1",
         "weekday": 4,
         "pair": 1,
@@ -19312,6 +22512,22 @@
         "group": "ИС 25-1",
         "weekday": 4,
         "pair": 1,
+        "subject": "физ-ра",
+        "classroom": "225",
+        "parity": "even"
+      },
+      {
+        "group": "М 25-1П",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "физ-ра",
+        "classroom": "225",
+        "parity": "odd"
+      },
+      {
+        "group": "М 25-1П",
+        "weekday": 4,
+        "pair": 3,
         "subject": "физ-ра",
         "classroom": "225",
         "parity": "even"
@@ -19430,6 +22646,22 @@
       }
     ],
     "Петруня": [
+      {
+        "group": "А 25-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "ин.яз.",
+        "classroom": "404",
+        "parity": "odd"
+      },
+      {
+        "group": "А 25-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "ин.яз.",
+        "classroom": "404",
+        "parity": "even"
+      },
       {
         "group": "А 25-2",
         "weekday": 3,
@@ -19939,6 +23171,22 @@
         "parity": "even"
       },
       {
+        "group": "СП 25-1П",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "физ-ра",
+        "classroom": "226",
+        "parity": "odd"
+      },
+      {
+        "group": "СП 25-1П",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "физ-ра",
+        "classroom": "226",
+        "parity": "even"
+      },
+      {
         "group": "ЭК 25-1",
         "weekday": 3,
         "pair": 1,
@@ -19966,6 +23214,38 @@
         "group": "СЗС 24-1",
         "weekday": 2,
         "pair": 4,
+        "subject": "физ-ра",
+        "classroom": "226",
+        "parity": "even"
+      },
+      {
+        "group": "Э 24-2",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "физ-ра",
+        "classroom": "226",
+        "parity": "odd"
+      },
+      {
+        "group": "Э 24-2",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "физ-ра",
+        "classroom": "226",
+        "parity": "even"
+      },
+      {
+        "group": "СЗС 25-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "физ-ра",
+        "classroom": "226",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 25-2",
+        "weekday": 4,
+        "pair": 3,
         "subject": "физ-ра",
         "classroom": "226",
         "parity": "even"
@@ -20021,6 +23301,22 @@
         "parity": "even"
       },
       {
+        "group": "А 23-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "оэап",
+        "classroom": "408",
+        "parity": "odd"
+      },
+      {
+        "group": "А 23-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "оэап",
+        "classroom": "408",
+        "parity": "even"
+      },
+      {
         "group": "А 23-2",
         "weekday": 1,
         "pair": 2,
@@ -20031,6 +23327,22 @@
       {
         "group": "А 23-2",
         "weekday": 1,
+        "pair": 2,
+        "subject": "оэап",
+        "classroom": "408",
+        "parity": "even"
+      },
+      {
+        "group": "А 23-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "оэап",
+        "classroom": "408",
+        "parity": "odd"
+      },
+      {
+        "group": "А 23-2",
+        "weekday": 4,
         "pair": 2,
         "subject": "оэап",
         "classroom": "408",
@@ -20275,6 +23587,22 @@
         "parity": "even"
       },
       {
+        "group": "Д 23-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "вдп",
+        "classroom": "303",
+        "parity": "odd"
+      },
+      {
+        "group": "Д 23-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "вдп",
+        "classroom": "303",
+        "parity": "even"
+      },
+      {
         "group": "Д 25-2",
         "weekday": 2,
         "pair": 1,
@@ -20368,6 +23696,22 @@
         "pair": 3,
         "subject": "вдп",
         "classroom": "416",
+        "parity": "even"
+      },
+      {
+        "group": "Д 23-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "вдп",
+        "classroom": "303",
+        "parity": "odd"
+      },
+      {
+        "group": "Д 23-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "вдп",
+        "classroom": "303",
         "parity": "even"
       }
     ],
@@ -20385,6 +23729,54 @@
         "weekday": 2,
         "pair": 2,
         "subject": "кл.час \"Разг. о важн.\"",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
+        "group": "А 24-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "врпф",
+        "classroom": "306",
+        "parity": "odd"
+      },
+      {
+        "group": "А 24-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "врпф",
+        "classroom": "306",
+        "parity": "even"
+      },
+      {
+        "group": "Д 23-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "ист.диз.",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "Д 23-2",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "ист.диз.",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
+        "group": "Д 23-2",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "ист.диз.",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "Д 23-2",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "ист.диз.",
         "classroom": "",
         "parity": "even"
       },
@@ -20483,6 +23875,38 @@
         "weekday": 3,
         "pair": 1,
         "subject": "тех.мех.",
+        "classroom": "219",
+        "parity": "even"
+      },
+      {
+        "group": "СП 25-2П",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "тех.мех.",
+        "classroom": "219",
+        "parity": "odd"
+      },
+      {
+        "group": "СП 25-2П",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "тех.мех.",
+        "classroom": "219",
+        "parity": "even"
+      },
+      {
+        "group": "СП 25-2П",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "тех.проц.",
+        "classroom": "219",
+        "parity": "odd"
+      },
+      {
+        "group": "СП 25-2П",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "тех.проц.",
         "classroom": "219",
         "parity": "even"
       },
@@ -20615,6 +24039,22 @@
         "parity": "even"
       },
       {
+        "group": "СП 24-1П",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "врпр",
+        "classroom": "219",
+        "parity": "odd"
+      },
+      {
+        "group": "СП 24-1П",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "врпр",
+        "classroom": "219",
+        "parity": "even"
+      },
+      {
         "group": "ПСК 24-1",
         "weekday": 1,
         "pair": 3,
@@ -20710,6 +24150,22 @@
         "group": "ПСК 23-1",
         "weekday": 3,
         "pair": 3,
+        "subject": "оатп",
+        "classroom": "318",
+        "parity": "even"
+      },
+      {
+        "group": "ПСК 23-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "оатп",
+        "classroom": "318",
+        "parity": "odd"
+      },
+      {
+        "group": "ПСК 23-1",
+        "weekday": 4,
+        "pair": 2,
         "subject": "оатп",
         "classroom": "318",
         "parity": "even"
@@ -20913,6 +24369,22 @@
         "parity": "even"
       },
       {
+        "group": "Э 24-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "лэ",
+        "classroom": "417",
+        "parity": "odd"
+      },
+      {
+        "group": "Э 24-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "лэ",
+        "classroom": "417",
+        "parity": "even"
+      },
+      {
         "group": "Э 24-2",
         "weekday": 0,
         "pair": 2,
@@ -21091,6 +24563,22 @@
         "parity": "even"
       },
       {
+        "group": "СЗС 24-4",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "итпд",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 24-4",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "итпд",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
         "group": "ИС 23-2",
         "weekday": 1,
         "pair": 4,
@@ -21103,6 +24591,22 @@
         "weekday": 1,
         "pair": 4,
         "subject": "итпс",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
+        "group": "СЗС 24-3",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "итпд",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 24-3",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "итпд",
         "classroom": "",
         "parity": "even"
       },
@@ -21269,6 +24773,22 @@
         "parity": "even"
       },
       {
+        "group": "СЗС 25-3",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "мат.",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 25-3",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "мат.",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
         "group": "СЗС 25-4",
         "weekday": 0,
         "pair": 3,
@@ -21344,6 +24864,38 @@
         "group": "СЗС 25-4",
         "weekday": 3,
         "pair": 1,
+        "subject": "мат.",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
+        "group": "СЗС 25-4",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "мат.",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 25-4",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "мат.",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
+        "group": "СЗС 25-4",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "мат.",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 25-4",
+        "weekday": 4,
+        "pair": 5,
         "subject": "мат.",
         "classroom": "",
         "parity": "even"
@@ -21477,6 +25029,22 @@
         "subject": "кл.час \"Разг. о важн.\"",
         "classroom": "",
         "parity": "even"
+      },
+      {
+        "group": "Д 24-2",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "кл.час \"Разг. о важн.\"",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "Д 24-2",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "кл.час \"Разг. о важн.\"",
+        "classroom": "",
+        "parity": "even"
       }
     ],
     "Титова": [
@@ -21497,12 +25065,44 @@
         "parity": "even"
       },
       {
+        "group": "СЗС 25-4",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "инф.",
+        "classroom": "214",
+        "parity": "odd"
+      },
+      {
+        "group": "СЗС 25-4",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "инф.",
+        "classroom": "214",
+        "parity": "even"
+      },
+      {
         "group": "Э 25-2",
         "weekday": 3,
         "pair": 2,
         "subject": "инф.",
         "classroom": "202",
         "parity": "odd"
+      },
+      {
+        "group": "Э 25-2",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "инф.",
+        "classroom": "214",
+        "parity": "odd"
+      },
+      {
+        "group": "Э 25-2",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "инф.",
+        "classroom": "214",
+        "parity": "even"
       },
       {
         "group": "ИС 25-1",
@@ -21651,6 +25251,22 @@
         "parity": "even"
       },
       {
+        "group": "ПСК 25-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "ист.",
+        "classroom": "420",
+        "parity": "odd"
+      },
+      {
+        "group": "ПСК 25-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "ист.",
+        "classroom": "420",
+        "parity": "even"
+      },
+      {
         "group": "Э 25-2",
         "weekday": 0,
         "pair": 1,
@@ -21779,6 +25395,22 @@
         "parity": "even"
       },
       {
+        "group": "ЭК 25-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "общ.",
+        "classroom": "420",
+        "parity": "odd"
+      },
+      {
+        "group": "ЭК 25-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "общ.",
+        "classroom": "420",
+        "parity": "even"
+      },
+      {
         "group": "ТЭСМО 24-1П",
         "weekday": 2,
         "pair": 3,
@@ -21877,6 +25509,22 @@
         "parity": "even"
       },
       {
+        "group": "ТЭСМО 24-2П",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "физ-ра",
+        "classroom": "004",
+        "parity": "odd"
+      },
+      {
+        "group": "ТЭСМО 24-2П",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "физ-ра",
+        "classroom": "004",
+        "parity": "even"
+      },
+      {
         "group": "М 24-1П",
         "weekday": 1,
         "pair": 2,
@@ -22016,6 +25664,22 @@
         "group": "ИС 23-1",
         "weekday": 3,
         "pair": 3,
+        "subject": "физ-ра",
+        "classroom": "004",
+        "parity": "even"
+      },
+      {
+        "group": "ИБ 23-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "физ-ра",
+        "classroom": "004",
+        "parity": "odd"
+      },
+      {
+        "group": "ИБ 23-1",
+        "weekday": 4,
+        "pair": 2,
         "subject": "физ-ра",
         "classroom": "004",
         "parity": "even"
@@ -22103,6 +25767,14 @@
         "parity": "even"
       },
       {
+        "group": "ПСК 25-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "общ.",
+        "classroom": "213",
+        "parity": "even"
+      },
+      {
         "group": "Э 25-1",
         "weekday": 3,
         "pair": 1,
@@ -22137,6 +25809,14 @@
       {
         "group": "Э 25-2",
         "weekday": 2,
+        "pair": 2,
+        "subject": "общ.",
+        "classroom": "213",
+        "parity": "even"
+      },
+      {
+        "group": "Э 25-2",
+        "weekday": 4,
         "pair": 2,
         "subject": "общ.",
         "classroom": "213",
@@ -22393,6 +26073,22 @@
         "parity": "even"
       },
       {
+        "group": "ИС 24-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "исрпо",
+        "classroom": "212",
+        "parity": "odd"
+      },
+      {
+        "group": "ИС 24-2",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "исрпо",
+        "classroom": "212",
+        "parity": "even"
+      },
+      {
         "group": "ИС 23-1",
         "weekday": 0,
         "pair": 5,
@@ -22415,6 +26111,22 @@
         "subject": "уп",
         "classroom": "415",
         "parity": "odd"
+      },
+      {
+        "group": "ИС 23-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "исрпо",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "ИС 23-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "исрпо",
+        "classroom": "",
+        "parity": "even"
       },
       {
         "group": "ИБ 23-1",
@@ -22587,6 +26299,22 @@
         "parity": "even"
       },
       {
+        "group": "Э 24-1",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "иг",
+        "classroom": "115",
+        "parity": "odd"
+      },
+      {
+        "group": "Э 24-1",
+        "weekday": 4,
+        "pair": 5,
+        "subject": "иг",
+        "classroom": "115",
+        "parity": "even"
+      },
+      {
         "group": "Э 24-2",
         "weekday": 1,
         "pair": 5,
@@ -22709,6 +26437,46 @@
       {
         "group": "ПСК 24-1",
         "weekday": 3,
+        "pair": 4,
+        "subject": "тпнсик",
+        "classroom": "115",
+        "parity": "even"
+      },
+      {
+        "group": "ПСК 24-1",
+        "weekday": 4,
+        "pair": 2,
+        "subject": "тпсник",
+        "classroom": "115",
+        "parity": "even"
+      },
+      {
+        "group": "ПСК 24-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "осп",
+        "classroom": "115",
+        "parity": "odd"
+      },
+      {
+        "group": "ПСК 24-1",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "осп",
+        "classroom": "115",
+        "parity": "even"
+      },
+      {
+        "group": "ПСК 24-1",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "тпнсик",
+        "classroom": "115",
+        "parity": "odd"
+      },
+      {
+        "group": "ПСК 24-1",
+        "weekday": 4,
         "pair": 4,
         "subject": "тпнсик",
         "classroom": "115",
@@ -22755,6 +26523,22 @@
         "subject": "опрпо",
         "classroom": "111",
         "parity": "odd"
+      },
+      {
+        "group": "М 24-1П",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "омр",
+        "classroom": "111",
+        "parity": "odd"
+      },
+      {
+        "group": "М 24-1П",
+        "weekday": 4,
+        "pair": 4,
+        "subject": "омр",
+        "classroom": "111",
+        "parity": "even"
       }
     ],
     "Юнусов": [
@@ -22770,6 +26554,22 @@
         "group": "ИС 24-3",
         "weekday": 0,
         "pair": 1,
+        "subject": "сис",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
+        "group": "ИС 24-3",
+        "weekday": 4,
+        "pair": 3,
+        "subject": "сис",
+        "classroom": "",
+        "parity": "odd"
+      },
+      {
+        "group": "ИС 24-3",
+        "weekday": 4,
+        "pair": 3,
         "subject": "сис",
         "classroom": "",
         "parity": "even"
@@ -22918,6 +26718,14 @@
         "group": "Д 25-3",
         "weekday": 3,
         "pair": 1,
+        "subject": "ин.яз.",
+        "classroom": "",
+        "parity": "even"
+      },
+      {
+        "group": "Д 25-3",
+        "weekday": 4,
+        "pair": 4,
         "subject": "ин.яз.",
         "classroom": "",
         "parity": "even"
