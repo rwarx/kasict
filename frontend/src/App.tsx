@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
-import { getDay, getGroups, getMeta, getTeachers, loadData } from './services/scheduleService'
+import { getDay, getGroups, getMeta, loadData } from './services/scheduleService'
 import type { DaySchedule, LessonView } from './services/replacementEngine'
-import type { TeacherEntry } from './parser/types'
 
 const GROUP_KEY = 'schedule:group'
 const ONBOARDING_KEY = 'schedule:onboarded'
@@ -50,7 +49,6 @@ function getGreeting(): string {
   return 'Добрый вечер'
 }
 
-const DAY_NAMES = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']
 const DAY_NAMES_FULL = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье']
 
 type Screen = 'schedule' | 'week' | 'settings'
@@ -90,7 +88,7 @@ export default function App() {
   }
 
   if (error) {
-    return <ErrorScreen error={error} onRetry={() => window.location.reload()} />
+    return <ErrorScreen onRetry={() => window.location.reload()} />
   }
 
   return (
@@ -141,7 +139,7 @@ function OnboardingFlow({ onComplete, loading, error }: {
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null)
 
   if (loading) return <LoadingScreen />
-  if (error) return <ErrorScreen error={error} onRetry={() => window.location.reload()} />
+  if (error) return <ErrorScreen onRetry={() => window.location.reload()} />
 
   if (step === 'welcome') {
     return (
@@ -165,7 +163,6 @@ function OnboardingFlow({ onComplete, loading, error }: {
     return (
       <GroupSelectScreen
         onSelect={(g) => { setSelectedGroup(g); setStep('success') }}
-        onBack={() => setStep('welcome')}
       />
     )
   }
@@ -182,7 +179,7 @@ function OnboardingFlow({ onComplete, loading, error }: {
   )
 }
 
-function GroupSelectScreen({ onSelect, onBack }: { onSelect: (g: string) => void; onBack?: () => void }) {
+function GroupSelectScreen({ onSelect }: { onSelect: (g: string) => void }) {
   const [query, setQuery] = useState('')
   const groups = useMemo(() => getGroups(), [])
 
@@ -263,7 +260,7 @@ function LoadingScreen() {
   )
 }
 
-function ErrorScreen({ error, onRetry }: { error: string; onRetry: () => void }) {
+function ErrorScreen({ onRetry }: { onRetry: () => void }) {
   return (
     <div className="main-content">
       <div className="container">
