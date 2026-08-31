@@ -52,7 +52,7 @@ function getGreeting(): string {
 
 const DAY_NAMES_FULL = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье']
 
-type Screen = 'schedule' | 'week' | 'settings'
+type Screen = 'schedule' | 'week' | 'time' | 'settings'
 
 export default function App() {
   const [group, setGroup] = useState<string | null>(() => localStorage.getItem(GROUP_KEY))
@@ -106,6 +106,9 @@ export default function App() {
           {screen === 'week' && group && (
             <WeekScreen group={group} dateISO={dateISO} setDateISO={setDateISO} />
           )}
+          {screen === 'time' && (
+            <TimeScreen />
+          )}
           {screen === 'settings' && (
             <SettingsScreen group={group} onChangeGroup={changeGroup} />
           )}
@@ -123,6 +126,11 @@ export default function App() {
                   onClick={() => setScreen('week')}>
             <span className="nav-icon">📆</span>
             Неделя
+          </button>
+          <button className={`nav-item ${screen === 'time' ? 'active' : ''}`}
+                  onClick={() => setScreen('time')}>
+            <span className="nav-icon">🕐</span>
+            Время
           </button>
           <button className={`nav-item ${screen === 'settings' ? 'active' : ''}`}
                   onClick={() => setScreen('settings')}>
@@ -556,6 +564,207 @@ function WeekScreen({ group, dateISO, setDateISO }: {
                   </div>
                 ))
               )}
+            </div>
+          )
+        })}
+      </div>
+    </>
+  )
+}
+
+/* ==================== TIME SCREEN ==================== */
+
+function toMin(h: number, m: number) { return h * 60 + m }
+function parseHHMM(s: string): [number, number] {
+  const [h, m] = s.split(':').map(Number)
+  return [h, m]
+}
+
+interface Slot {
+  type: 'pair' | 'break' | 'lunch'
+  label: string
+  start: number
+  end: number
+  pairNum?: number
+}
+
+const TIMELINE: Slot[] = (() => {
+  const slots: Slot[] = []
+  const pairs: [string, string][] = [
+    ['08:00', '09:35'], ['09:45', '11:20'], ['11:45', '13:20'],
+    ['13:45', '15:20'], ['15:30', '17:05'], ['17:15', '18:50'],
+  ]
+  const lunchAfter = new Set([2, 3])
+  const shortBreakAfter = new Set([1, 4, 5])
+
+  for (let i = 0; i < pairs.length; i++) {
+    const num = i + 1
+    const [sh1, sm1] = parseHHMM(pairs[i][0])
+    const [eh1, em1] = parseHHMM(pairs[i][1])
+    const start = toMin(sh1, sm1)
+    const mid = toMin(...parseHHMM(`${String(sh1 + Math.floor(((eh1 * 60 + em1) - (sh1 * 60 + sm1)) / 2 / 60)).padStart(2, '0')}:${String(Math.floor(((eh1 * 60 + em1) - (sh1 * 60 + sm1)) / 2) % 60).padStart(2, '0')}`))
+    const end = toMin(eh1, em1)
+
+    slots.push({ type: 'pair', label: `${num} пара`, start, end: mid, pairNum: num })
+    slots.push({ type: 'break', label: 'Перемена 5 мин', start: mid, end: mid + 5 })
+
+    if (i < pairs.length - 1) {
+      const [sh2, sm2] = parseHHMM(pairs[i + 1][0])
+      const nextStart = toMin(sh2, sm2)
+      if (lunchAfter.has(num)) {
+        slots.push({ type: 'lunch', label: 'Обеденный перерыв', start: end, end: nextStart })
+      } else if (shortBreakAfter.has(num)) {
+        slots.push({ type: 'break', label: 'Перемена 10 мин', start: end, end: nextStart })
+      }
+    }
+  }
+  return slots
+})()
+
+function fmtTime(m: number) {
+  const h = Math.floor(m / 60)
+  const mm = m % 60
+  return `${String(h).padStart(2, '0')}:${String(mm).padStart(2, '0')}`
+}
+
+function getTimeStatus() {
+  const now = new Date()
+  const nowMin = toMin(now.getHours(), now.getMinutes())
+  const day = now.getDay()
+  if (day === 0 || day === 6) return { status: 'weekend' as const, current: null, next: null, remaining: 0, elapsed: 0, total: 0 }
+
+  let current: Slot | null = null
+  let next: Slot | null = null
+
+  for (const slot of TIMELINE) {
+    if (nowMin >= slot.start && nowMin < slot.end) {
+      current = slot
+      break
+    }
+    if (nowMin < slot.start) {
+      next = slot
+      break
+    }
+  }
+
+  if (!current && !next) return { status: 'empty' as const, current: null, next: null, remaining: 0, elapsed: 0, total: 0 }
+
+  if (current) {
+    const elapsed = nowMin - current.start
+    const total = current.end - current.start
+    const remaining = current.end - nowMin
+    const nxt = TIMELINE.find(s => s.start >= current!.end) ?? null
+    return { status: 'active' as const, current, next: nxt, remaining, elapsed, total }
+  }
+
+  return { status: 'before' as const, current: null, next, remaining: 0, elapsed: 0, total: 0 }
+}
+
+function TimeScreen() {
+  const [, setTick] = useState(0)
+  const now = new Date()
+
+  useEffect(() => {
+    const id = setInterval(() => setTick(t => t + 1), 10000)
+    return () => clearInterval(id)
+  }, [])
+
+  const ts = getTimeStatus()
+  const nowMin = toMin(now.getHours(), now.getMinutes())
+
+  if (ts.status === 'weekend') {
+    return (
+      <>
+        <div className="settings-header">
+          <h1 className="settings-title">Время</h1>
+        </div>
+        <div className="time-status-card">
+          <div className="time-big">{fmtTime(toMin(now.getHours(), now.getMinutes()))}</div>
+          <div className="time-subtitle">Выходной — пар нет</div>
+        </div>
+      </>
+    )
+  }
+
+  if (ts.status === 'empty' || (!ts.current && !ts.next)) {
+    return (
+      <>
+        <div className="settings-header">
+          <h1 className="settings-title">Время</h1>
+        </div>
+        <div className="time-status-card">
+          <div className="time-big">{fmtTime(toMin(now.getHours(), now.getMinutes()))}</div>
+          <div className="time-subtitle">Пары закончились</div>
+        </div>
+      </>
+    )
+  }
+
+  if (ts.status === 'before' && ts.next) {
+    const diff = ts.next.start - toMin(now.getHours(), now.getMinutes())
+    return (
+      <>
+        <div className="settings-header">
+          <h1 className="settings-title">Время</h1>
+        </div>
+        <div className="time-status-card">
+          <div className="time-big">{fmtTime(toMin(now.getHours(), now.getMinutes()))}</div>
+          <div className="time-subtitle">До начала {ts.next.label}</div>
+          <div className="time-remaining">{fmtTime(diff)} до старта</div>
+        </div>
+      </>
+    )
+  }
+
+  const current = ts.current!
+  const progress = ts.total > 0 ? (ts.elapsed / ts.total) * 100 : 0
+  const isLunch = current.type === 'lunch'
+  const isBreak = current.type === 'break'
+  const pairName = current.pairNum ? `${current.pairNum} пара` : current.label
+
+  return (
+    <>
+      <div className="settings-header">
+        <h1 className="settings-title">Время</h1>
+      </div>
+
+      <div className={`time-status-card ${isLunch ? 'lunch' : isBreak ? 'break' : 'pair'}`}>
+        <div className="time-big">{fmtTime(toMin(now.getHours(), now.getMinutes()))}</div>
+        <div className="time-current-label">
+          {isLunch ? 'Обеденный перерыв' : isBreak ? 'Перемена' : pairName}
+        </div>
+        <div className="time-remaining">
+          {ts.remaining > 0 ? `${fmtTime(ts.remaining)} до конца` : 'Заканчивается'}
+        </div>
+        <div className="time-progress-track">
+          <div className="time-progress-fill" style={{ width: `${progress}%` }} />
+        </div>
+        {ts.next && (
+          <div className="time-next">
+            Далее: {ts.next.label} ({fmtTime(ts.next.start)})
+          </div>
+        )}
+      </div>
+
+      <div className="time-timeline">
+        {TIMELINE.map((slot, i) => {
+          const isCurrent = current && slot.start === current.start && slot.end === current.end
+          const isPast = nowMin >= slot.end
+          const isFuture = nowMin < slot.start
+          return (
+            <div
+              key={i}
+              className={`time-slot ${slot.type} ${isCurrent ? 'current' : ''} ${isPast ? 'past' : ''} ${isFuture ? 'future' : ''}`}
+            >
+              <div className="time-slot-time">
+                {fmtTime(slot.start)}
+              </div>
+              <div className="time-slot-bar">
+                <div className="time-slot-label">{slot.label}</div>
+              </div>
+              <div className="time-slot-time">
+                {fmtTime(slot.end)}
+              </div>
             </div>
           )
         })}
