@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { getDay, getGroups, getMeta, loadData } from './services/scheduleService'
+import { disableNotifications, enableNotifications, handleNewData, isNotifEnabled, isNotifSupported, notifStatusText } from './services/notifications'
 import type { DaySchedule, LessonView } from './services/replacementEngine'
 
 const GROUP_KEY = 'schedule:group'
@@ -63,7 +64,11 @@ export default function App() {
 
   useEffect(() => {
     loadData()
-      .then(() => setLoading(false))
+      .then(() => {
+        setLoading(false)
+        const meta = getMeta()
+        if (meta) handleNewData(meta)
+      })
       .catch(() => { setError('Не удалось загрузить данные'); setLoading(false) })
   }, [])
 
@@ -566,7 +571,21 @@ function SettingsScreen({ group, onChangeGroup }: {
 }) {
   const [showGroupSelect, setShowGroupSelect] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
+  const [notifOn, setNotifOn] = useState(isNotifEnabled())
+  const [notifStatus, setNotifStatus] = useState(notifStatusText())
   const meta = getMeta()
+
+  const handleToggleNotif = async () => {
+    if (!isNotifSupported()) return
+    if (notifOn) {
+      disableNotifications()
+      setNotifOn(false)
+    } else {
+      const granted = await enableNotifications()
+      setNotifOn(granted)
+    }
+    setNotifStatus(notifStatusText())
+  }
 
   const handleChangeGroup = () => {
     setShowConfirm(true)
@@ -602,6 +621,27 @@ function SettingsScreen({ group, onChangeGroup }: {
               <div className="settings-row-value">{group || 'Не выбрана'}</div>
             </div>
             <span className="settings-row-arrow">›</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="settings-section">
+        <div className="settings-section-title">Уведомления</div>
+        <div className="settings-card">
+          <div className="settings-row" onClick={handleToggleNotif}>
+            <div className="settings-row-info">
+              <div className="settings-row-label">О новом расписании</div>
+              <div className="settings-row-value">{notifStatus}</div>
+            </div>
+            <label className="toggle" onClick={e => e.stopPropagation()}>
+              <input
+                type="checkbox"
+                checked={notifOn}
+                disabled={!isNotifSupported() || Notification.permission === 'denied'}
+                onChange={handleToggleNotif}
+              />
+              <span className="toggle-track" />
+            </label>
           </div>
         </div>
       </div>

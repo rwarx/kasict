@@ -41,6 +41,64 @@ self.addEventListener('message', (event) => {
   }
 })
 
+// Фоновая проверка обновлений (Periodic Background Sync, Chrome/Android, установленное PWA)
+self.addEventListener('periodicsync', (event) => {
+  if (event.tag === 'schedule-update') {
+    event.waitUntil(checkForUpdates())
+  }
+})
+
+async function checkForUpdates() {
+  const cache = await caches.open(SHELL_CACHE)
+  const metaUrl = resolve('./data/meta.json')
+  let fresh
+  try {
+    fresh = await fetch(metaUrl, { cache: 'no-store' })
+  } catch {
+    return
+  }
+  if (!fresh.ok) return
+  const freshText = await fresh.text()
+  const cached = await cache.match(metaUrl)
+  if (cached && (await cached.text()) === freshText) return
+
+  // Обновляем офлайн-кэш свежими данными
+  await Promise.all(['./data/schedule.json', './data/replacements.json'].map(async (p) => {
+    try {
+      const resp = await fetch(resolve(p))
+      if (resp.ok) await cache.put(resolve(p), resp)
+    } catch { /* ignore */ }
+  }))
+  await cache.put(metaUrl, new Response(freshText))
+
+  let body = 'Расписание обновилось. Загляни!'
+  try {
+    const meta = JSON.parse(freshText)
+    if (Array.isArray(meta.replacement_dates) && meta.replacement_dates.length) {
+      const dates = meta.replacement_dates.map((iso) =>
+        new Date(iso + 'T12:00:00').toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' }))
+      body = 'Новые замены: ' + dates.join(', ')
+    }
+  } catch { /* ignore */ }
+  await self.registration.showNotification('Расписание обновлено', {
+    body,
+    tag: 'data-update',
+    icon: resolve('./icons/icon-192.png'),
+  })
+}
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close()
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((list) => {
+      for (const client of list) {
+        if ('focus' in client) return client.focus()
+      }
+      return self.clients.openWindow(resolve('./'))
+    }),
+  )
+})
+
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url)
   if (event.request.method !== 'GET') return
