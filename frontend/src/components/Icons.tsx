@@ -103,6 +103,14 @@ export const UserIcon = (p: IconProps) => (
   </Icon>
 )
 
+export const UsersIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <circle cx="9" cy="8" r="3" />
+    <path d="M3.5 19a5.5 5.5 0 0 1 11 0" />
+    <path d="M15 5.5a3 3 0 0 1 0 5.8M17 13.5a5.5 5.5 0 0 1 3.5 5" />
+  </Icon>
+)
+
 export const RefreshIcon = (p: IconProps) => (
   <Icon {...p}>
     <path d="M20 11a8 8 0 1 0-2.3 5.7" />

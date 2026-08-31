@@ -7,6 +7,7 @@ import { GroupSelectModal } from './components/GroupSelect'
 import { ErrorScreen, LoadingScreen, OfflineBanner } from './components/StateViews'
 import { ScheduleScreen } from './screens/ScheduleScreen'
 import { WeekScreen } from './screens/WeekScreen'
+import { TeachersScreen } from './screens/TeachersScreen'
 import { TimeScreen } from './screens/TimeScreen'
 import { SettingsScreen } from './screens/SettingsScreen'
 import { OnboardingFlow } from './screens/Onboarding'
@@ -88,6 +89,9 @@ export default function App() {
           )}
           {screen === 'week' && group && (
             <WeekScreen group={group} dateISO={dateISO} setDateISO={setDateISO} />
+          )}
+          {screen === 'teachers' && (
+            <TeachersScreen dateISO={dateISO} setDateISO={setDateISO} />
           )}
           {screen === 'time' && <TimeScreen />}
           {screen === 'settings' && (

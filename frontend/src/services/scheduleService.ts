@@ -96,6 +96,14 @@ export function getTeachers(): Record<string, import('../parser/types').TeacherE
   return _schedule.teachers ?? {}
 }
 
+export function getParity(d: Date): 'odd' | 'even' | null {
+  return _resolver ? _resolver.parity(d) as 'odd' | 'even' : null
+}
+
+export function getPairTimes(): Record<string, [string, string]> {
+  return _schedule?.pair_times ?? {}
+}
+
 export function getStaleMeta(): MetaJSON | null {
   // Return meta even if cache expired
   try {

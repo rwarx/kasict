@@ -1,3 +1,3 @@
 // Общий тип экрана нижней навигации.
 
-export type Screen = 'schedule' | 'week' | 'time' | 'settings'
+export type Screen = 'schedule' | 'week' | 'teachers' | 'time' | 'settings'
