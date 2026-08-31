@@ -1050,55 +1050,25 @@ body {
 .hourglass-wrapper {
   display: flex;
   justify-content: center;
-  margin-bottom: 8px;
-}
-
-.hourglass {
-  width: 48px;
-  height: 80px;
-  perspective: 300px;
+  margin-bottom: 4px;
 }
 
 .hourglass-svg {
-  width: 100%;
-  height: 100%;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-style: preserve-3d;
+  width: 56px;
+  height: 84px;
 }
 
-.hourglass.flipped .hourglass-svg {
-  transform: rotateX(180deg);
-}
-
-.sand-top-level {
-  animation: sand-drain 5s linear infinite;
-  transform-origin: center bottom;
-}
-
-.sand-bot-level {
-  animation: sand-fill 5s linear infinite;
-  transform-origin: center top;
-}
-
-@keyframes sand-drain {
-  0%   { transform: scaleY(1); opacity: 1; }
-  90%  { transform: scaleY(0.05); opacity: 0.5; }
-  100% { transform: scaleY(0); opacity: 0; }
-}
-
-@keyframes sand-fill {
-  0%   { transform: scaleY(0); opacity: 0; }
-  10%  { transform: scaleY(0.05); opacity: 0.5; }
-  100% { transform: scaleY(1); opacity: 1; }
+.sand-top, .sand-bot {
+  transition: cx 0.3s, cy 0.3s, rx 0.3s, ry 0.3s;
 }
 
 .sand-stream {
-  animation: stream-flow 0.8s ease-in-out infinite;
+  animation: stream-flow 1s ease-in-out infinite;
 }
 
 @keyframes stream-flow {
-  0%, 100% { opacity: 0.3; }
-  50%      { opacity: 1; }
+  0%, 100% { opacity: 0.2; }
+  50%      { opacity: 0.8; }
 }
 
 .time-status-card {

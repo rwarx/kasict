@@ -575,50 +575,44 @@ function WeekScreen({ group, dateISO, setDateISO }: {
 /* ==================== TIME SCREEN ==================== */
 
 function toMin(h: number, m: number) { return h * 60 + m }
-function parseHHMM(s: string): [number, number] {
-  const [h, m] = s.split(':').map(Number)
-  return [h, m]
-}
 
 interface Slot {
   type: 'pair' | 'break' | 'lunch'
   label: string
-  start: number
-  end: number
+  startMin: number
+  endMin: number
   pairNum?: number
 }
 
 const TIMELINE: Slot[] = (() => {
-  const slots: Slot[] = []
-  const pairs: [string, string][] = [
-    ['08:00', '09:35'], ['09:45', '11:20'], ['11:45', '13:20'],
-    ['13:45', '15:20'], ['15:30', '17:05'], ['17:15', '18:50'],
+  const PAIRS: [number, number, number, number][] = [
+    [8, 0, 9, 35],
+    [9, 45, 11, 20],
+    [11, 45, 13, 20],
+    [13, 45, 15, 20],
+    [15, 30, 17, 5],
+    [17, 15, 18, 50],
   ]
-  const lunchAfter = new Set([2, 3])
-  const shortBreakAfter = new Set([1, 4, 5])
+  const LUNCH_AFTER = [2, 3]
+  const result: Slot[] = []
 
-  for (let i = 0; i < pairs.length; i++) {
+  for (let i = 0; i < PAIRS.length; i++) {
     const num = i + 1
-    const [sh1, sm1] = parseHHMM(pairs[i][0])
-    const [eh1, em1] = parseHHMM(pairs[i][1])
-    const start = toMin(sh1, sm1)
-    const mid = toMin(...parseHHMM(`${String(sh1 + Math.floor(((eh1 * 60 + em1) - (sh1 * 60 + sm1)) / 2 / 60)).padStart(2, '0')}:${String(Math.floor(((eh1 * 60 + em1) - (sh1 * 60 + sm1)) / 2) % 60).padStart(2, '0')}`))
-    const end = toMin(eh1, em1)
+    const [sh, sm, eh, em] = PAIRS[i]
+    result.push({ type: 'pair', label: `${num} пара`, startMin: toMin(sh, sm), endMin: toMin(eh, em), pairNum: num })
 
-    slots.push({ type: 'pair', label: `${num} пара`, start, end: mid, pairNum: num })
-    slots.push({ type: 'break', label: 'Перемена 5 мин', start: mid, end: mid + 5 })
-
-    if (i < pairs.length - 1) {
-      const [sh2, sm2] = parseHHMM(pairs[i + 1][0])
-      const nextStart = toMin(sh2, sm2)
-      if (lunchAfter.has(num)) {
-        slots.push({ type: 'lunch', label: 'Обеденный перерыв', start: end, end: nextStart })
-      } else if (shortBreakAfter.has(num)) {
-        slots.push({ type: 'break', label: 'Перемена 10 мин', start: end, end: nextStart })
+    if (i < PAIRS.length - 1) {
+      const [nh, nm] = [PAIRS[i + 1][0], PAIRS[i + 1][1]]
+      const breakStart = toMin(eh, em)
+      const breakEnd = toMin(nh, nm)
+      if (LUNCH_AFTER.includes(num)) {
+        result.push({ type: 'lunch', label: 'Обед', startMin: breakStart, endMin: breakEnd })
+      } else {
+        result.push({ type: 'break', label: 'Перемена', startMin: breakStart, endMin: breakEnd })
       }
     }
   }
-  return slots
+  return result
 })()
 
 function fmtTime(m: number) {
@@ -636,15 +630,7 @@ function fmtCountdown(ms: number) {
   return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}.${String(millis).padStart(3, '0')}`
 }
 
-function getSlotEndMs(slot: Slot): number {
-  const [h, m] = [Math.floor(slot.end / 60), slot.end % 60]
-  return (h * 3600 + m * 60) * 1000
-}
-
-function getSlotStartMs(slot: Slot): number {
-  const [h, m] = [Math.floor(slot.start / 60), slot.start % 60]
-  return (h * 3600 + m * 60) * 1000
-}
+function slotMs(min: number) { return min * 60 * 1000 }
 
 interface TimeStatus {
   status: 'weekend' | 'empty' | 'before' | 'active'
@@ -656,7 +642,7 @@ interface TimeStatus {
 
 function getTimeStatus(): TimeStatus {
   const now = new Date()
-  const nowSec = (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) * 1000
+  const nowMs = (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) * 1000
   const day = now.getDay()
   if (day === 0 || day === 6) return { status: 'weekend', current: null, next: null, remainingMs: 0, totalMs: 0 }
 
@@ -664,103 +650,122 @@ function getTimeStatus(): TimeStatus {
   let next: Slot | null = null
 
   for (const slot of TIMELINE) {
-    if (nowSec >= getSlotStartMs(slot) && nowSec < getSlotEndMs(slot)) {
+    const s = slotMs(slot.startMin)
+    const e = slotMs(slot.endMin)
+    if (nowMs >= s && nowMs < e) {
       current = slot
       break
     }
-    if (nowSec < getSlotStartMs(slot)) {
+    if (nowMs < s && !next) {
       next = slot
-      break
     }
   }
 
   if (!current && !next) return { status: 'empty', current: null, next: null, remainingMs: 0, totalMs: 0 }
 
   if (current) {
-    const endMs = getSlotEndMs(current)
-    const startMs = getSlotStartMs(current)
-    const remainingMs = Math.max(0, endMs - nowSec)
+    const endMs = slotMs(current.endMin)
+    const startMs = slotMs(current.startMin)
+    const remainingMs = Math.max(0, endMs - nowMs)
     const totalMs = endMs - startMs
-    const nxt = TIMELINE.find(s => s.start >= current!.end) ?? null
+    const nxt = TIMELINE.find(s => s.startMin >= current!.endMin) ?? null
     return { status: 'active', current, next: nxt, remainingMs, totalMs }
   }
 
   return { status: 'before', current: null, next, remainingMs: 0, totalMs: 0 }
 }
 
-function Hourglass({ flipKey }: { flipKey: number }) {
+function Hourglass({ progress }: { progress: number }) {
+  const p = Math.max(0, Math.min(1, progress))
+
+  const topY = 8 + (1 - p) * 28
+  const topH = Math.max(0.5, p * 28)
+  const botH = Math.max(0.5, (1 - p) * 28)
+  const botY = 46 + p * 28
+
   return (
     <div className="hourglass-wrapper">
-      <div className={`hourglass ${flipKey % 2 === 0 ? '' : 'flipped'}`}>
-        <svg viewBox="0 0 48 80" className="hourglass-svg">
-          <defs>
-            <linearGradient id="sand-top" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.9" />
-              <stop offset="100%" stopColor="var(--accent)" stopOpacity="0.4" />
-            </linearGradient>
-            <linearGradient id="sand-bot" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="var(--accent)" stopOpacity="0.9" />
-            </linearGradient>
-            <clipPath id="bulb-top">
-              <path d="M8,4 L40,4 L40,32 Q40,36 36,38 L26,42 Q24,43 22,42 L12,38 Q8,36 8,32 Z" />
-            </clipPath>
-            <clipPath id="bulb-bot">
-              <path d="M12,42 L22,42 Q24,43 26,42 L36,38 Q40,36 40,40 L40,76 L8,76 L8,40 Q8,36 12,38 Z" />
-            </clipPath>
-          </defs>
+      <svg viewBox="0 0 64 96" className="hourglass-svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="hg-sand" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="var(--amber)" stopOpacity="0.95" />
+            <stop offset="100%" stopColor="var(--amber)" stopOpacity="0.6" />
+          </linearGradient>
+          <linearGradient id="hg-sand-bot" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="var(--amber)" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="var(--amber)" stopOpacity="0.95" />
+          </linearGradient>
+          <clipPath id="hg-clip-top">
+            <path d="M18,6 L46,6 Q48,6 48,8 L48,34 Q48,38 44,40 L34,45 Q32,46 30,45 L20,40 Q16,38 16,34 L16,8 Q16,6 18,6 Z" />
+          </clipPath>
+          <clipPath id="hg-clip-bot">
+            <path d="M20,51 L30,51 Q32,50 34,51 L44,56 Q48,58 48,62 L48,88 Q48,90 46,90 L18,90 Q16,90 16,88 L16,62 Q16,58 20,56 Z" />
+          </clipPath>
+        </defs>
 
-          {/* Frame */}
-          <path
-            d="M8,2 L40,2 L40,4 Q42,4 42,6 L42,6 Q42,34 34,38 L26,42 Q24,43 22,42 L14,38 Q6,34 6,6 Q6,4 8,4 Z"
-            fill="none" stroke="var(--text-secondary)" strokeWidth="2" strokeLinejoin="round"
+        {/* top plate */}
+        <rect x="12" y="0" width="40" height="6" rx="3" fill="var(--text-tertiary)" opacity="0.7" />
+        {/* bottom plate */}
+        <rect x="12" y="90" width="40" height="6" rx="3" fill="var(--text-tertiary)" opacity="0.7" />
+
+        {/* left pillar */}
+        <path d="M14,4 L14,92 Q14,94 16,94 L18,94 L18,2 Q16,2 14,4 Z" fill="var(--text-tertiary)" opacity="0.4" />
+        {/* right pillar */}
+        <path d="M50,4 L50,92 Q50,94 48,94 L46,94 L46,2 Q48,2 50,4 Z" fill="var(--text-tertiary)" opacity="0.4" />
+
+        {/* glass body — top bulb */}
+        <path
+          d="M18,6 L46,6 Q48,6 48,8 L48,34 Q48,38 44,40 L34,45 Q32,46 30,45 L20,40 Q16,38 16,34 L16,8 Q16,6 18,6 Z"
+          fill="none" stroke="var(--text-tertiary)" strokeWidth="1.5" opacity="0.5"
+        />
+        {/* glass body — bottom bulb */}
+        <path
+          d="M20,51 L30,51 Q32,50 34,51 L44,56 Q48,58 48,62 L48,88 Q48,90 46,90 L18,90 Q16,90 16,88 L16,62 Q16,58 20,56 Z"
+          fill="none" stroke="var(--text-tertiary)" strokeWidth="1.5" opacity="0.5"
+        />
+
+        {/* top sand */}
+        {topH > 0.5 && (
+          <ellipse
+            cx="32" cy={topY + topH / 2}
+            rx={6 + (1 - p) * 10} ry={topH / 2}
+            fill="url(#hg-sand)" className="sand-top"
           />
-          <path
-            d="M14,42 L22,42 Q24,43 26,42 L34,38 Q42,34 42,6 L42,6 Q42,4 40,4 L8,4 Q6,4 6,6 Q6,34 14,38 Z"
-            fill="none" stroke="var(--text-secondary)" strokeWidth="2" strokeLinejoin="round"
+        )}
+
+        {/* stream */}
+        <line x1="32" y1="45" x2="32" y2="52" stroke="var(--amber)" strokeWidth="1.2" opacity="0.6" className="sand-stream" />
+
+        {/* bottom sand */}
+        {botH > 0.5 && (
+          <ellipse
+            cx="32" cy={botY + botH / 2}
+            rx={6 + p * 10} ry={botH / 2}
+            fill="url(#hg-sand-bot)" className="sand-bot"
           />
-          <rect x="4" y="0" width="40" height="4" rx="2" fill="var(--text-secondary)" />
-          <rect x="4" y="76" width="40" height="4" rx="2" fill="var(--text-secondary)" />
+        )}
 
-          {/* Top sand */}
-          <g clipPath="url(#bulb-top)">
-            <rect className="sand-top-level" x="8" y="4" width="34" height="30" fill="url(#sand-top)" />
-          </g>
-
-          {/* Stream */}
-          <line className="sand-stream" x1="24" y1="42" x2="24" y2="42" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" />
-
-          {/* Bottom sand */}
-          <g clipPath="url(#bulb-bot)">
-            <rect className="sand-bot-level" x="8" y="76" width="34" height="0" fill="url(#sand-bot)" />
-          </g>
-        </svg>
-      </div>
+        {/* glass highlight */}
+        <ellipse cx="26" cy="22" rx="3" ry="10" fill="white" opacity="0.06" />
+      </svg>
     </div>
   )
 }
 
 function TimeScreen() {
   const [, setTick] = useState(0)
-  const [flipKey, setFlipKey] = useState(0)
 
   useEffect(() => {
     const id = setInterval(() => setTick(t => t + 1), 50)
     return () => clearInterval(id)
   }, [])
 
-  // Flip hourglass every 5 minutes
-  useEffect(() => {
-    const id = setInterval(() => setFlipKey(k => k + 1), 5 * 60 * 1000)
-    // Sync flip to the next 5-minute boundary
-    const now = Date.now()
-    const msToNext5 = (5 * 60 * 1000) - (now % (5 * 60 * 1000))
-    const sync = setTimeout(() => setFlipKey(k => k + 1), msToNext5)
-    return () => { clearInterval(id); clearTimeout(sync) }
-  }, [])
-
   const ts = getTimeStatus()
   const now = new Date()
+  const nowMs = (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) * 1000
+  const hourglassProgress = ts.status === 'active' ? 1 - ts.remainingMs / ts.totalMs : 0
+
+  const clockTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`
 
   if (ts.status === 'weekend') {
     return (
@@ -769,8 +774,8 @@ function TimeScreen() {
           <h1 className="settings-title">Время</h1>
         </div>
         <div className="time-status-card">
-          <Hourglass flipKey={flipKey} />
-          <div className="time-big">{fmtCountdown(0)}</div>
+          <Hourglass progress={0} />
+          <div className="time-big">{clockTime}</div>
           <div className="time-subtitle">Выходной — пар нет</div>
         </div>
       </>
@@ -784,8 +789,8 @@ function TimeScreen() {
           <h1 className="settings-title">Время</h1>
         </div>
         <div className="time-status-card">
-          <Hourglass flipKey={flipKey} />
-          <div className="time-big">{fmtCountdown(0)}</div>
+          <Hourglass progress={0} />
+          <div className="time-big">{clockTime}</div>
           <div className="time-subtitle">Пары закончились</div>
         </div>
       </>
@@ -793,18 +798,16 @@ function TimeScreen() {
   }
 
   if (ts.status === 'before' && ts.next) {
-    const nextStartMs = getSlotStartMs(ts.next)
-    const nowMs = (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) * 1000
-    const diff = nextStartMs - nowMs
+    const diff = slotMs(ts.next.startMin) - nowMs
     return (
       <>
         <div className="settings-header">
           <h1 className="settings-title">Время</h1>
         </div>
-        <div className="time-status-card">
-          <Hourglass flipKey={flipKey} />
+        <div className="time-status-card before-pair">
+          <Hourglass progress={0} />
           <div className="time-big">{fmtCountdown(Math.max(0, diff))}</div>
-          <div className="time-subtitle">До начала {ts.next.label}</div>
+          <div className="time-current-label">До начала {ts.next.label}</div>
         </div>
       </>
     )
@@ -823,7 +826,7 @@ function TimeScreen() {
       </div>
 
       <div className={`time-status-card ${isLunch ? 'lunch' : isBreak ? 'break' : 'pair'}`}>
-        <Hourglass flipKey={flipKey} />
+        <Hourglass progress={hourglassProgress} />
         <div className="time-big">{fmtCountdown(ts.remainingMs)}</div>
         <div className="time-current-label">
           {isLunch ? 'Обеденный перерыв' : isBreak ? 'Перемена' : pairName}
@@ -833,31 +836,26 @@ function TimeScreen() {
         </div>
         {ts.next && (
           <div className="time-next">
-            Далее: {ts.next.label} ({fmtTime(ts.next.start)})
+            Далее: {ts.next.label} ({fmtTime(ts.next.startMin)})
           </div>
         )}
       </div>
 
       <div className="time-timeline">
         {TIMELINE.map((slot, i) => {
-          const isCurrent = current && slot.start === current.start && slot.end === current.end
-          const nowSec = (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) * 1000
-          const isPast = nowSec >= getSlotEndMs(slot)
-          const isFuture = nowSec < getSlotStartMs(slot)
+          const isCurrent = current && slot.startMin === current.startMin && slot.endMin === current.endMin
+          const isPast = nowMs >= slotMs(slot.endMin)
+          const isFuture = nowMs < slotMs(slot.startMin)
           return (
             <div
               key={i}
               className={`time-slot ${slot.type} ${isCurrent ? 'current' : ''} ${isPast ? 'past' : ''} ${isFuture ? 'future' : ''}`}
             >
-              <div className="time-slot-time">
-                {fmtTime(slot.start)}
-              </div>
+              <div className="time-slot-time">{fmtTime(slot.startMin)}</div>
               <div className="time-slot-bar">
                 <div className="time-slot-label">{slot.label}</div>
               </div>
-              <div className="time-slot-time">
-                {fmtTime(slot.end)}
-              </div>
+              <div className="time-slot-time">{fmtTime(slot.endMin)}</div>
             </div>
           )
         })}
