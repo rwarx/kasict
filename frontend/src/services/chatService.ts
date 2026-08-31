@@ -7,7 +7,7 @@ const MAX_HISTORY = 20
 
 // В dev-режиме Vite проксирует /api/chat на Worker.
 // В проде — прямой URL Worker.
-const WORKER_URL = '/api/chat'
+const WORKER_URL = 'https://kasict-chat.kasict.workers.dev'
 
 export interface ChatMessage {
   role: 'system' | 'user' | 'assistant'
