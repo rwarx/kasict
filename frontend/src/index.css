@@ -140,7 +140,7 @@ button {
 .main-content {
   flex: 1;
   padding-top: max(var(--safe-top), 14px);
-  padding-bottom: calc(var(--nav-h) + var(--safe-bottom) + 28px);
+  padding-bottom: calc(var(--nav-h) + var(--safe-bottom) + 40px);
 }
 
 .container {
@@ -774,13 +774,13 @@ button {
   align-items: center;
   justify-content: center;
   gap: 3px;
-  min-width: 62px;
-  padding: 8px 12px;
+  min-width: 52px;
+  padding: 6px 8px;
   border: none;
   border-radius: 999px;
   background: transparent;
   color: var(--text-3);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   cursor: pointer;
   transition: color 0.15s, background 0.15s, transform 0.1s;
@@ -2279,6 +2279,12 @@ button.settings-row:hover {
 
 /* ---------- Chat ---------- */
 
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - max(var(--safe-top), 14px) - var(--nav-h) - var(--safe-bottom) - 40px);
+}
+
 .chat-header {
   display: flex;
   align-items: center;
@@ -2392,7 +2398,7 @@ button.settings-row:hover {
 .chat-input-bar {
   display: flex;
   gap: 8px;
-  padding: 10px 0 4px;
+  padding: 10px 0 calc(var(--nav-h) + var(--safe-bottom) + 8px);
   align-items: center;
 }
 

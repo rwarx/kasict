@@ -128,7 +128,7 @@ export function ChatScreen({ group }: { group: string | null }) {
   const showWelcome = messages.length === 0
 
   return (
-    <>
+    <div className="chat-container">
       <section className="chat-header">
         <div className="chat-header-info">
           <h1 className="date-title">Помощник</h1>
@@ -236,6 +236,6 @@ export function ChatScreen({ group }: { group: string | null }) {
           )}
         </button>
       </div>
-    </>
+    </div>
   )
 }
