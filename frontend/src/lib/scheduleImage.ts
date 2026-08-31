@@ -96,10 +96,32 @@ export function downloadScheduleImage(options: {
   ctx.font = '400 12px Arial'
   ctx.fillText('Сохранено из приложения KASICT', 56, height - 23)
 
-  const link = document.createElement('a')
-  link.download = `kasict-${options.date}.png`
-  link.href = canvas.toDataURL('image/png')
-  link.click()
+  canvas.toBlob(async (blob) => {
+    if (!blob) return
+    const file = new File([blob], `kasict-${options.date}.png`, { type: 'image/png' })
+
+    // Mobile: Web Share API → нативное меню «Поделиться» → «Сохранить в галерею»
+    if (navigator.share && navigator.canShare?.({ files: [file] })) {
+      try {
+        await navigator.share({
+          title: `Расписание — ${options.date}`,
+          text: `${options.group} · ${options.weekday}`,
+          files: [file],
+        })
+        return
+      } catch {
+        // пользователь отменил — fallback ниже
+      }
+    }
+
+    // Desktop / fallback: обычное скачивание
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.download = `kasict-${options.date}.png`
+    link.href = url
+    link.click()
+    URL.revokeObjectURL(url)
+  }, 'image/png')
 }
 
 function drawRoundRect(ctx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, radius: number) {
