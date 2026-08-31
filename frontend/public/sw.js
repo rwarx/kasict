@@ -45,6 +45,24 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url)
   if (event.request.method !== 'GET') return
 
+  // Навигация: network-first, чтобы после деплоя клиент сразу получал новый бандл
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then((resp) => {
+          if (resp.ok) {
+            const clone = resp.clone()
+            caches.open(SHELL_CACHE).then((c) => c.put(event.request, clone))
+          }
+          return resp
+        })
+        .catch(() =>
+          caches.match(event.request).then((c) => c || caches.match(resolve('./index.html'))),
+        ),
+    )
+    return
+  }
+
   // For data files: network-first (fresh data when online, cache when offline)
   if (url.pathname.includes('/data/')) {
     event.respondWith(
