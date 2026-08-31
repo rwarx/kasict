@@ -7,7 +7,8 @@ import { formatDateFull, formatDateShort, getWeekDays, shiftISO, todayISO, weekd
 import { CalendarSheet } from '../components/CalendarSheet'
 import { LessonCard, ReplacementSheet } from '../components/LessonCard'
 import { EmptyDay } from '../components/StateViews'
-import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from '../components/Icons'
+import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon, DownloadIcon } from '../components/Icons'
+import { downloadScheduleImage } from '../lib/scheduleImage'
 
 export function ScheduleScreen({ group, dateISO, setDateISO }: {
   group: string
@@ -39,14 +40,31 @@ export function ScheduleScreen({ group, dateISO, setDateISO }: {
             <div className="date-eyebrow">{eyebrow}</div>
             <h1 className="date-title">{formatDateFull(dateISO)}</h1>
           </div>
-          <button
-            type="button"
-            className="icon-btn lg"
-            onClick={() => setCalendarOpen(true)}
-            aria-label="Открыть календарь"
-          >
-            <CalendarIcon size={20} />
-          </button>
+          <div className="date-actions">
+            <button
+              type="button"
+              className="icon-btn lg"
+              onClick={() => setCalendarOpen(true)}
+              aria-label="Открыть календарь"
+            >
+              <CalendarIcon size={20} />
+            </button>
+            <button
+              type="button"
+              className="icon-btn lg"
+              onClick={() => day && downloadScheduleImage({
+                date: dateISO,
+                group,
+                weekday: day.weekday,
+                parity: day.parity === 'odd' ? 'Нечётная неделя' : 'Чётная неделя',
+                lessons: visible,
+              })}
+              aria-label="Скачать расписание изображением"
+              title="Скачать изображение"
+            >
+              <DownloadIcon size={19} />
+            </button>
+          </div>
         </div>
         {day?.parity && (
           <div className="date-tags">

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getMeta, loadData } from './services/scheduleService'
+import { getLastChanges, getMeta, loadData } from './services/scheduleService'
 import { handleNewData } from './services/notifications'
 import { AppHeader } from './components/AppHeader'
 import { BottomNav } from './components/BottomNav'
@@ -35,7 +35,7 @@ export default function App() {
       .then(() => {
         setLoading(false)
         const meta = getMeta()
-        if (meta) handleNewData(meta)
+        if (meta) void handleNewData(meta, getLastChanges())
       })
       .catch(() => { setError('Не удалось загрузить данные'); setLoading(false) })
   }, [])

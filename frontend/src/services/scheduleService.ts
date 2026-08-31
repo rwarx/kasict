@@ -3,6 +3,7 @@
 import type { MetaJSON, ReplacementBlockJSON, ScheduleJSON } from '../parser/types'
 import { createResolverFromBlocks, type ParityResolver } from './parity'
 import { applyDay, type DaySchedule } from './replacementEngine'
+import { summarizeScheduleChanges, type DataChangeSummary } from './scheduleChanges'
 
 const DATA_BASE = './data'
 const CACHE_KEY_PREFIX = 'schedule:'
@@ -41,6 +42,7 @@ let _schedule: ScheduleJSON | null = null
 let _replacements: ReplacementBlockJSON[] | null = null
 let _meta: MetaJSON | null = null
 let _resolver: ParityResolver | null = null
+let _lastChanges: DataChangeSummary | null = null
 
 export async function loadData(): Promise<void> {
   // Network-first: всегда тянем свежие данные; кэш — офлайн-фолбэк.
@@ -50,6 +52,9 @@ export async function loadData(): Promise<void> {
       fetchJSON<ReplacementBlockJSON[]>(`${DATA_BASE}/replacements.json`),
       fetchJSON<MetaJSON>(`${DATA_BASE}/meta.json`),
     ])
+    const previousSchedule = cacheGet<ScheduleJSON>('schedule')
+    const previousReplacements = cacheGet<ReplacementBlockJSON[]>('replacements')
+    _lastChanges = summarizeScheduleChanges(previousSchedule, sched, previousReplacements, reps)
     _schedule = sched
     _replacements = reps
     _meta = meta
@@ -91,9 +96,18 @@ export function getMeta(): MetaJSON | null {
   return _meta
 }
 
+export function getLastChanges(): DataChangeSummary | null {
+  return _lastChanges
+}
+
 export function getTeachers(): Record<string, import('../parser/types').TeacherEntry[]> {
   if (!_schedule) return {}
-  return _schedule.teachers ?? {}
+  const normalized: Record<string, import('../parser/types').TeacherEntry[]> = {}
+  Object.entries(_schedule.teachers ?? {}).forEach(([rawName, entries]) => {
+    const name = rawName.replace(/^[-–—\s]+/, '').trim() || rawName
+    normalized[name] = [...(normalized[name] ?? []), ...entries]
+  })
+  return normalized
 }
 
 export function getParity(d: Date): 'odd' | 'even' | null {
@@ -102,6 +116,10 @@ export function getParity(d: Date): 'odd' | 'even' | null {
 
 export function getPairTimes(): Record<string, [string, string]> {
   return _schedule?.pair_times ?? {}
+}
+
+export function getSnapshot(): { schedule: ScheduleJSON | null; replacements: ReplacementBlockJSON[] | null } {
+  return { schedule: _schedule, replacements: _replacements }
 }
 
 export function getStaleMeta(): MetaJSON | null {

@@ -141,6 +141,12 @@ export const ArrowRightIcon = (p: IconProps) => (
   <Icon {...p}><path d="M4 12h16M13 5l7 7-7 7" /></Icon>
 )
 
+export const DownloadIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 3v12M7 11l5 5 5-5M5 21h14" />
+  </Icon>
+)
+
 export const BellIcon = (p: IconProps) => (
   <Icon {...p}>
     <path d="M18 9a6 6 0 1 0-12 0c0 6-2.5 7-2.5 7h17S18 15 18 9Z" />
