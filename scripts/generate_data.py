@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parent.parent
 BACKEND = ROOT / "backend"
 sys.path.insert(0, str(BACKEND))
 
+from app.parsers.html_utils import decode_bytes
 from app.parsers.replacement_parser import parse_replacements
 from app.parsers.schedule_parser import parse_schedule
 from app.services.parity import ParityResolver
