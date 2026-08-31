@@ -1074,6 +1074,51 @@ button {
   padding: 12px;
 }
 
+/* History panel */
+.history-panel {
+  max-width: 380px;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.history-list {
+  overflow-y: auto;
+  max-height: 45vh;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.history-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.history-item:hover {
+  border-color: var(--accent);
+}
+
+.history-item-date {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.history-item-info {
+  font-size: 12px;
+  color: var(--text-3);
+}
+
 /* ---------- Group select ---------- */
 
 .search-wrap {

@@ -102,6 +102,7 @@ export default function App() {
               onThemePref={setPref}
               accent={accent}
               onAccent={setAccent}
+              onViewSchedule={() => setScreen('schedule')}
             />
           )}
         </div>

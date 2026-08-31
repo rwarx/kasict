@@ -4,6 +4,7 @@ import type { MetaJSON, ReplacementBlockJSON, ScheduleJSON } from '../parser/typ
 import { createResolverFromBlocks, type ParityResolver } from './parity'
 import { applyDay, type DaySchedule } from './replacementEngine'
 import { summarizeScheduleChanges, type DataChangeSummary } from './scheduleChanges'
+import { saveSnapshot } from './history'
 
 const DATA_BASE = './data'
 const CACHE_KEY_PREFIX = 'schedule:'
@@ -62,6 +63,9 @@ export async function loadData(): Promise<void> {
     cacheSet('schedule', sched)
     cacheSet('replacements', reps)
     cacheSet('meta', meta)
+
+    // Сохраняем снимок в IndexedDB (не блокируя UI)
+    saveSnapshot(sched, reps, meta).catch(() => {})
   } catch {
     const sched = cacheGet<ScheduleJSON>('schedule')
     const reps = cacheGet<ReplacementBlockJSON[]>('replacements')
@@ -131,4 +135,12 @@ export function getStaleMeta(): MetaJSON | null {
   } catch {
     return null
   }
+}
+
+/** Загрузить данные из исторического снимка (для просмотра прошлого расписания). */
+export function loadSnapshotData(snapshot: { schedule: ScheduleJSON; replacements: ReplacementBlockJSON[]; meta: MetaJSON }) {
+  _schedule = snapshot.schedule
+  _replacements = snapshot.replacements
+  _meta = snapshot.meta
+  _resolver = createResolverFromBlocks(snapshot.replacements)
 }

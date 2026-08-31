@@ -1,24 +1,33 @@
-// Настройки: группа, тема, уведомления, данные, приложение.
+// Настройки: группа, тема, уведомления, данные, история, приложение.
 
-import { useState } from 'react'
-import { getMeta } from '../services/scheduleService'
+import { useEffect, useState } from 'react'
+import { getMeta, loadSnapshotData } from '../services/scheduleService'
 import { disableNotifications, enableNotifications, isNotifEnabled, isNotifSupported, notifStatusText } from '../services/notifications'
+import { getAllSnapshots, clearHistory, getSnapshotCount, type ScheduleSnapshot } from '../services/history'
 import type { AccentColor, ThemePref } from '../lib/theme'
 import { ACCENT_OPTIONS } from '../lib/theme'
 import { ChevronRightIcon, RefreshIcon } from '../components/Icons'
 
-export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemePref, accent, onAccent }: {
+export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemePref, accent, onAccent, onViewSchedule }: {
   group: string | null
   onOpenGroupSelector: () => void
   themePref: ThemePref
   onThemePref: (p: ThemePref) => void
   accent: AccentColor
   onAccent: (a: AccentColor) => void
+  onViewSchedule: () => void
 }) {
   const [pendingGroup, setPendingGroup] = useState(false)
   const [notifOn, setNotifOn] = useState(isNotifEnabled())
   const [notifStatus, setNotifStatus] = useState(notifStatusText())
+  const [historySnapshots, setHistorySnapshots] = useState<ScheduleSnapshot[]>([])
+  const [historyCount, setHistoryCount] = useState(0)
+  const [showHistory, setShowHistory] = useState(false)
   const meta = getMeta()
+
+  useEffect(() => {
+    getSnapshotCount().then(setHistoryCount).catch(() => {})
+  }, [])
 
   const handleToggleNotif = async () => {
     if (!isNotifSupported()) return
@@ -30,6 +39,25 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
       setNotifOn(granted)
     }
     setNotifStatus(notifStatusText())
+  }
+
+  const handleOpenHistory = async () => {
+    const snapshots = await getAllSnapshots()
+    setHistorySnapshots(snapshots)
+    setShowHistory(true)
+  }
+
+  const handleLoadSnapshot = (snapshot: ScheduleSnapshot) => {
+    loadSnapshotData(snapshot)
+    setShowHistory(false)
+    onViewSchedule()
+  }
+
+  const handleClearHistory = async () => {
+    await clearHistory()
+    setHistoryCount(0)
+    setHistorySnapshots([])
+    setShowHistory(false)
   }
 
   const themeOptions: { id: ThemePref; label: string }[] = [
@@ -156,6 +184,19 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
       </section>
 
       <section className="settings-section">
+        <div className="settings-section-title">История</div>
+        <div className="settings-card">
+          <button type="button" className="settings-row" onClick={handleOpenHistory}>
+            <div className="settings-row-info">
+              <span className="settings-row-label">Сохранённые снимки</span>
+              <span className="settings-row-value">{historyCount} шт.</span>
+            </div>
+            <ChevronRightIcon size={16} className="settings-row-arrow" />
+          </button>
+        </div>
+      </section>
+
+      <section className="settings-section">
         <div className="settings-section-title">Приложение</div>
         <div className="settings-card">
           <div className="info-row">
@@ -184,6 +225,49 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
             onOpenGroupSelector()
           }}
         />
+      )}
+
+      {showHistory && (
+        <div className="modal-root" role="dialog" aria-modal="true" aria-label="История расписания">
+          <div className="modal-overlay" onClick={() => setShowHistory(false)} />
+          <div className="dialog-panel history-panel" onClick={e => e.stopPropagation()}>
+            <h3 className="dialog-title">История расписания</h3>
+            {historySnapshots.length === 0 ? (
+              <p className="dialog-text">Пока нет сохранённых снимков.</p>
+            ) : (
+              <div className="history-list">
+                {historySnapshots.map((snap) => (
+                  <button
+                    key={snap.id}
+                    type="button"
+                    className="history-item"
+                    onClick={() => handleLoadSnapshot(snap)}
+                  >
+                    <div className="history-item-date">
+                      {new Date(snap.timestamp).toLocaleString('ru-RU', {
+                        day: 'numeric', month: 'short', year: 'numeric',
+                        hour: '2-digit', minute: '2-digit',
+                      })}
+                    </div>
+                    <div className="history-item-info">
+                      {snap.meta.groups_count} групп · замены на {snap.meta.replacement_dates?.length ?? 0} дн.
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+            <div className="dialog-buttons">
+              {historySnapshots.length > 0 && (
+                <button type="button" className="btn-ghost btn-block" onClick={handleClearHistory}>
+                  Очистить
+                </button>
+              )}
+              <button type="button" className="btn-solid btn-block" onClick={() => setShowHistory(false)}>
+                Закрыть
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </>
   )
