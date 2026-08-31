@@ -6,7 +6,7 @@ import { applyDay, type DaySchedule } from './replacementEngine'
 
 const DATA_BASE = './data'
 const CACHE_KEY_PREFIX = 'schedule:'
-const CACHE_TTL_MS = 6 * 60 * 60 * 1000 // 6 часов (как GitHub Actions)
+const FETCH_TIMEOUT_MS = 10_000
 
 interface CacheEntry<T> {
   data: T
@@ -18,7 +18,6 @@ function cacheGet<T>(key: string): T | null {
     const raw = localStorage.getItem(CACHE_KEY_PREFIX + key)
     if (!raw) return null
     const entry: CacheEntry<T> = JSON.parse(raw)
-    if (Date.now() - entry.ts > CACHE_TTL_MS) return null
     return entry.data
   } catch {
     return null
@@ -33,7 +32,7 @@ function cacheSet<T>(key: string, data: T) {
 }
 
 async function fetchJSON<T>(path: string): Promise<T> {
-  const resp = await fetch(path)
+  const resp = await fetch(path, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) })
   if (!resp.ok) throw new Error(`HTTP ${resp.status} for ${path}`)
   return resp.json() as Promise<T>
 }
@@ -44,17 +43,7 @@ let _meta: MetaJSON | null = null
 let _resolver: ParityResolver | null = null
 
 export async function loadData(): Promise<void> {
-  // Try cache first
-  _schedule = cacheGet<ScheduleJSON>('schedule')
-  _replacements = cacheGet<ReplacementBlockJSON[]>('replacements')
-  _meta = cacheGet<MetaJSON>('meta')
-
-  if (_schedule && _replacements && _meta) {
-    _resolver = createResolverFromBlocks(_replacements)
-    return
-  }
-
-  // Fetch from network
+  // Network-first: всегда тянем свежие данные; кэш — офлайн-фолбэк.
   try {
     const [sched, reps, meta] = await Promise.all([
       fetchJSON<ScheduleJSON>(`${DATA_BASE}/schedule.json`),
@@ -68,13 +57,18 @@ export async function loadData(): Promise<void> {
     cacheSet('schedule', sched)
     cacheSet('replacements', reps)
     cacheSet('meta', meta)
-  } catch (e) {
-    // If network fails but cache exists, use it
-    if (_schedule && _replacements && _meta) {
-      _resolver = createResolverFromBlocks(_replacements)
+  } catch {
+    const sched = cacheGet<ScheduleJSON>('schedule')
+    const reps = cacheGet<ReplacementBlockJSON[]>('replacements')
+    const meta = cacheGet<MetaJSON>('meta')
+    if (sched && reps && meta) {
+      _schedule = sched
+      _replacements = reps
+      _meta = meta
+      _resolver = createResolverFromBlocks(reps)
       return
     }
-    throw e
+    throw new Error('Нет данных: сеть недоступна, локальный кэш пуст')
   }
 }
 
