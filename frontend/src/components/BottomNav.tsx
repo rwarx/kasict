@@ -1,13 +1,14 @@
 // Нижняя навигация: Сегодня / Неделя / Учителя / Время / Настройки.
 
 import type { Screen } from '../types'
-import { CalendarIcon, ClockIcon, GridIcon, SettingsIcon, UsersIcon } from './Icons'
+import { CalendarIcon, ClockIcon, GridIcon, MessageIcon, SettingsIcon, UsersIcon } from './Icons'
 
 const ITEMS: { id: Screen; label: string; Icon: typeof CalendarIcon }[] = [
   { id: 'schedule', label: 'Сегодня', Icon: CalendarIcon },
   { id: 'week', label: 'Неделя', Icon: GridIcon },
   { id: 'teachers', label: 'Учителя', Icon: UsersIcon },
   { id: 'time', label: 'Время', Icon: ClockIcon },
+  { id: 'chat', label: 'Помощник', Icon: MessageIcon },
   { id: 'settings', label: 'Ещё', Icon: SettingsIcon },
 ]
 
