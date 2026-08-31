@@ -627,50 +627,140 @@ function fmtTime(m: number) {
   return `${String(h).padStart(2, '0')}:${String(mm).padStart(2, '0')}`
 }
 
-function getTimeStatus() {
+function fmtCountdown(ms: number) {
+  if (ms <= 0) return '00:00.000'
+  const totalSec = Math.floor(ms / 1000)
+  const min = Math.floor(totalSec / 60)
+  const sec = totalSec % 60
+  const millis = ms % 1000
+  return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}.${String(millis).padStart(3, '0')}`
+}
+
+function getSlotEndMs(slot: Slot): number {
+  const [h, m] = [Math.floor(slot.end / 60), slot.end % 60]
+  return (h * 3600 + m * 60) * 1000
+}
+
+function getSlotStartMs(slot: Slot): number {
+  const [h, m] = [Math.floor(slot.start / 60), slot.start % 60]
+  return (h * 3600 + m * 60) * 1000
+}
+
+interface TimeStatus {
+  status: 'weekend' | 'empty' | 'before' | 'active'
+  current: Slot | null
+  next: Slot | null
+  remainingMs: number
+  totalMs: number
+}
+
+function getTimeStatus(): TimeStatus {
   const now = new Date()
-  const nowMin = toMin(now.getHours(), now.getMinutes())
+  const nowSec = (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) * 1000
   const day = now.getDay()
-  if (day === 0 || day === 6) return { status: 'weekend' as const, current: null, next: null, remaining: 0, elapsed: 0, total: 0 }
+  if (day === 0 || day === 6) return { status: 'weekend', current: null, next: null, remainingMs: 0, totalMs: 0 }
 
   let current: Slot | null = null
   let next: Slot | null = null
 
   for (const slot of TIMELINE) {
-    if (nowMin >= slot.start && nowMin < slot.end) {
+    if (nowSec >= getSlotStartMs(slot) && nowSec < getSlotEndMs(slot)) {
       current = slot
       break
     }
-    if (nowMin < slot.start) {
+    if (nowSec < getSlotStartMs(slot)) {
       next = slot
       break
     }
   }
 
-  if (!current && !next) return { status: 'empty' as const, current: null, next: null, remaining: 0, elapsed: 0, total: 0 }
+  if (!current && !next) return { status: 'empty', current: null, next: null, remainingMs: 0, totalMs: 0 }
 
   if (current) {
-    const elapsed = nowMin - current.start
-    const total = current.end - current.start
-    const remaining = current.end - nowMin
+    const endMs = getSlotEndMs(current)
+    const startMs = getSlotStartMs(current)
+    const remainingMs = Math.max(0, endMs - nowSec)
+    const totalMs = endMs - startMs
     const nxt = TIMELINE.find(s => s.start >= current!.end) ?? null
-    return { status: 'active' as const, current, next: nxt, remaining, elapsed, total }
+    return { status: 'active', current, next: nxt, remainingMs, totalMs }
   }
 
-  return { status: 'before' as const, current: null, next, remaining: 0, elapsed: 0, total: 0 }
+  return { status: 'before', current: null, next, remainingMs: 0, totalMs: 0 }
+}
+
+function Hourglass({ flipKey }: { flipKey: number }) {
+  return (
+    <div className="hourglass-wrapper">
+      <div className={`hourglass ${flipKey % 2 === 0 ? '' : 'flipped'}`}>
+        <svg viewBox="0 0 48 80" className="hourglass-svg">
+          <defs>
+            <linearGradient id="sand-top" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.9" />
+              <stop offset="100%" stopColor="var(--accent)" stopOpacity="0.4" />
+            </linearGradient>
+            <linearGradient id="sand-bot" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="var(--accent)" stopOpacity="0.9" />
+            </linearGradient>
+            <clipPath id="bulb-top">
+              <path d="M8,4 L40,4 L40,32 Q40,36 36,38 L26,42 Q24,43 22,42 L12,38 Q8,36 8,32 Z" />
+            </clipPath>
+            <clipPath id="bulb-bot">
+              <path d="M12,42 L22,42 Q24,43 26,42 L36,38 Q40,36 40,40 L40,76 L8,76 L8,40 Q8,36 12,38 Z" />
+            </clipPath>
+          </defs>
+
+          {/* Frame */}
+          <path
+            d="M8,2 L40,2 L40,4 Q42,4 42,6 L42,6 Q42,34 34,38 L26,42 Q24,43 22,42 L14,38 Q6,34 6,6 Q6,4 8,4 Z"
+            fill="none" stroke="var(--text-secondary)" strokeWidth="2" strokeLinejoin="round"
+          />
+          <path
+            d="M14,42 L22,42 Q24,43 26,42 L34,38 Q42,34 42,6 L42,6 Q42,4 40,4 L8,4 Q6,4 6,6 Q6,34 14,38 Z"
+            fill="none" stroke="var(--text-secondary)" strokeWidth="2" strokeLinejoin="round"
+          />
+          <rect x="4" y="0" width="40" height="4" rx="2" fill="var(--text-secondary)" />
+          <rect x="4" y="76" width="40" height="4" rx="2" fill="var(--text-secondary)" />
+
+          {/* Top sand */}
+          <g clipPath="url(#bulb-top)">
+            <rect className="sand-top-level" x="8" y="4" width="34" height="30" fill="url(#sand-top)" />
+          </g>
+
+          {/* Stream */}
+          <line className="sand-stream" x1="24" y1="42" x2="24" y2="42" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" />
+
+          {/* Bottom sand */}
+          <g clipPath="url(#bulb-bot)">
+            <rect className="sand-bot-level" x="8" y="76" width="34" height="0" fill="url(#sand-bot)" />
+          </g>
+        </svg>
+      </div>
+    </div>
+  )
 }
 
 function TimeScreen() {
   const [, setTick] = useState(0)
-  const now = new Date()
+  const [flipKey, setFlipKey] = useState(0)
 
   useEffect(() => {
-    const id = setInterval(() => setTick(t => t + 1), 10000)
+    const id = setInterval(() => setTick(t => t + 1), 50)
     return () => clearInterval(id)
   }, [])
 
+  // Flip hourglass every 5 minutes
+  useEffect(() => {
+    const id = setInterval(() => setFlipKey(k => k + 1), 5 * 60 * 1000)
+    // Sync flip to the next 5-minute boundary
+    const now = Date.now()
+    const msToNext5 = (5 * 60 * 1000) - (now % (5 * 60 * 1000))
+    const sync = setTimeout(() => setFlipKey(k => k + 1), msToNext5)
+    return () => { clearInterval(id); clearTimeout(sync) }
+  }, [])
+
   const ts = getTimeStatus()
-  const nowMin = toMin(now.getHours(), now.getMinutes())
+  const now = new Date()
 
   if (ts.status === 'weekend') {
     return (
@@ -679,7 +769,8 @@ function TimeScreen() {
           <h1 className="settings-title">Время</h1>
         </div>
         <div className="time-status-card">
-          <div className="time-big">{fmtTime(toMin(now.getHours(), now.getMinutes()))}</div>
+          <Hourglass flipKey={flipKey} />
+          <div className="time-big">{fmtCountdown(0)}</div>
           <div className="time-subtitle">Выходной — пар нет</div>
         </div>
       </>
@@ -693,7 +784,8 @@ function TimeScreen() {
           <h1 className="settings-title">Время</h1>
         </div>
         <div className="time-status-card">
-          <div className="time-big">{fmtTime(toMin(now.getHours(), now.getMinutes()))}</div>
+          <Hourglass flipKey={flipKey} />
+          <div className="time-big">{fmtCountdown(0)}</div>
           <div className="time-subtitle">Пары закончились</div>
         </div>
       </>
@@ -701,23 +793,25 @@ function TimeScreen() {
   }
 
   if (ts.status === 'before' && ts.next) {
-    const diff = ts.next.start - toMin(now.getHours(), now.getMinutes())
+    const nextStartMs = getSlotStartMs(ts.next)
+    const nowMs = (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) * 1000
+    const diff = nextStartMs - nowMs
     return (
       <>
         <div className="settings-header">
           <h1 className="settings-title">Время</h1>
         </div>
         <div className="time-status-card">
-          <div className="time-big">{fmtTime(toMin(now.getHours(), now.getMinutes()))}</div>
+          <Hourglass flipKey={flipKey} />
+          <div className="time-big">{fmtCountdown(Math.max(0, diff))}</div>
           <div className="time-subtitle">До начала {ts.next.label}</div>
-          <div className="time-remaining">{fmtTime(diff)} до старта</div>
         </div>
       </>
     )
   }
 
   const current = ts.current!
-  const progress = ts.total > 0 ? (ts.elapsed / ts.total) * 100 : 0
+  const progress = ts.totalMs > 0 ? ((ts.totalMs - ts.remainingMs) / ts.totalMs) * 100 : 0
   const isLunch = current.type === 'lunch'
   const isBreak = current.type === 'break'
   const pairName = current.pairNum ? `${current.pairNum} пара` : current.label
@@ -729,12 +823,10 @@ function TimeScreen() {
       </div>
 
       <div className={`time-status-card ${isLunch ? 'lunch' : isBreak ? 'break' : 'pair'}`}>
-        <div className="time-big">{fmtTime(toMin(now.getHours(), now.getMinutes()))}</div>
+        <Hourglass flipKey={flipKey} />
+        <div className="time-big">{fmtCountdown(ts.remainingMs)}</div>
         <div className="time-current-label">
           {isLunch ? 'Обеденный перерыв' : isBreak ? 'Перемена' : pairName}
-        </div>
-        <div className="time-remaining">
-          {ts.remaining > 0 ? `${fmtTime(ts.remaining)} до конца` : 'Заканчивается'}
         </div>
         <div className="time-progress-track">
           <div className="time-progress-fill" style={{ width: `${progress}%` }} />
@@ -749,8 +841,9 @@ function TimeScreen() {
       <div className="time-timeline">
         {TIMELINE.map((slot, i) => {
           const isCurrent = current && slot.start === current.start && slot.end === current.end
-          const isPast = nowMin >= slot.end
-          const isFuture = nowMin < slot.start
+          const nowSec = (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) * 1000
+          const isPast = nowSec >= getSlotEndMs(slot)
+          const isFuture = nowSec < getSlotStartMs(slot)
           return (
             <div
               key={i}
