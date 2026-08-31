@@ -7,6 +7,7 @@ const DB_NAME = 'kasict-history'
 const DB_VERSION = 1
 const STORE = 'snapshots'
 const MAX_SNAPSHOTS = 200
+const RETENTION_DAYS = 7
 
 export interface ScheduleSnapshot {
   id?: number
@@ -29,6 +30,26 @@ function openDB(): Promise<IDBDatabase> {
     req.onsuccess = () => resolve(req.result)
     req.onerror = () => reject(req.error)
   })
+}
+
+/** Удалить снимки старше RETENTION_DAYS. */
+async function cleanupOldSnapshots(db: IDBDatabase): Promise<void> {
+  const cutoff = new Date()
+  cutoff.setDate(cutoff.getDate() - RETENTION_DAYS)
+  const cutoffISO = cutoff.toISOString()
+
+  const tx = db.transaction(STORE, 'readwrite')
+  const store = tx.objectStore(STORE)
+  const idx = store.index('timestamp')
+  const range = IDBKeyRange.upperBound(cutoffISO)
+  const req = idx.openCursor(range)
+  req.onsuccess = () => {
+    const cursor = req.result
+    if (cursor) {
+      cursor.delete()
+      cursor.continue()
+    }
+  }
 }
 
 /** Сохранить снимок. Если запись с таким timestamp уже есть — не дублирует. */
@@ -60,7 +81,10 @@ export async function saveSnapshot(
         meta,
       } satisfies ScheduleSnapshot)
 
-      // Чистим старые снимки, оставляем MAX_SNAPSHOTS
+      // Чистим старые снимки (> 7 дней)
+      cleanupOldSnapshots(db)
+
+      // Чистим по количеству, оставляем MAX_SNAPSHOTS
       const countReq = store.count()
       countReq.onsuccess = () => {
         if (countReq.result > MAX_SNAPSHOTS) {
