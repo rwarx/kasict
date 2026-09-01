@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: write
 
     steps:
       - uses: actions/checkout@v4
@@ -30,9 +31,23 @@ jobs:
         run: python scripts/generate_data.py
 
       - name: Commit and push
+        id: commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add frontend/public/data/
-          git diff --staged --quiet || git commit -m "chore: update schedule data"
-          git push
+          if git diff --staged --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "chore: update schedule data"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Push ботовым GITHUB_TOKEN не триггерит другие workflows — деплой запускаем явно
+      - name: Trigger Pages deploy
+        if: steps.commit.outputs.changed == 'true'
+        run: |
+          gh api "repos/${{ github.repository }}/actions/workflows/deploy.yml/dispatches" -f ref=main
+        env:
+          GH_TOKEN: ${{ github.token }}

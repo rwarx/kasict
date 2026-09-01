@@ -34,7 +34,10 @@ function cacheSet<T>(key: string, data: T) {
 }
 
 async function fetchJSON<T>(path: string): Promise<T> {
-  const resp = await fetch(path, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) })
+  const resp = await fetch(path, {
+    signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+    cache: 'no-store',
+  })
   if (!resp.ok) throw new Error(`HTTP ${resp.status} for ${path}`)
   return resp.json() as Promise<T>
 }

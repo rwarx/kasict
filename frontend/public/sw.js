@@ -124,7 +124,7 @@ self.addEventListener('fetch', (event) => {
   // For data files: network-first (fresh data when online, cache when offline)
   if (url.pathname.includes('/data/')) {
     event.respondWith(
-      fetch(event.request)
+      fetch(event.request, { cache: 'no-store' })
         .then((resp) => {
           if (resp.ok) {
             const clone = resp.clone()
