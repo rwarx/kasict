@@ -112,6 +112,8 @@ export function applyDay(
       if (rep.group !== group) continue
 
       const targets = rep.lesson_numbers.length > 0 ? rep.lesson_numbers : PAIR_NUMBERS
+      let groupChanged = false
+
       for (const p of targets) {
         if (!(p in views)) {
           daySchedule.warnings.push(`Некорректный номер пары ${p} в замене для «${rep.group}»`)
@@ -128,23 +130,26 @@ export function applyDay(
             status: 'cancelled',
             original: originals[p] ? { ...originals[p]! } : null,
           }
+          groupChanged = true
           continue
         }
 
         const base = originals[p]
+        const status = classify(base, rep)
         views[p] = {
           ...views[p],
           subject: rep.subject,
           teacher: rep.teacher,
           classroom: rep.classroom,
           is_remote: isRemote(rep.classroom),
-          status: classify(base, rep),
+          status,
           original: base ? { ...base } : null,
         }
+        if (status !== 'normal') groupChanged = true
+      }
 
-        if (rep.lesson_numbers.length === 0 && rep.subject) {
-          daySchedule.day_note = rep.subject.slice(0, 60)
-        }
+      if (groupChanged && rep.lesson_numbers.length === 0 && rep.subject) {
+        daySchedule.day_note = rep.subject.slice(0, 60)
       }
     }
   }
