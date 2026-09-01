@@ -2,8 +2,9 @@ name: Update Schedule Data
 
 on:
   schedule:
-    # Обновление каждые 6 часов
-    - cron: '0 */6 * * *'
+    # Проверка каждые 30 минут (на не круглых минутах — GitHub задерживает
+    # запуски ровно в :00 из-за пиков нагрузки)
+    - cron: '7,37 * * * *'
   workflow_dispatch: # Ручной запуск
   push:
     paths:
@@ -22,10 +23,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: scripts/requirements.txt
 
       - name: Install dependencies
-        run: |
-          pip install httpx beautifulsoup4 lxml pydantic pydantic-settings
+        run: pip install -r scripts/requirements.txt
 
       - name: Generate schedule data
         run: python scripts/generate_data.py

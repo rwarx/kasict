@@ -165,22 +165,36 @@ def main() -> None:
     replacements_json = build_replacements_json(blocks)
 
     # 6. Write files
-    (OUTPUT_DIR / "schedule.json").write_text(
-        json.dumps(schedule_json, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-    (OUTPUT_DIR / "replacements.json").write_text(
-        json.dumps(replacements_json, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-    meta = {
-        "updated_at": datetime.now().isoformat(),
-        "groups_count": len(schedule.groups),
-        "replacement_dates": [b.date.isoformat() for b in blocks],
-        "raspisanie_url": raspisanie_url,
-        "zamena_url": zamena_url,
-    }
-    (OUTPUT_DIR / "meta.json").write_text(
-        json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
+    new_schedule_text = json.dumps(schedule_json, ensure_ascii=False, indent=2)
+    new_replacements_text = json.dumps(replacements_json, ensure_ascii=False, indent=2)
+
+    def read_existing(name: str) -> str | None:
+        p = OUTPUT_DIR / name
+        return p.read_text(encoding="utf-8") if p.exists() else None
+
+    old_schedule = read_existing("schedule.json")
+    old_replacements = read_existing("replacements.json")
+    changed = new_schedule_text != old_schedule or new_replacements_text != old_replacements
+
+    (OUTPUT_DIR / "schedule.json").write_text(new_schedule_text, encoding="utf-8")
+    (OUTPUT_DIR / "replacements.json").write_text(new_replacements_text, encoding="utf-8")
+
+    # meta.updated_at и коммит меняются только при реальном изменении данных —
+    # иначе частые запуски создают пустые коммиты и лишние деплои
+    meta_path = OUTPUT_DIR / "meta.json"
+    if changed or not meta_path.exists():
+        meta = {
+            "updated_at": datetime.now().isoformat(),
+            "groups_count": len(schedule.groups),
+            "replacement_dates": [b.date.isoformat() for b in blocks],
+            "raspisanie_url": raspisanie_url,
+            "zamena_url": zamena_url,
+        }
+        meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
+        log.info("Data changed, meta updated")
+    else:
+        log.info("Data unchanged, meta kept")
+
     log.info("Written: %s", OUTPUT_DIR)
     log.info("Done!")
 
