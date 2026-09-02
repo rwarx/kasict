@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 function toMin(h: number, m: number) { return h * 60 + m }
 
 interface Slot {
-  type: 'pair' | 'break' | 'lunch'
+  type: 'pair' | 'pair_break' | 'break' | 'lunch'
   label: string
   startMin: number
   endMin: number
@@ -23,16 +23,27 @@ const TIMELINE: Slot[] = (() => {
     [17, 15, 18, 50],
   ]
   const LUNCH_AFTER = [2, 3]
+  const PAIR_BREAK_MIN = 5
   const result: Slot[] = []
 
   for (let i = 0; i < PAIRS.length; i++) {
     const num = i + 1
     const [sh, sm, eh, em] = PAIRS[i]
-    result.push({ type: 'pair', label: `${num} пара`, startMin: toMin(sh, sm), endMin: toMin(eh, em), pairNum: num })
+    const startMin = toMin(sh, sm)
+    const endMin = toMin(eh, em)
+    const totalMin = endMin - startMin
+    const halfMin = (totalMin - PAIR_BREAK_MIN) / 2
+
+    // Первая половина пары
+    result.push({ type: 'pair', label: `${num} пара`, startMin, endMin: startMin + halfMin, pairNum: num })
+    // 5-минутная перемена внутри пары
+    result.push({ type: 'pair_break', label: 'Перемена', startMin: startMin + halfMin, endMin: startMin + halfMin + PAIR_BREAK_MIN, pairNum: num })
+    // Вторая половина пары
+    result.push({ type: 'pair', label: `${num} пара`, startMin: startMin + halfMin + PAIR_BREAK_MIN, endMin, pairNum: num })
 
     if (i < PAIRS.length - 1) {
       const [nh, nm] = [PAIRS[i + 1][0], PAIRS[i + 1][1]]
-      const breakStart = toMin(eh, em)
+      const breakStart = endMin
       const breakEnd = toMin(nh, nm)
       if (LUNCH_AFTER.includes(num)) {
         result.push({ type: 'lunch', label: 'Обед', startMin: breakStart, endMin: breakEnd })
@@ -272,6 +283,7 @@ export function TimeScreen() {
   const progress = ts.totalMs > 0 ? ((ts.totalMs - ts.remainingMs) / ts.totalMs) * 100 : 0
   const isLunch = current.type === 'lunch'
   const isBreak = current.type === 'break'
+  const isPairBreak = current.type === 'pair_break'
   const pairName = current.pairNum ? `${current.pairNum} пара` : current.label
 
   return (
@@ -280,11 +292,11 @@ export function TimeScreen() {
         <div className="date-eyebrow">Время</div>
       </div>
 
-      <div className={`time-status-card ${isLunch ? 'lunch' : isBreak ? 'break' : 'pair'}`}>
+      <div className={`time-status-card ${isLunch ? 'lunch' : isBreak || isPairBreak ? 'break' : 'pair'}`}>
         <Hourglass progress={hourglassProgress} />
         <div className="time-big">{fmtCountdown(ts.remainingMs)}</div>
         <div className="time-current-label">
-          {isLunch ? 'Обеденный перерыв' : isBreak ? 'Перемена' : pairName}
+          {isLunch ? 'Обеденный перерыв' : isPairBreak ? `Перемена (${pairName})` : isBreak ? 'Перемена' : pairName}
         </div>
         <div className="time-progress-track">
           <div className="time-progress-fill" style={{ width: `${progress}%` }} />
