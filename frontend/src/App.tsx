@@ -122,6 +122,7 @@ export default function App() {
               accent={accent}
               onAccent={setAccent}
               onViewSchedule={() => setScreen('schedule')}
+              onShowFireworks={() => setDayXShow(true)}
             />
           )}
         </div>

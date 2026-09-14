@@ -7,9 +7,9 @@ import { getAllSnapshots, clearHistory, getSnapshotCount, type ScheduleSnapshot 
 import type { AccentColor, ThemePref } from '../lib/theme'
 import { ACCENT_OPTIONS } from '../lib/theme'
 import { isDayXFireworksEnabled, setDayXFireworksEnabled } from '../lib/specialDays'
-import { ChevronRightIcon, RefreshIcon } from '../components/Icons'
+import { ChevronRightIcon, RefreshIcon, SparklesIcon } from '../components/Icons'
 
-export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemePref, accent, onAccent, onViewSchedule }: {
+export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemePref, accent, onAccent, onViewSchedule, onShowFireworks }: {
   group: string | null
   onOpenGroupSelector: () => void
   themePref: ThemePref
@@ -17,6 +17,7 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
   accent: AccentColor
   onAccent: (a: AccentColor) => void
   onViewSchedule: () => void
+  onShowFireworks: () => void
 }) {
   const [pendingGroup, setPendingGroup] = useState(false)
   const [notifOn, setNotifOn] = useState(isNotifEnabled())
@@ -147,6 +148,16 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
               <span className="toggle-track" />
             </label>
           </div>
+          <button type="button" className="settings-row" onClick={onShowFireworks}>
+            <div className="settings-row-info">
+              <span className="settings-row-label settings-row-label-accent">
+                <SparklesIcon size={15} />
+                Показать салют
+              </span>
+              <span className="settings-row-value">Предпросмотр Дня X — в любой день</span>
+            </div>
+            <ChevronRightIcon size={16} className="settings-row-arrow" />
+          </button>
         </div>
       </section>
 
