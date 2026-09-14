@@ -134,7 +134,7 @@ export function ScheduleScreen({ group, dateISO, setDateISO }: {
       )}
 
       {visible.length === 0 ? (
-        <EmptyDay dateLabel={formatDateFull(dateISO)} />
+        <EmptyDay dateLabel={formatDateFull(dateISO)} celebrate={isDayX(dateISO)} />
       ) : (
         <div className="lessons animate-in" key={dateISO}>
           {visible.map((l, i) => (

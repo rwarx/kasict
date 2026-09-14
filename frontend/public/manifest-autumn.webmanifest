@@ -1,0 +1,17 @@
+{
+  "name": "Расписание колледжа",
+  "short_name": "Расписание",
+  "description": "Расписание колледжа kasict.ru с автоматическим учётом замен",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#0E0E12",
+  "background_color": "#0E0E12",
+  "icons": [
+    { "src": "./icons/icon-192-autumn.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-512-autumn.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-maskable-512-autumn.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

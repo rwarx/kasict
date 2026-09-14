@@ -2,6 +2,7 @@
 // Логика слотов и отсчёта перенесена из исходного App.tsx без изменений.
 
 import { useEffect, useState } from 'react'
+import type { ReactNode } from 'react'
 
 function toMin(h: number, m: number) { return h * 60 + m }
 
@@ -71,6 +72,51 @@ function fmtCountdown(ms: number) {
 }
 
 function slotMs(min: number) { return min * 60 * 1000 }
+
+const DAY_START_MS = slotMs(8 * 60 - 10) // условная «точка отсчёта» дня — 07:50
+
+/**
+ * Круговой неоновый индикатор: «до конца пары / до звонка».
+ * В центре — песочные часы (существующая деталь интерфейса).
+ */
+function ProgressRing({ progress, children }: { progress: number; children?: ReactNode }) {
+  const SIZE = 232
+  const STROKE = 10
+  const R = (SIZE - STROKE) / 2
+  const C = 2 * Math.PI * R
+  const p = Math.max(0, Math.min(1, progress))
+
+  return (
+    <div
+      className="time-ring"
+      role="progressbar"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(p * 100)}
+      aria-label="Прогресс до звонка"
+    >
+      <svg viewBox={`0 0 ${SIZE} ${SIZE}`} aria-hidden="true">
+        <defs>
+          <linearGradient id="time-ring-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="var(--accent)" />
+            <stop offset="100%" stopColor="var(--accent-2)" />
+          </linearGradient>
+        </defs>
+        <circle className="time-ring-track" cx={SIZE / 2} cy={SIZE / 2} r={R} strokeWidth={STROKE} />
+        <circle
+          className="time-ring-fill"
+          cx={SIZE / 2}
+          cy={SIZE / 2}
+          r={R}
+          strokeWidth={STROKE}
+          strokeDasharray={C}
+          strokeDashoffset={C * (1 - p)}
+        />
+      </svg>
+      <div className="time-ring-center" aria-hidden="true">{children}</div>
+    </div>
+  )
+}
 
 interface TimeStatus {
   status: 'weekend' | 'empty' | 'before' | 'active'
@@ -237,7 +283,9 @@ export function TimeScreen() {
           <div className="date-eyebrow">Время</div>
         </div>
         <div className="time-status-card">
-          <Hourglass progress={0} />
+          <ProgressRing progress={0}>
+            <Hourglass progress={0} />
+          </ProgressRing>
           <div className="time-big">{clockTime}</div>
           <div className="time-subtitle">Выходной — пар нет</div>
         </div>
@@ -253,7 +301,9 @@ export function TimeScreen() {
           <div className="date-eyebrow">Время</div>
         </div>
         <div className="time-status-card">
-          <Hourglass progress={0} />
+          <ProgressRing progress={1}>
+            <Hourglass progress={1} />
+          </ProgressRing>
           <div className="time-big">{clockTime}</div>
           <div className="time-subtitle">Пары закончились</div>
         </div>
@@ -264,15 +314,26 @@ export function TimeScreen() {
 
   if (ts.status === 'before' && ts.next) {
     const diff = slotMs(ts.next.startMin) - nowMs
+    // Прогресс «до звонка»: доля времени от конца предыдущего слота до начала следующего
+    let prevEnd = DAY_START_MS
+    for (const s of TIMELINE) {
+      const e = slotMs(s.endMin)
+      if (e <= nowMs && e > prevEnd) prevEnd = e
+    }
+    const ringTotal = slotMs(ts.next.startMin) - prevEnd
+    const ringP = ringTotal > 0 ? (nowMs - prevEnd) / ringTotal : 0
+    const beforeLabel = ts.next.type === 'pair' ? `До начала ${ts.next.label}` : 'До звонка'
     return (
       <>
         <div className="date-hero">
           <div className="date-eyebrow">Время</div>
         </div>
         <div className="time-status-card before-pair">
-          <Hourglass progress={0} />
+          <ProgressRing progress={ringP}>
+            <Hourglass progress={0} />
+          </ProgressRing>
           <div className="time-big">{fmtCountdown(Math.max(0, diff))}</div>
-          <div className="time-current-label">До начала {ts.next.label}</div>
+          <div className="time-current-label">{beforeLabel}</div>
         </div>
         <DayTimeline nowMs={nowMs} />
       </>
@@ -280,11 +341,17 @@ export function TimeScreen() {
   }
 
   const current = ts.current!
-  const progress = ts.totalMs > 0 ? ((ts.totalMs - ts.remainingMs) / ts.totalMs) * 100 : 0
   const isLunch = current.type === 'lunch'
   const isBreak = current.type === 'break'
   const isPairBreak = current.type === 'pair_break'
   const pairName = current.pairNum ? `${current.pairNum} пара` : current.label
+  const activeLabel = isLunch
+    ? 'Обеденный перерыв'
+    : isPairBreak
+      ? `Перемена (${pairName})`
+      : isBreak
+        ? 'Перемена'
+        : `До конца ${current.pairNum}-й пары`
 
   return (
     <>
@@ -293,14 +360,11 @@ export function TimeScreen() {
       </div>
 
       <div className={`time-status-card ${isLunch ? 'lunch' : isBreak || isPairBreak ? 'break' : 'pair'}`}>
-        <Hourglass progress={hourglassProgress} />
+        <ProgressRing progress={hourglassProgress}>
+          <Hourglass progress={hourglassProgress} />
+        </ProgressRing>
         <div className="time-big">{fmtCountdown(ts.remainingMs)}</div>
-        <div className="time-current-label">
-          {isLunch ? 'Обеденный перерыв' : isPairBreak ? `Перемена (${pairName})` : isBreak ? 'Перемена' : pairName}
-        </div>
-        <div className="time-progress-track">
-          <div className="time-progress-fill" style={{ width: `${progress}%` }} />
-        </div>
+        <div className="time-current-label">{activeLabel}</div>
         {ts.next && (
           <div className="time-next">
             Далее: {ts.next.label} ({fmtTime(ts.next.startMin)})

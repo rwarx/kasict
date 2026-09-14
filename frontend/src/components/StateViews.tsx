@@ -37,12 +37,16 @@ export function ErrorScreen({ onRetry }: { onRetry: () => void }) {
   )
 }
 
-export function EmptyDay({ dateLabel }: { dateLabel: string }) {
+export function EmptyDay({ dateLabel, celebrate }: { dateLabel: string; celebrate?: boolean }) {
   return (
-    <div className="state-wrap">
-      <div className="state-icon success" aria-hidden="true">✓</div>
-      <h2 className="state-title">Пар нет</h2>
-      <p className="state-text">На {dateLabel} занятий не запланировано — можно отдыхать.</p>
+    <div className="state-wrap empty-day">
+      <div className={`empty-orb ${celebrate ? 'party' : ''}`} aria-hidden="true">
+        {celebrate ? '🎉' : '☕'}
+      </div>
+      <h2 className="state-title">{celebrate ? 'День X — гуляем!' : 'Пар нет — отдыхай'}</h2>
+      <p className="state-text">
+        На {dateLabel} занятий не запланировано{celebrate ? ' — празднуем День X' : ' — самое время передохнуть'}.
+      </p>
     </div>
   )
 }

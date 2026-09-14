@@ -1,4 +1,4 @@
-const SHELL_CACHE = 'shell-v8'
+const SHELL_CACHE = 'shell-v9'
 const API_CACHE = 'api-v1'
 
 function resolve(path) {
@@ -48,6 +48,11 @@ self.addEventListener('periodicsync', (event) => {
   }
 })
 
+function seasonName() {
+  const m = new Date().getMonth()
+  return (m <= 1 || m === 11) ? 'winter' : m <= 4 ? 'spring' : m <= 7 ? 'summer' : 'autumn'
+}
+
 async function checkForUpdates() {
   const cache = await caches.open(SHELL_CACHE)
   const metaUrl = resolve('./data/meta.json')
@@ -83,7 +88,7 @@ async function checkForUpdates() {
   await self.registration.showNotification('Расписание обновлено', {
     body,
     tag: 'data-update',
-    icon: resolve('./icons/icon-192.png'),
+    icon: resolve('./icons/icon-192-' + seasonName() + '.png'),
   })
 }
 

@@ -2,7 +2,7 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
     <meta name="theme-color" content="#F4F4F1" />
     <meta name="description" content="Расписание колледжа с автоматическим учётом замен" />
     <link rel="manifest" href="./manifest.webmanifest" />
@@ -29,6 +29,13 @@
           root.dataset.theme = p
           root.dataset.season = s
           root.style.colorScheme = p
+          // Сезонные иконки PWA: манифест + favicon + apple-touch-icon под текущий сезон
+          var ml = document.querySelector('link[rel="manifest"]')
+          if (ml) ml.setAttribute('href', './manifest-' + s + '.webmanifest')
+          var il = document.querySelector('link[rel="icon"]')
+          if (il) il.setAttribute('href', './icons/icon-192-' + s + '.png')
+          var al = document.querySelector('link[rel="apple-touch-icon"]')
+          if (al) al.setAttribute('href', './icons/icon-192-' + s + '.png')
         } catch (e) { /* noop */ }
       })()
     </script>

@@ -92,8 +92,11 @@
 html {
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   scrollbar-width: thin;
   scrollbar-color: var(--border-strong) transparent;
+  /* Нативное app-поведение: без pull-to-refresh и резиновой отдачи страницы */
+  overscroll-behavior: none;
 }
 
 body {
@@ -107,6 +110,22 @@ body {
   min-height: 100dvh;
   overflow-x: hidden;
   transition: background 0.25s ease, color 0.25s ease;
+  /* Как в нативном приложении: без двойного тапа-зума и прокрутки-цепочки */
+  touch-action: manipulation;
+  overscroll-behavior-y: none;
+}
+
+/* UI-хром приложения не выделяется и не вызывает системное меню при долгом тапе */
+button,
+.app-header,
+.bottom-nav,
+.quick-nav,
+.date-strip,
+.week-day-header,
+.cal-grid {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 
 #root {
@@ -814,6 +833,40 @@ button {
   min-width: 160px;
 }
 
+/* Пустой день: крупный неоновый орб-эмодзи + градиентный заголовок */
+.empty-orb {
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 50px;
+  line-height: 1;
+  margin: 0 auto 20px;
+  background:
+    radial-gradient(120% 120% at 30% 20%, var(--accent-soft-2), var(--accent-soft) 55%, transparent 100%),
+    var(--surface);
+  border: 1px solid var(--accent-soft-2);
+  animation: emptyOrbPulse 3.2s ease-in-out infinite;
+}
+
+.empty-orb.party {
+  animation-duration: 2.2s;
+}
+
+@keyframes emptyOrbPulse {
+  0%, 100% { box-shadow: 0 0 16px var(--accent-glow), inset 0 0 18px var(--accent-soft-2); }
+  50%      { box-shadow: 0 0 32px var(--accent-glow), 0 0 6px var(--accent-glow), inset 0 0 22px var(--accent-soft-2); }
+}
+
+.empty-day .state-title {
+  background: linear-gradient(120deg, var(--neon), var(--accent-2) 55%, var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
 .footer-info {
   text-align: center;
   font-size: 12.5px;
@@ -1378,14 +1431,17 @@ button {
 }
 
 .cal-cell.selected {
-  background: var(--accent);
-  color: var(--on-accent);
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    linear-gradient(135deg, var(--accent), var(--accent-2)) border-box;
+  color: var(--accent);
   font-weight: 800;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 0 14px var(--accent-glow), var(--shadow-md);
 }
 
 .cal-cell.selected.today::after {
-  background: var(--on-accent);
+  background: var(--accent);
 }
 
 .calendar-actions {
@@ -1899,6 +1955,53 @@ button.settings-row:hover {
   transition: filter 0.6s ease;
 }
 
+/* ---------- Круговой неон-индикатор «Времени» ---------- */
+
+.time-ring {
+  position: relative;
+  width: 232px;
+  height: 232px;
+  margin: 0 auto 10px;
+}
+
+.time-ring > svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform: rotate(-90deg);
+}
+
+.time-ring-track {
+  fill: none;
+  stroke: var(--surface-2);
+}
+
+.time-ring-fill {
+  fill: none;
+  stroke: url(#time-ring-grad);
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px var(--accent-glow));
+  transition: stroke-dashoffset 0.12s linear;
+}
+
+.time-ring-center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.time-ring-center .hourglass-wrapper {
+  margin: 0;
+}
+
+@media (max-width: 359px) {
+  .time-ring {
+    width: 196px;
+    height: 196px;
+  }
+}
+
 /* струйка песка: движение штрихов сверху вниз */
 .sand-stream {
   animation: sandFall 0.9s linear infinite;
@@ -1976,24 +2079,6 @@ button.settings-row:hover {
   margin-top: 6px;
   font-weight: 500;
 }
-
-.time-progress-track {
-  height: 5px;
-  background: var(--surface-2);
-  border-radius: 3px;
-  margin-top: 16px;
-  overflow: hidden;
-}
-
-.time-progress-fill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 3px;
-  transition: width 10s linear;
-}
-
-.time-status-card.lunch .time-progress-fill { background: var(--amber); }
-.time-status-card.break .time-progress-fill { background: var(--green); }
 
 .time-next {
   font-size: 13px;
@@ -2937,7 +3022,8 @@ button.settings-row:hover {
 
 @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
   :root[data-theme='dark'] .lesson-card,
-  :root[data-theme='dark'] .settings-card {
+  :root[data-theme='dark'] .settings-card,
+  :root[data-theme='dark'] .time-status-card {
     background: rgba(24, 24, 31, 0.60);
     backdrop-filter: blur(16px) saturate(1.2);
     -webkit-backdrop-filter: blur(16px) saturate(1.2);
