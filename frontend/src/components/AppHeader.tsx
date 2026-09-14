@@ -1,40 +1,54 @@
-// Верхняя панель: бренд KASICT, чип группы, переключатель темы.
+// Верхняя панель: бренд KASICT, чип сезона, чип «День X», чип группы, переключатель белой/чёрной темы.
 
-import type { ThemePref } from '../lib/theme'
-import { ChevronDownIcon, LaptopIcon, MoonIcon, SparklesIcon, SunIcon } from './Icons'
+import type { Season, ThemePref } from '../lib/theme'
+import { SEASONS } from '../lib/theme'
+import { ChevronDownIcon, MoonIcon, SparklesIcon, SunIcon } from './Icons'
 
-export function ThemeButton({ pref, onCycle, isDark }: {
+export function ThemeButton({ pref, onToggle, isDark }: {
   pref: ThemePref
-  onCycle: () => void
+  onToggle: () => void
   isDark: boolean
 }) {
-  const label = pref === 'system' ? 'Системная тема' : pref === 'dark' ? 'Тёмная тема' : 'Светлая тема'
+  const label = isDark ? 'Чёрная тема' : 'Белая тема'
   return (
     <button
       type="button"
       className="icon-btn"
-      onClick={onCycle}
+      onClick={onToggle}
       aria-label={`${label}. Нажмите, чтобы переключить`}
       title={label}
+      data-pref={pref}
     >
-      {pref === 'system' ? <LaptopIcon /> : isDark ? <MoonIcon /> : <SunIcon />}
+      {isDark ? <MoonIcon /> : <SunIcon />}
     </button>
   )
 }
 
-export function AppHeader({ group, onOpenGroup, pref, onCycleTheme, isDark, dayX }: {
+export function SeasonChip({ season }: { season: Season }) {
+  const s = SEASONS[season]
+  return (
+    <span className="season-chip" title={`Сезонная тема: ${s.hint}`}>
+      {s.emoji}
+      {s.label}
+    </span>
+  )
+}
+
+export function AppHeader({ group, onOpenGroup, pref, onToggleTheme, isDark, dayX, season }: {
   group: string
   onOpenGroup: () => void
   pref: ThemePref
-  onCycleTheme: () => void
+  onToggleTheme: () => void
   isDark: boolean
   dayX?: boolean
+  season: Season
 }) {
   return (
     <header className="app-header">
       <div className="brand">
         <span className="brand-mark" aria-hidden="true">K</span>
         <span className="brand-name">KASICT</span>
+        <SeasonChip season={season} />
         {dayX && (
           <span className="dayx-chip" title="Сегодня — День X! (18 сентября)">
             <SparklesIcon size={13} />
@@ -48,7 +62,7 @@ export function AppHeader({ group, onOpenGroup, pref, onCycleTheme, isDark, dayX
           <span className="group-chip-value">{group}</span>
           <ChevronDownIcon size={14} />
         </button>
-        <ThemeButton pref={pref} onCycle={onCycleTheme} isDark={isDark} />
+        <ThemeButton pref={pref} onToggle={onToggleTheme} isDark={isDark} />
       </div>
     </header>
   )

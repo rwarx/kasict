@@ -3,7 +3,7 @@ import { getLastChanges, getMeta, loadData } from './services/scheduleService'
 import { handleNewData } from './services/notifications'
 import { AppHeader } from './components/AppHeader'
 import { Fireworks } from './components/Fireworks'
-import { isDayXFireworksEnabled, shouldCelebrateDayX } from './lib/specialDays'
+import { shouldCelebrateDayX } from './lib/specialDays'
 import { BottomNav } from './components/BottomNav'
 import { GroupSelectModal } from './components/GroupSelect'
 import { ErrorScreen, LoadingScreen, OfflineBanner } from './components/StateViews'
@@ -15,7 +15,7 @@ import { ChatScreen } from './screens/ChatScreen'
 import { SettingsScreen } from './screens/SettingsScreen'
 import { OnboardingFlow } from './screens/Onboarding'
 import type { Screen } from './types'
-import { useTheme, type ThemePref } from './lib/theme'
+import { useTheme } from './lib/theme'
 
 const GROUP_KEY = 'schedule:group'
 const ONBOARDING_KEY = 'schedule:onboarded'
@@ -38,11 +38,11 @@ export default function App() {
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
   })
   const isDayXToday = shouldCelebrateDayX(today)
-  const { pref, setPref, accent, setAccent, isDark } = useTheme()
+  const { pref, setPref, isDark, season } = useTheme()
 
-  // День X: при открытии приложения 18 сентября — салют
+  // День X: при открытии приложения 18 сентября — салют (всегда включён)
   useEffect(() => {
-    if (shouldCelebrateDayX(today) && isDayXFireworksEnabled()) {
+    if (shouldCelebrateDayX(today)) {
       setDayXShow(true)
     }
   }, [today])
@@ -69,10 +69,8 @@ export default function App() {
     setGroup(newGroup)
   }
 
-  const cycleTheme = () => {
-    const order: ThemePref[] = ['light', 'dark', 'system']
-    const next = order[(order.indexOf(pref) + 1) % order.length]
-    setPref(next)
+  const toggleTheme = () => {
+    setPref(isDark ? 'light' : 'dark')
   }
 
   if (!onboarded && !group) {
@@ -95,9 +93,10 @@ export default function App() {
             group={group ?? '—'}
             onOpenGroup={() => setGroupModal(true)}
             pref={pref}
-            onCycleTheme={cycleTheme}
+            onToggleTheme={toggleTheme}
             isDark={isDark}
             dayX={isDayXToday}
+            season={season}
           />
 
           <OfflineBanner show={!navigator.onLine} />
@@ -119,8 +118,7 @@ export default function App() {
               onOpenGroupSelector={() => setGroupModal(true)}
               themePref={pref}
               onThemePref={setPref}
-              accent={accent}
-              onAccent={setAccent}
+              season={season}
               onViewSchedule={() => setScreen('schedule')}
               onShowFireworks={() => setDayXShow(true)}
             />

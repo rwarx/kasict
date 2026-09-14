@@ -2701,3 +2701,201 @@ button.settings-row:hover {
   gap: 6px;
   color: var(--accent);
 }
+
+/* ============================================================
+   Сезонные палитры (данные-theme + data-season выставляет
+   инлайн-скрипт в index.html до загрузки бандла)
+   ============================================================ */
+
+/* --- Осень: жёлто-оранжевая (сентябрь–ноябрь) --- */
+:root[data-season='autumn'] {
+  --accent: #D97706;
+  --accent-strong: #B45309;
+  --on-accent: #FFFFFF;
+  --accent-soft: rgba(217, 119, 6, 0.10);
+  --accent-soft-2: rgba(217, 119, 6, 0.17);
+  --accent-2: #F59E0B;
+  --accent-2-soft: rgba(245, 158, 11, 0.12);
+  --accent-glow: rgba(217, 119, 6, 0.30);
+  --neon: #FBBF24;
+}
+
+/* --- Лето: жёлто-зелёная (июнь–август) --- */
+:root[data-season='summer'] {
+  --accent: #65A30D;
+  --accent-strong: #4D7C0F;
+  --on-accent: #FFFFFF;
+  --accent-soft: rgba(101, 163, 13, 0.10);
+  --accent-soft-2: rgba(101, 163, 13, 0.17);
+  --accent-2: #84CC16;
+  --accent-2-soft: rgba(132, 204, 22, 0.12);
+  --accent-glow: rgba(101, 163, 13, 0.30);
+  --neon: #A3E635;
+}
+
+/* --- Зима: бело-голубая (декабрь–февраль) --- */
+:root[data-season='winter'] {
+  --accent: #0284C7;
+  --accent-strong: #0369A1;
+  --on-accent: #FFFFFF;
+  --accent-soft: rgba(2, 132, 199, 0.10);
+  --accent-soft-2: rgba(2, 132, 199, 0.17);
+  --accent-2: #38BDF8;
+  --accent-2-soft: rgba(56, 189, 248, 0.13);
+  --accent-glow: rgba(2, 132, 199, 0.30);
+  --neon: #7DD3FC;
+}
+
+/* --- Весна: свежая зелёно-розовая (март–май) --- */
+:root[data-season='spring'] {
+  --accent: #16A34A;
+  --accent-strong: #15803D;
+  --on-accent: #FFFFFF;
+  --accent-soft: rgba(22, 163, 74, 0.10);
+  --accent-soft-2: rgba(22, 163, 74, 0.17);
+  --accent-2: #EC4899;
+  --accent-2-soft: rgba(236, 72, 153, 0.11);
+  --accent-glow: rgba(22, 163, 74, 0.30);
+  --neon: #4ADE80;
+}
+
+/* --- Тёмные (неон) варианты сезонов --- */
+:root[data-theme='dark'][data-season='autumn'] {
+  --accent: #FBBF24;
+  --accent-strong: #FCD34D;
+  --on-accent: #1F120A;
+  --accent-soft: rgba(251, 191, 36, 0.14);
+  --accent-soft-2: rgba(251, 191, 36, 0.22);
+  --accent-2: #FB923C;
+  --accent-2-soft: rgba(251, 146, 60, 0.15);
+  --accent-glow: rgba(251, 191, 36, 0.38);
+  --neon: #FDE68A;
+}
+
+:root[data-theme='dark'][data-season='summer'] {
+  --accent: #A3E635;
+  --accent-strong: #BEF264;
+  --on-accent: #1A2005;
+  --accent-soft: rgba(163, 230, 53, 0.14);
+  --accent-soft-2: rgba(163, 230, 53, 0.22);
+  --accent-2: #FACC15;
+  --accent-2-soft: rgba(250, 204, 21, 0.14);
+  --accent-glow: rgba(163, 230, 53, 0.38);
+  --neon: #D9F99D;
+}
+
+:root[data-theme='dark'][data-season='winter'] {
+  --accent: #7DD3FC;
+  --accent-strong: #BAE6FD;
+  --on-accent: #0A1B26;
+  --accent-soft: rgba(125, 211, 252, 0.15);
+  --accent-soft-2: rgba(125, 211, 252, 0.23);
+  --accent-2: #38BDF8;
+  --accent-2-soft: rgba(56, 189, 248, 0.16);
+  --accent-glow: rgba(125, 211, 252, 0.40);
+  --neon: #E0F2FE;
+}
+
+:root[data-theme='dark'][data-season='spring'] {
+  --accent: #4ADE80;
+  --accent-strong: #86EFAC;
+  --on-accent: #0B1F12;
+  --accent-soft: rgba(74, 222, 128, 0.14);
+  --accent-soft-2: rgba(74, 222, 128, 0.22);
+  --accent-2: #F9A8D4;
+  --accent-2-soft: rgba(249, 168, 212, 0.15);
+  --accent-glow: rgba(74, 222, 128, 0.38);
+  --neon: #BBF7D0;
+}
+
+/* ============================================================
+   Неон-UI + сезонная атмосфера
+   ============================================================ */
+
+/* Мягкое сезонное свечение фона приложения */
+.app-shell {
+  background:
+    radial-gradient(90% 55% at 88% -8%, var(--accent-soft), transparent 62%),
+    radial-gradient(70% 45% at 0% 104%, var(--accent-2-soft), transparent 58%);
+  background-attachment: fixed;
+}
+
+/* Неон на главных кнопках */
+.btn-solid {
+  background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  box-shadow: 0 0 16px var(--accent-glow), 0 2px 10px rgba(22, 22, 32, 0.08);
+  transition: box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+.btn-solid:hover {
+  box-shadow: 0 0 24px var(--accent-glow), 0 0 4px var(--accent-glow), 0 2px 10px rgba(22, 22, 32, 0.08);
+}
+
+/* Логотип K в шапке — неоновый */
+.brand-mark {
+  box-shadow: 0 0 14px var(--accent-glow), inset 0 0 6px rgba(255, 255, 255, 0.14);
+}
+
+/* Активный пункт нижней навигации — неоновая подсветка */
+.nav-item.active {
+  box-shadow: inset 0 0 0 1px var(--accent-soft-2), 0 0 16px var(--accent-glow);
+}
+
+.nav-item.active svg {
+  filter: drop-shadow(0 0 6px var(--accent-glow));
+}
+
+/* Выбранные даты и сегменты */
+.quick-chip.current,
+.date-day.selected,
+.cal-cell.selected,
+.seg-item.active {
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* Тумблер в включённом состоянии */
+.toggle input:checked + .toggle-track {
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* Чип «День X» — сезонный градиент + неоновая пульсация */
+.dayx-chip {
+  background: linear-gradient(120deg, var(--accent-strong), var(--accent) 55%, var(--accent-2));
+  box-shadow: 0 0 18px var(--accent-glow), 0 2px 10px var(--accent-soft-2);
+  animation: dayx-appear 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both, neon-pulse 2.6s ease-in-out 0.5s infinite;
+}
+
+@keyframes neon-pulse {
+  0%, 100% { box-shadow: 0 0 12px var(--accent-glow), 0 2px 10px var(--accent-soft-2); }
+  50%      { box-shadow: 0 0 24px var(--accent-glow), 0 0 6px var(--accent-glow), 0 2px 10px var(--accent-soft-2); }
+}
+
+/* Чип текущего сезона в шапке */
+.season-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 3px 9px;
+  border-radius: 999px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft-2);
+  white-space: nowrap;
+}
+
+/* Карточка салюта — сезонный градиент заголовка */
+.fireworks-title {
+  background: linear-gradient(120deg, var(--neon), var(--accent-2) 60%, var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.fireworks-overlay .fireworks-btn {
+  background: linear-gradient(120deg, var(--accent-strong), var(--accent-2));
+  color: var(--on-accent);
+}

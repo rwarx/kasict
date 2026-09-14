@@ -1,28 +1,25 @@
-// Настройки: группа, тема, уведомления, данные, история, приложение.
+// Настройки: группа, тема, сезон, уведомления, данные, история, приложение.
 
 import { useEffect, useState } from 'react'
 import { getMeta, loadSnapshotData } from '../services/scheduleService'
 import { disableNotifications, enableNotifications, isNotifEnabled, isNotifSupported, notifStatusText } from '../services/notifications'
 import { getAllSnapshots, clearHistory, getSnapshotCount, type ScheduleSnapshot } from '../services/history'
-import type { AccentColor, ThemePref } from '../lib/theme'
-import { ACCENT_OPTIONS } from '../lib/theme'
-import { isDayXFireworksEnabled, setDayXFireworksEnabled } from '../lib/specialDays'
+import type { Season, ThemePref } from '../lib/theme'
+import { SEASONS } from '../lib/theme'
 import { ChevronRightIcon, RefreshIcon, SparklesIcon } from '../components/Icons'
 
-export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemePref, accent, onAccent, onViewSchedule, onShowFireworks }: {
+export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemePref, season, onViewSchedule, onShowFireworks }: {
   group: string | null
   onOpenGroupSelector: () => void
   themePref: ThemePref
   onThemePref: (p: ThemePref) => void
-  accent: AccentColor
-  onAccent: (a: AccentColor) => void
+  season: Season
   onViewSchedule: () => void
   onShowFireworks: () => void
 }) {
   const [pendingGroup, setPendingGroup] = useState(false)
   const [notifOn, setNotifOn] = useState(isNotifEnabled())
   const [notifStatus, setNotifStatus] = useState(notifStatusText())
-  const [dayxFireworksOn, setDayxFireworksOn] = useState(isDayXFireworksEnabled)
   const [historySnapshots, setHistorySnapshots] = useState<ScheduleSnapshot[]>([])
   const [historyCount, setHistoryCount] = useState(0)
   const [showHistory, setShowHistory] = useState(false)
@@ -64,9 +61,8 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
   }
 
   const themeOptions: { id: ThemePref; label: string }[] = [
-    { id: 'system', label: 'Системная' },
-    { id: 'light', label: 'Светлая' },
-    { id: 'dark', label: 'Тёмная' },
+    { id: 'light', label: 'Белая' },
+    { id: 'dark', label: 'Чёрная' },
   ]
 
   return (
@@ -93,6 +89,13 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
         <div className="settings-card">
           <div className="settings-row static">
             <div className="settings-row-info">
+              <span className="settings-row-label">Сезонная тема</span>
+              <span className="settings-row-value">{SEASONS[season].hint} — включается автоматически</span>
+            </div>
+            <span className="season-chip">{SEASONS[season].emoji} {SEASONS[season].label}</span>
+          </div>
+          <div className="settings-row static">
+            <div className="settings-row-info">
               <span className="settings-row-label">Тема</span>
             </div>
             <div className="seg-control" role="radiogroup" aria-label="Тема оформления">
@@ -112,41 +115,9 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
           </div>
           <div className="settings-row static">
             <div className="settings-row-info">
-              <span className="settings-row-label">Цвет акцента</span>
-              <span className="settings-row-value">{ACCENT_OPTIONS.find(o => o.id === accent)?.label}</span>
-            </div>
-            <div className="accent-row" role="radiogroup" aria-label="Цвет акцента">
-              {ACCENT_OPTIONS.map(o => (
-                <button
-                  key={o.id}
-                  type="button"
-                  role="radio"
-                  aria-checked={accent === o.id}
-                  aria-label={o.label}
-                  title={o.label}
-                  className={`accent-swatch ${accent === o.id ? 'active' : ''}`}
-                  style={{ backgroundColor: o.swatch }}
-                  onClick={() => onAccent(o.id)}
-                />
-              ))}
-            </div>
-          </div>
-          <div className="settings-row static">
-            <div className="settings-row-info">
               <span className="settings-row-label">Фейерверк 18 сентября</span>
-              <span className="settings-row-value">Салют при открытии в День X</span>
+              <span className="settings-row-value">Включён всегда — салют при открытии в День X</span>
             </div>
-            <label className="toggle">
-              <input
-                type="checkbox"
-                checked={dayxFireworksOn}
-                onChange={(e) => {
-                  setDayXFireworksEnabled(e.target.checked)
-                  setDayxFireworksOn(e.target.checked)
-                }}
-              />
-              <span className="toggle-track" />
-            </label>
           </div>
           <button type="button" className="settings-row" onClick={onShowFireworks}>
             <div className="settings-row-info">

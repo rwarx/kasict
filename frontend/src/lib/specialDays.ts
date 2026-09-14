@@ -3,8 +3,6 @@
 export const DAY_X_MONTH = 9 // сентябрь
 export const DAY_X_DAY = 18
 
-const DAY_X_FIREWORKS_KEY = 'schedule:dayxFireworks'
-
 /** ISO-дата Дня X для указанного года (по умолчанию — текущего). */
 export function dayXISO(year: number = new Date().getFullYear()): string {
   return `${year}-${String(DAY_X_MONTH).padStart(2, '0')}-${String(DAY_X_DAY).padStart(2, '0')}`
@@ -28,23 +26,6 @@ export function daysUntilDayX(from: Date = new Date()): number {
   const target = new Date(nextDayXISO(from) + 'T12:00:00')
   const start = new Date(from.getFullYear(), from.getMonth(), from.getDate())
   return Math.round((target.getTime() - start.getTime()) / 86_400_000)
-}
-
-/** Включён ли фейерверк (переключается в настройках; по умолчанию — включён). */
-export function isDayXFireworksEnabled(): boolean {
-  try {
-    return localStorage.getItem(DAY_X_FIREWORKS_KEY) !== 'off'
-  } catch {
-    return true
-  }
-}
-
-export function setDayXFireworksEnabled(on: boolean): void {
-  try {
-    localStorage.setItem(DAY_X_FIREWORKS_KEY, on ? 'on' : 'off')
-  } catch {
-    /* приватный режим — просто игнорируем */
-  }
 }
 
 /**

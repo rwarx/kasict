@@ -1,86 +1,60 @@
-// Управление темой: light / dark / system, сохранение в localStorage.
+// Управление темой: белая / чёрная + автоматический сезонный акцент.
+// Сезон определяется по текущему месяцу (можно предпросмотреть через ?season=winter|spring|summer|autumn).
 
 import { useCallback, useEffect, useState } from 'react'
 
-export type ThemePref = 'light' | 'dark' | 'system'
-
-export type AccentColor = 'indigo' | 'violet' | 'rose' | 'orange' | 'teal' | 'blue'
+export type ThemePref = 'light' | 'dark'
+export type Season = 'winter' | 'spring' | 'summer' | 'autumn'
 
 const THEME_KEY = 'schedule:theme'
-const ACCENT_KEY = 'schedule:accent'
 
-const ACCENTS: Record<AccentColor, {
-  light: string; lightStrong: string; lightOn: string;
-  dark: string; darkStrong: string; darkOn: string;
-}> = {
-  indigo: { light: '#4A50E0', lightStrong: '#3B41C9', lightOn: '#FFFFFF', dark: '#8B90FF', darkStrong: '#A2A6FF', darkOn: '#101017' },
-  violet: { light: '#7C3AED', lightStrong: '#6D28D9', lightOn: '#FFFFFF', dark: '#A78BFA', darkStrong: '#C4B5FD', darkOn: '#17111F' },
-  rose:   { light: '#E11D48', lightStrong: '#BE123C', lightOn: '#FFFFFF', dark: '#FB7185', darkStrong: '#FDA4AF', darkOn: '#20100F' },
-  orange: { light: '#EA580C', lightStrong: '#C2410C', lightOn: '#FFFFFF', dark: '#FB923C', darkStrong: '#FDBA74', darkOn: '#1F120A' },
-  teal:   { light: '#0F8A83', lightStrong: '#0F766E', lightOn: '#FFFFFF', dark: '#5EEAD4', darkStrong: '#99F6E4', darkOn: '#0B1A18' },
-  blue:   { light: '#2563EB', lightStrong: '#1D4ED8', lightOn: '#FFFFFF', dark: '#60A5FA', darkStrong: '#93C5FD', darkOn: '#0D1420' },
+export const SEASONS: Record<Season, { label: string; emoji: string; hint: string }> = {
+  winter: { label: 'Зима', emoji: '❄️', hint: 'бело-голубая тема' },
+  spring: { label: 'Весна', emoji: '🌸', hint: 'свежая зелёно-розовая тема' },
+  summer: { label: 'Лето', emoji: '☀️', hint: 'жёлто-зелёная тема' },
+  autumn: { label: 'Осень', emoji: '🍂', hint: 'жёлто-оранжевая тема' },
 }
 
-export const ACCENT_OPTIONS: { id: AccentColor; label: string; swatch: string }[] = [
-  { id: 'indigo', label: 'Индиго', swatch: '#6366F1' },
-  { id: 'violet', label: 'Фиолетовый', swatch: '#8B5CF6' },
-  { id: 'rose', label: 'Розовый', swatch: '#F43F5E' },
-  { id: 'orange', label: 'Оранжевый', swatch: '#F97316' },
-  { id: 'teal', label: 'Бирюзовый', swatch: '#14B8A6' },
-  { id: 'blue', label: 'Синий', swatch: '#3B82F6' },
-]
+/** Сезон по месяцу (северное полушарие). */
+export function seasonByMonth(date: Date = new Date()): Season {
+  const m = date.getMonth() // 0–11
+  if (m <= 1 || m === 11) return 'winter'   // декабрь–февраль
+  if (m <= 4) return 'spring'               // март–май
+  if (m <= 7) return 'summer'               // июнь–август
+  return 'autumn'                           // сентябрь–ноябрь
+}
 
-
-function systemDark(): boolean {
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
+/** Сезон с учётом предпросмотра через URL: ?season=winter|spring|summer|autumn */
+export function currentSeason(date: Date = new Date()): Season {
+  try {
+    const v = new URLSearchParams(window.location.search).get('season')?.toLowerCase()
+    if (v === 'winter' || v === 'spring' || v === 'summer' || v === 'autumn') return v
+  } catch { /* ignore */ }
+  return seasonByMonth(date)
 }
 
 function readPref(): ThemePref {
   try {
     const v = localStorage.getItem(THEME_KEY)
-    if (v === 'light' || v === 'dark' || v === 'system') return v
+    if (v === 'light' || v === 'dark') return v
+    // Старое значение 'system' больше не используется — разрешаем один раз
+    if (v === 'system') {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    }
   } catch { /* ignore */ }
-  return 'system'
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
-function readAccent(): AccentColor {
-  try {
-    const v = localStorage.getItem(ACCENT_KEY)
-    if (v && v in ACCENTS) return v as AccentColor
-  } catch { /* ignore */ }
-  return 'indigo'
+function isDarkPref(p: ThemePref): boolean {
+  return p === 'dark'
 }
 
-function hexToRgb(hex: string): [number, number, number] {
-  const h = hex.replace('#', '')
-  return [
-    parseInt(h.slice(0, 2), 16),
-    parseInt(h.slice(2, 4), 16),
-    parseInt(h.slice(4, 6), 16),
-  ]
-}
-
-function applyAccent(accent: AccentColor, dark: boolean) {
-  const c = ACCENTS[accent]
-  const main = dark ? c.dark : c.light
-  const strong = dark ? c.darkStrong : c.lightStrong
-  const on = dark ? c.darkOn : c.lightOn
-  const [r, g, b] = hexToRgb(main)
-  const root = document.documentElement
-  root.style.setProperty('--accent', main)
-  root.style.setProperty('--accent-strong', strong)
-  root.style.setProperty('--on-accent', on)
-  root.style.setProperty('--accent-soft', `rgba(${r}, ${g}, ${b}, ${dark ? 0.13 : 0.09})`)
-  root.style.setProperty('--accent-soft-2', `rgba(${r}, ${g}, ${b}, ${dark ? 0.20 : 0.16})`)
-  root.style.setProperty('--accent-glow', `rgba(${r}, ${g}, ${b}, ${dark ? 0.35 : 0.28})`)
-}
-
-function apply(pref: ThemePref, accent: AccentColor): boolean {
-  const dark = pref === 'dark' || (pref === 'system' && systemDark())
+function apply(pref: ThemePref, season: Season): boolean {
+  const dark = isDarkPref(pref)
   const root = document.documentElement
   root.dataset.theme = dark ? 'dark' : 'light'
+  root.dataset.season = season
   root.style.colorScheme = dark ? 'dark' : 'light'
-  applyAccent(accent, dark)
   const meta = document.querySelector('meta[name="theme-color"]')
   meta?.setAttribute('content', dark ? '#0E0E12' : '#F4F4F1')
   return dark
@@ -89,34 +63,31 @@ function apply(pref: ThemePref, accent: AccentColor): boolean {
 export function useTheme(): {
   pref: ThemePref
   setPref: (p: ThemePref) => void
-  accent: AccentColor
-  setAccent: (a: AccentColor) => void
   isDark: boolean
+  season: Season
 } {
   const [pref, setPrefState] = useState<ThemePref>(readPref)
-  const [accent, setAccentState] = useState<AccentColor>(readAccent)
-  const [isDark, setIsDark] = useState(() => apply(readPref(), readAccent()))
+  const [season] = useState<Season>(() => currentSeason())
+  const [isDark, setIsDark] = useState(() => apply(readPref(), currentSeason()))
 
   const setPref = useCallback((p: ThemePref) => {
     setPrefState(p)
     try { localStorage.setItem(THEME_KEY, p) } catch { /* ignore */ }
-    setIsDark(apply(p, accent))
-  }, [accent])
+    setIsDark(apply(p, season))
+  }, [season])
 
-  const setAccent = useCallback((a: AccentColor) => {
-    setAccentState(a)
-    try { localStorage.setItem(ACCENT_KEY, a) } catch { /* ignore */ }
-    setIsDark(apply(pref, a))
-  }, [pref])
-
+  // Синхронизация между вкладками
   useEffect(() => {
-    const mq = window.matchMedia('(prefers-color-scheme: dark)')
-    const onChange = () => {
-      if (pref === 'system') setIsDark(apply('system', accent))
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === THEME_KEY) {
+        const next = readPref()
+        setPrefState(next)
+        setIsDark(apply(next, season))
+      }
     }
-    mq.addEventListener('change', onChange)
-    return () => mq.removeEventListener('change', onChange)
-  }, [pref, accent])
+    window.addEventListener('storage', onStorage)
+    return () => window.removeEventListener('storage', onStorage)
+  }, [season])
 
-  return { pref, setPref, accent, setAccent, isDark }
+  return { pref, setPref, isDark, season }
 }
