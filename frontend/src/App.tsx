@@ -96,7 +96,6 @@ export default function App() {
             onToggleTheme={toggleTheme}
             isDark={isDark}
             dayX={isDayXToday}
-            season={season}
           />
 
           <OfflineBanner show={!navigator.onLine} />

@@ -1,7 +1,6 @@
-// Верхняя панель: бренд KASICT, чип сезона, чип «День X», чип группы, переключатель белой/чёрной темы.
+// Верхняя панель: бренд KASICT, чип «День X», чип группы, переключатель белой/чёрной темы.
 
-import type { Season, ThemePref } from '../lib/theme'
-import { SEASONS } from '../lib/theme'
+import type { ThemePref } from '../lib/theme'
 import { ChevronDownIcon, MoonIcon, SparklesIcon, SunIcon } from './Icons'
 
 export function ThemeButton({ pref, onToggle, isDark }: {
@@ -24,31 +23,19 @@ export function ThemeButton({ pref, onToggle, isDark }: {
   )
 }
 
-export function SeasonChip({ season }: { season: Season }) {
-  const s = SEASONS[season]
-  return (
-    <span className="season-chip" title={`Сезонная тема: ${s.hint}`}>
-      {s.emoji}
-      {s.label}
-    </span>
-  )
-}
-
-export function AppHeader({ group, onOpenGroup, pref, onToggleTheme, isDark, dayX, season }: {
+export function AppHeader({ group, onOpenGroup, pref, onToggleTheme, isDark, dayX }: {
   group: string
   onOpenGroup: () => void
   pref: ThemePref
   onToggleTheme: () => void
   isDark: boolean
   dayX?: boolean
-  season: Season
 }) {
   return (
     <header className="app-header">
       <div className="brand">
         <span className="brand-mark" aria-hidden="true">K</span>
         <span className="brand-name">KASICT</span>
-        <SeasonChip season={season} />
         {dayX && (
           <span className="dayx-chip" title="Сегодня — День X! (18 сентября)">
             <SparklesIcon size={13} />
