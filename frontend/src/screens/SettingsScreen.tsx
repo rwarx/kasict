@@ -6,6 +6,7 @@ import { disableNotifications, enableNotifications, isNotifEnabled, isNotifSuppo
 import { getAllSnapshots, clearHistory, getSnapshotCount, type ScheduleSnapshot } from '../services/history'
 import type { AccentColor, ThemePref } from '../lib/theme'
 import { ACCENT_OPTIONS } from '../lib/theme'
+import { isDayXFireworksEnabled, setDayXFireworksEnabled } from '../lib/specialDays'
 import { ChevronRightIcon, RefreshIcon } from '../components/Icons'
 
 export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemePref, accent, onAccent, onViewSchedule }: {
@@ -20,6 +21,7 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
   const [pendingGroup, setPendingGroup] = useState(false)
   const [notifOn, setNotifOn] = useState(isNotifEnabled())
   const [notifStatus, setNotifStatus] = useState(notifStatusText())
+  const [dayxFireworksOn, setDayxFireworksOn] = useState(isDayXFireworksEnabled)
   const [historySnapshots, setHistorySnapshots] = useState<ScheduleSnapshot[]>([])
   const [historyCount, setHistoryCount] = useState(0)
   const [showHistory, setShowHistory] = useState(false)
@@ -127,6 +129,23 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
                 />
               ))}
             </div>
+          </div>
+          <div className="settings-row static">
+            <div className="settings-row-info">
+              <span className="settings-row-label">Фейерверк 18 сентября</span>
+              <span className="settings-row-value">Салют при открытии в День X</span>
+            </div>
+            <label className="toggle">
+              <input
+                type="checkbox"
+                checked={dayxFireworksOn}
+                onChange={(e) => {
+                  setDayXFireworksEnabled(e.target.checked)
+                  setDayxFireworksOn(e.target.checked)
+                }}
+              />
+              <span className="toggle-track" />
+            </label>
           </div>
         </div>
       </section>

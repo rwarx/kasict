@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { getLastChanges, getMeta, loadData } from './services/scheduleService'
 import { handleNewData } from './services/notifications'
 import { AppHeader } from './components/AppHeader'
+import { Fireworks } from './components/Fireworks'
+import { isDayXFireworksEnabled, shouldCelebrateDayX } from './lib/specialDays'
 import { BottomNav } from './components/BottomNav'
 import { GroupSelectModal } from './components/GroupSelect'
 import { ErrorScreen, LoadingScreen, OfflineBanner } from './components/StateViews'
@@ -29,7 +31,21 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [groupModal, setGroupModal] = useState(false)
+  const [dayXShow, setDayXShow] = useState(false)
+  // Сегодняшняя дата не меняется за время жизни страницы — вычисляем один раз
+  const [today] = useState(() => {
+    const d = new Date()
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+  })
+  const isDayXToday = shouldCelebrateDayX(today)
   const { pref, setPref, accent, setAccent, isDark } = useTheme()
+
+  // День X: при открытии приложения 18 сентября — салют
+  useEffect(() => {
+    if (shouldCelebrateDayX(today) && isDayXFireworksEnabled()) {
+      setDayXShow(true)
+    }
+  }, [today])
 
   useEffect(() => {
     loadData()
@@ -81,6 +97,7 @@ export default function App() {
             pref={pref}
             onCycleTheme={cycleTheme}
             isDark={isDark}
+            dayX={isDayXToday}
           />
 
           <OfflineBanner show={!navigator.onLine} />
@@ -119,6 +136,8 @@ export default function App() {
           onClose={() => setGroupModal(false)}
         />
       )}
+
+      {dayXShow && <Fireworks onClose={() => setDayXShow(false)} />}
     </div>
   )
 }

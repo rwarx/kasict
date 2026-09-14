@@ -1,7 +1,7 @@
 // Верхняя панель: бренд KASICT, чип группы, переключатель темы.
 
 import type { ThemePref } from '../lib/theme'
-import { ChevronDownIcon, LaptopIcon, MoonIcon, SunIcon } from './Icons'
+import { ChevronDownIcon, LaptopIcon, MoonIcon, SparklesIcon, SunIcon } from './Icons'
 
 export function ThemeButton({ pref, onCycle, isDark }: {
   pref: ThemePref
@@ -22,18 +22,25 @@ export function ThemeButton({ pref, onCycle, isDark }: {
   )
 }
 
-export function AppHeader({ group, onOpenGroup, pref, onCycleTheme, isDark }: {
+export function AppHeader({ group, onOpenGroup, pref, onCycleTheme, isDark, dayX }: {
   group: string
   onOpenGroup: () => void
   pref: ThemePref
   onCycleTheme: () => void
   isDark: boolean
+  dayX?: boolean
 }) {
   return (
     <header className="app-header">
       <div className="brand">
         <span className="brand-mark" aria-hidden="true">K</span>
         <span className="brand-name">KASICT</span>
+        {dayX && (
+          <span className="dayx-chip" title="Сегодня — День X! (18 сентября)">
+            <SparklesIcon size={13} />
+            День X
+          </span>
+        )}
       </div>
       <div className="app-header-actions">
         <button type="button" className="group-chip" onClick={onOpenGroup} aria-label={`Группа ${group}. Изменить группу`}>

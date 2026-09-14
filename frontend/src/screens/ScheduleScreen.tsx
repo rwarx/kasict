@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { getDay } from '../services/scheduleService'
 import type { DaySchedule, LessonView } from '../services/replacementEngine'
 import { formatDateFull, formatDateShort, getWeekDays, shiftISO, todayISO, weekdayName } from '../lib/date'
+import { isDayX } from '../lib/specialDays'
 import { CalendarSheet } from '../components/CalendarSheet'
 import { LessonCard, ReplacementSheet } from '../components/LessonCard'
 import { EmptyDay } from '../components/StateViews'
@@ -73,6 +74,9 @@ export function ScheduleScreen({ group, dateISO, setDateISO }: {
             </span>
             {day.has_replacements && !day.day_note && (
               <span className="badge warn">Есть замены</span>
+            )}
+            {isDayX(dateISO) && (
+              <span className="badge dayx">День X</span>
             )}
           </div>
         )}

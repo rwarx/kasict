@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { formatDateFull, getWeekDays, monthGrid, monthLabel, shiftISO, todayISO } from '../lib/date'
+import { isDayX } from '../lib/specialDays'
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from './Icons'
 
 const WEEKDAYS = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']
@@ -57,6 +58,7 @@ export function CalendarSheet({ dateISO, onPick, onClose }: {
             const selected = c.iso === dateISO
             const isToday = c.iso === today
             const hasRepl = marked.has(c.iso) && !selected
+            const isDayXCell = isDayX(c.iso)
             return (
               <button
                 key={c.iso}
@@ -67,9 +69,10 @@ export function CalendarSheet({ dateISO, onPick, onClose }: {
                   selected ? 'selected' : '',
                   isToday ? 'today' : '',
                   hasRepl ? 'marked' : '',
+                  isDayXCell ? 'dayx' : '',
                 ].join(' ').trim()}
                 onClick={() => quick(c.iso)}
-                aria-label={formatDateFull(c.iso)}
+                aria-label={isDayXCell ? `${formatDateFull(c.iso)} — День X` : formatDateFull(c.iso)}
                 aria-pressed={selected}
               >
                 {c.day}
