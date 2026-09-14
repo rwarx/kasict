@@ -554,7 +554,7 @@ button {
   border-radius: var(--radius);
   padding: 15px 16px;
   box-shadow: var(--shadow-sm);
-  transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s, opacity 0.3s ease;
 }
 
 .lesson-card.clickable {
@@ -580,6 +580,79 @@ button {
 .lesson-card.added { border-left: 3px solid var(--green); border-top-left-radius: var(--radius-xs); border-bottom-left-radius: var(--radius-xs); }
 .lesson-card.teacher_changed,
 .lesson-card.room_changed { border-left: 3px solid var(--blue); border-top-left-radius: var(--radius-xs); border-bottom-left-radius: var(--radius-xs); }
+
+/* ---------- Live: текущая пара ---------- */
+
+.lesson-card.past {
+  opacity: 0.55;
+}
+
+.lesson-card.live {
+  border-color: var(--accent-soft-2);
+  box-shadow: 0 0 0 1px var(--accent-soft-2), 0 0 18px var(--accent-glow), var(--shadow-md);
+}
+
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft-2);
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--neon, var(--accent));
+  animation: livePulse 1.9s ease-out infinite;
+}
+
+@keyframes livePulse {
+  0%   { box-shadow: 0 0 0 0 var(--accent-glow); opacity: 1; }
+  70%  { box-shadow: 0 0 0 7px transparent; opacity: 0.85; }
+  100% { box-shadow: 0 0 0 0 transparent; opacity: 1; }
+}
+
+.lesson-live-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 11px;
+}
+
+.lesson-progress {
+  flex: 1;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.lesson-progress span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  box-shadow: 0 0 10px var(--accent-glow);
+  transition: width 0.5s ease;
+}
+
+.lesson-left {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-2);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
 
 .lesson-time-col {
   display: flex;
@@ -2535,8 +2608,14 @@ button.settings-row:hover {
   animation: fadeInUp 0.3s ease;
 }
 
+/* Каскадное появление карточек: упругая кривая, задержка задаётся инлайн (40мс/карточка) */
 .stagger {
-  animation: fadeInUp 0.32s ease both;
+  animation: cardIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2695,13 +2774,6 @@ button.settings-row:hover {
   background: rgba(255, 255, 255, 0.18);
 }
 
-.settings-row-label-accent {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--accent);
-}
-
 /* ============================================================
    Сезонные палитры (данные-theme + data-season выставляет
    инлайн-скрипт в index.html до загрузки бандла)
@@ -2856,6 +2928,25 @@ button.settings-row:hover {
 /* Тумблер в включённом состоянии */
 .toggle input:checked + .toggle-track {
   box-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* ============================================================
+   Glassmorphism (только тёмная тема): карточки пар и настроек
+   с лёгкой прозрачностью и размытием — неон сквозь стекло
+   ============================================================ */
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  :root[data-theme='dark'] .lesson-card,
+  :root[data-theme='dark'] .settings-card {
+    background: rgba(24, 24, 31, 0.60);
+    backdrop-filter: blur(16px) saturate(1.2);
+    -webkit-backdrop-filter: blur(16px) saturate(1.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045), var(--shadow-sm);
+  }
+
+  :root[data-theme='dark'] .lesson-card.live {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045), 0 0 0 1px var(--accent-soft-2), 0 0 20px var(--accent-glow);
+  }
 }
 
 /* Чип «День X» — сезонный градиент + неоновая пульсация */

@@ -1,6 +1,7 @@
 // Карточка пары + нижний лист с деталями замены.
 
 import type { LessonView } from '../services/replacementEngine'
+import type { LessonLive } from '../lib/lessonLive'
 import { LaptopIcon, PinIcon, SwapIcon, UserIcon } from './Icons'
 
 const STATUS_META: Record<string, { label: string; kind: string }> = {
@@ -11,10 +12,12 @@ const STATUS_META: Record<string, { label: string; kind: string }> = {
   added: { label: 'Добавлено', kind: 'success' },
 }
 
-export function LessonCard({ lesson, onClick }: { lesson: LessonView; onClick: () => void }) {
+export function LessonCard({ lesson, live, onClick }: { lesson: LessonView; live?: LessonLive | null; onClick: () => void }) {
   const changed = lesson.status !== 'normal'
   const cancelled = lesson.status === 'cancelled'
   const statusMeta = changed ? STATUS_META[lesson.status] : null
+  const liveNow = live?.state === 'now'
+  const past = live?.state === 'past'
 
   return (
     <article
@@ -22,6 +25,8 @@ export function LessonCard({ lesson, onClick }: { lesson: LessonView; onClick: (
         'lesson-card',
         lesson.status,
         changed ? 'clickable' : '',
+        liveNow ? 'live' : '',
+        past ? 'past' : '',
       ].join(' ').trim()}
       onClick={changed ? onClick : undefined}
       role={changed ? 'button' : undefined}
@@ -36,6 +41,12 @@ export function LessonCard({ lesson, onClick }: { lesson: LessonView; onClick: (
       <div className="lesson-body">
         <div className="lesson-top-row">
           <span className="lesson-num">#{lesson.number}</span>
+          {liveNow && (
+            <span className="live-badge">
+              <span className="live-dot" aria-hidden="true" />
+              Идёт сейчас
+            </span>
+          )}
           {statusMeta && <span className={`badge ${statusMeta.kind}`}>{statusMeta.label}</span>}
         </div>
 
@@ -80,6 +91,24 @@ export function LessonCard({ lesson, onClick }: { lesson: LessonView; onClick: (
           <div className="lesson-details-hint">
             <SwapIcon size={13} />
             Подробности
+          </div>
+        )}
+
+        {liveNow && live && (
+          <div className="lesson-live-row">
+            <div
+              className="lesson-progress"
+              role="progressbar"
+              aria-label={`Прогресс пары: ${Math.round(live.progress * 100)}%`}
+              aria-valuenow={Math.round(live.progress * 100)}
+              aria-valuemin={0}
+              aria-valuemax={100}
+            >
+              <span style={{ width: `${Math.round(live.progress * 100)}%` }} />
+            </div>
+            <span className="lesson-left">
+              {live.minutesLeft > 0 ? `осталось ${live.minutesLeft} мин` : 'до конца пары'}
+            </span>
           </div>
         )}
       </div>

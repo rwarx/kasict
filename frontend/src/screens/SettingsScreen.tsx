@@ -6,16 +6,15 @@ import { disableNotifications, enableNotifications, isNotifEnabled, isNotifSuppo
 import { getAllSnapshots, clearHistory, getSnapshotCount, type ScheduleSnapshot } from '../services/history'
 import type { Season, ThemePref } from '../lib/theme'
 import { SEASONS } from '../lib/theme'
-import { ChevronRightIcon, RefreshIcon, SparklesIcon } from '../components/Icons'
+import { ChevronRightIcon, RefreshIcon } from '../components/Icons'
 
-export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemePref, season, onViewSchedule, onShowFireworks }: {
+export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemePref, season, onViewSchedule }: {
   group: string | null
   onOpenGroupSelector: () => void
   themePref: ThemePref
   onThemePref: (p: ThemePref) => void
   season: Season
   onViewSchedule: () => void
-  onShowFireworks: () => void
 }) {
   const [pendingGroup, setPendingGroup] = useState(false)
   const [notifOn, setNotifOn] = useState(isNotifEnabled())
@@ -113,22 +112,6 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
               ))}
             </div>
           </div>
-          <div className="settings-row static">
-            <div className="settings-row-info">
-              <span className="settings-row-label">Фейерверк 18 сентября</span>
-              <span className="settings-row-value">Включён всегда — салют при открытии в День X</span>
-            </div>
-          </div>
-          <button type="button" className="settings-row" onClick={onShowFireworks}>
-            <div className="settings-row-info">
-              <span className="settings-row-label settings-row-label-accent">
-                <SparklesIcon size={15} />
-                Показать салют
-              </span>
-              <span className="settings-row-value">Предпросмотр Дня X — в любой день</span>
-            </div>
-            <ChevronRightIcon size={16} className="settings-row-arrow" />
-          </button>
         </div>
       </section>
 

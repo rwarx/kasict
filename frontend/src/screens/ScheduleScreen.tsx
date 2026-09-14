@@ -5,6 +5,7 @@ import { getDay } from '../services/scheduleService'
 import type { DaySchedule, LessonView } from '../services/replacementEngine'
 import { formatDateFull, formatDateShort, getWeekDays, shiftISO, todayISO, weekdayName } from '../lib/date'
 import { isDayX } from '../lib/specialDays'
+import { computeLive, useNow } from '../lib/lessonLive'
 import { CalendarSheet } from '../components/CalendarSheet'
 import { LessonCard, ReplacementSheet } from '../components/LessonCard'
 import { EmptyDay } from '../components/StateViews'
@@ -30,6 +31,7 @@ export function ScheduleScreen({ group, dateISO, setDateISO }: {
   const isYesterday = dateISO === shiftISO(today, -1)
   const weekDays = useMemo(() => getWeekDays(dateISO), [dateISO])
   const visible = day?.lessons.filter(l => l.status === 'cancelled' || l.subject) ?? []
+  const nowMin = useNow(30000)
 
   const eyebrow = isToday ? 'Сегодня' : isTomorrow ? 'Завтра' : isYesterday ? 'Вчера' : weekdayName(dateISO)
 
@@ -136,9 +138,10 @@ export function ScheduleScreen({ group, dateISO, setDateISO }: {
       ) : (
         <div className="lessons animate-in" key={dateISO}>
           {visible.map((l, i) => (
-            <div className="stagger" style={{ animationDelay: `${i * 45}ms` }} key={l.number}>
+            <div className="stagger" style={{ animationDelay: `${Math.min(i, 10) * 40}ms` }} key={l.number}>
               <LessonCard
                 lesson={l}
+                live={isToday && l.status !== 'cancelled' ? computeLive(l.time_start, l.time_end, nowMin) : null}
                 onClick={() => l.status !== 'normal' && setSheetLesson(l)}
               />
             </div>

@@ -119,7 +119,6 @@ export default function App() {
               onThemePref={setPref}
               season={season}
               onViewSchedule={() => setScreen('schedule')}
-              onShowFireworks={() => setDayXShow(true)}
             />
           )}
         </div>
