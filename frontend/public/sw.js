@@ -1,4 +1,4 @@
-const SHELL_CACHE = 'shell-v9'
+const SHELL_CACHE = 'shell-v10'
 const API_CACHE = 'api-v1'
 
 function resolve(path) {

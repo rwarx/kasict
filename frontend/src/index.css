@@ -1675,6 +1675,9 @@ button {
 .teacher-lesson-copy strong { display: block; overflow: hidden; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
 .teacher-lesson-copy span { display: block; overflow: hidden; margin-top: 4px; color: var(--text-2); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
 .teacher-parity { flex: 0 0 auto; color: var(--text-3); font-size: 10px; }
+.teacher-lesson .badge { flex: 0 0 auto; }
+.teacher-lesson.cancelled { opacity: 0.66; }
+.teacher-lesson.cancelled .teacher-lesson-copy strong s { color: var(--text-3); }
 
 @media (min-width: 600px) {
   .teacher-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }

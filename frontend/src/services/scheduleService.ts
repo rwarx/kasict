@@ -2,7 +2,7 @@
 
 import type { MetaJSON, ReplacementBlockJSON, ScheduleJSON } from '../parser/types'
 import { createResolverFromBlocks, type ParityResolver } from './parity'
-import { applyDay, type DaySchedule } from './replacementEngine'
+import { applyDay, type DaySchedule, type LessonStatus } from './replacementEngine'
 import { summarizeScheduleChanges, type DataChangeSummary } from './scheduleChanges'
 import { saveSnapshot } from './history'
 
@@ -115,6 +115,51 @@ export function getTeachers(): Record<string, import('../parser/types').TeacherE
     normalized[name] = [...(normalized[name] ?? []), ...entries]
   })
   return normalized
+}
+
+export interface TeacherLessonView {
+  number: number
+  time_start: string
+  time_end: string
+  subject: string
+  classroom: string
+  group: string
+  status: LessonStatus
+  original: { subject: string; teacher: string; classroom: string } | null
+}
+
+function normTeacher(name: string): string {
+  return name.replace(/^[-–—\s]+/, '').trim()
+}
+
+/** День преподавателя с применёнными заменами (по всем его группам). */
+export function getTeacherDay(teacher: string, d: Date): TeacherLessonView[] {
+  if (!_schedule || !_replacements || !_resolver) return []
+  const target = normTeacher(teacher)
+  if (!target) return []
+  const parity = _resolver.parity(d)
+  const found: TeacherLessonView[] = []
+  for (const group of Object.keys(_schedule.lessons)) {
+    const day = applyDay(_schedule, group, d, parity, _replacements, null)
+    for (const lesson of day.lessons) {
+      const current = normTeacher(lesson.teacher) === target
+      const wasCancelled = lesson.status === 'cancelled'
+        && Boolean(lesson.original) && normTeacher(lesson.original!.teacher) === target
+      if (!current && !wasCancelled) continue
+      if (!lesson.subject && lesson.status !== 'cancelled') continue
+      found.push({
+        number: lesson.number,
+        time_start: lesson.time_start,
+        time_end: lesson.time_end,
+        subject: lesson.status === 'cancelled' ? (lesson.original?.subject || '') : lesson.subject,
+        classroom: lesson.classroom,
+        group,
+        status: lesson.status,
+        original: lesson.original,
+      })
+    }
+  }
+  return found.sort((a, b) => a.number - b.number || a.group.localeCompare(b.group, 'ru'))
 }
 
 export function getParity(d: Date): 'odd' | 'even' | null {

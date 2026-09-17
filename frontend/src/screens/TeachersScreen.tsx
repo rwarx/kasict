@@ -1,10 +1,16 @@
 import { useMemo, useState } from 'react'
-import { getPairTimes, getParity, getTeachers } from '../services/scheduleService'
-import type { TeacherEntry } from '../parser/types'
+import { getPairTimes, getParity, getTeacherDay, getTeachers, type TeacherLessonView } from '../services/scheduleService'
 import { getWeekDays, shiftISO, todayISO, weekdayName } from '../lib/date'
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon, SearchIcon, UserIcon, UsersIcon } from '../components/Icons'
 
 const MONTHS_GEN = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+
+const STATUS_META: Partial<Record<string, { label: string; kind: string }>> = {
+  replaced: { label: 'Замена', kind: 'warn' },
+  teacher_changed: { label: 'Преподаватель', kind: 'info' },
+  room_changed: { label: 'Кабинет', kind: 'info' },
+  added: { label: 'Добавлено', kind: 'success' },
+}
 
 function formatPairCount(count: number) {
   if (count === 0) return 'пар нет'
@@ -37,15 +43,15 @@ export function TeachersScreen({ dateISO, setDateISO }: {
   const weekEnd = new Date(weekDays[6] + 'T12:00:00')
   const isCurrentWeek = weekDays.includes(todayISO())
 
-  const grouped = useMemo(() => {
-    const byDay = new Map<number, TeacherEntry[]>()
-    entries.forEach(entry => {
-      const list = byDay.get(entry.weekday) ?? []
-      list.push(entry)
-      byDay.set(entry.weekday, list)
-    })
-    return byDay
-  }, [entries])
+  // Неделя преподавателя с применёнными заменами (как в групповом расписании).
+  const weekLessons = useMemo(() => {
+    const map = new Map<string, TeacherLessonView[]>()
+    if (!selected) return map
+    for (const date of weekDays) {
+      map.set(date, getTeacherDay(selected, new Date(date + 'T12:00:00')))
+    }
+    return map
+  }, [selected, weekDays])
 
   return (
     <>
@@ -135,35 +141,50 @@ export function TeachersScreen({ dateISO, setDateISO }: {
           </div>
 
           <div className="teacher-days">
-            {weekDays.map((date, index) => {
+            {weekDays.map((date) => {
+              const rows = weekLessons.get(date) ?? []
+              const activeCount = rows.filter(row => row.status !== 'cancelled').length
+              const hasReplacements = rows.some(row => row.status !== 'normal')
               const currentParity = getParity(new Date(date + 'T12:00:00'))
-              const dayEntries = (grouped.get(index) ?? []).filter(entry => entry.subject && (!currentParity || entry.parity === currentParity)).sort((a, b) => a.pair - b.pair)
+              const parityLabel = currentParity === 'odd' ? 'Нечётная' : currentParity === 'even' ? 'Чётная' : ''
               return (
                 <section key={date} className="teacher-day">
                   <div className="teacher-day-header">
                     <div>
                       <strong>{weekdayName(date)}</strong>
-                      <span>{new Date(date + 'T12:00:00').getDate()} · {formatPairCount(dayEntries.length)}</span>
+                      <span>{new Date(date + 'T12:00:00').getDate()} · {formatPairCount(activeCount)}</span>
                     </div>
                     {date === todayISO() && <span className="badge accent">Сегодня</span>}
+                    {hasReplacements && date !== todayISO() && <span className="badge warn">Замены</span>}
                   </div>
-                  {dayEntries.length === 0 ? (
+                  {rows.length === 0 ? (
                     <div className="teacher-day-empty">Пар нет</div>
                   ) : (
                     <div className="teacher-lessons">
-                      {dayEntries.map((entry, entryIndex) => (
-                        <div key={`${entry.group}-${entry.pair}-${entry.parity}-${entryIndex}`} className="teacher-lesson">
-                          <div className="teacher-lesson-time">
-                            <strong>#{entry.pair}</strong>
-                            <span>{pairTime(entry.pair)}</span>
+                      {rows.map((row, rowIndex) => {
+                        const cancelled = row.status === 'cancelled'
+                        const statusMeta = STATUS_META[row.status]
+                        return (
+                          <div key={`${row.group}-${row.number}-${rowIndex}`} className={`teacher-lesson ${cancelled ? 'cancelled' : ''}`}>
+                            <div className="teacher-lesson-time">
+                              <strong>#{row.number}</strong>
+                              <span>{pairTime(row.number)}</span>
+                            </div>
+                            <div className="teacher-lesson-copy">
+                              <strong>{cancelled ? <s>{row.original?.subject || row.subject || '—'}</s> : row.subject}</strong>
+                              <span>
+                                {row.group}
+                                {cancelled ? ' · Отменено' : row.classroom ? ` · ${row.classroom} каб.` : ''}
+                              </span>
+                            </div>
+                            {statusMeta && !cancelled ? (
+                              <span className={`badge ${statusMeta.kind}`}>{statusMeta.label}</span>
+                            ) : (
+                              <span className="teacher-parity">{parityLabel}</span>
+                            )}
                           </div>
-                          <div className="teacher-lesson-copy">
-                            <strong>{entry.subject}</strong>
-                            <span>{entry.group}{entry.classroom ? ` · ${entry.classroom} каб.` : ''}</span>
-                          </div>
-                          <span className="teacher-parity">{entry.parity === 'odd' ? 'Нечётная' : 'Чётная'}</span>
-                        </div>
-                      ))}
+                        )
+                      })}
                     </div>
                   )}
                 </section>
