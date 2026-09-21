@@ -11139,12 +11139,12 @@
           "odd": {
             "subject": "кл.час \"Разг. о важн.\"",
             "teacher": "Терскова",
-            "classroom": ""
+            "classroom": "421"
           },
           "even": {
             "subject": "кл.час \"Разг. о важн.\"",
             "teacher": "Терскова",
-            "classroom": ""
+            "classroom": "421"
           }
         },
         "3": {
@@ -29171,7 +29171,7 @@
         "weekday": 0,
         "pair": 2,
         "subject": "кл.час \"Разг. о важн.\"",
-        "classroom": "",
+        "classroom": "421",
         "parity": "odd"
       },
       {
@@ -29179,7 +29179,7 @@
         "weekday": 0,
         "pair": 2,
         "subject": "кл.час \"Разг. о важн.\"",
-        "classroom": "",
+        "classroom": "421",
         "parity": "even"
       }
     ],
