@@ -176,12 +176,6 @@ export const LaptopIcon = (p: IconProps) => (
   </Icon>
 )
 
-export const MessageIcon = (p: IconProps) => (
-  <Icon {...p}>
-    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-  </Icon>
-)
-
 export const SparklesIcon = (p: IconProps) => (
   <Icon {...p}>
     <path d="M12 4l1.7 4.3L18 10l-4.3 1.7L12 16l-1.7-4.3L6 10l4.3-1.7L12 4Z" />

@@ -11,7 +11,6 @@ import { ScheduleScreen } from './screens/ScheduleScreen'
 import { WeekScreen } from './screens/WeekScreen'
 import { TeachersScreen } from './screens/TeachersScreen'
 import { TimeScreen } from './screens/TimeScreen'
-import { ChatScreen } from './screens/ChatScreen'
 import { SettingsScreen } from './screens/SettingsScreen'
 import { OnboardingFlow } from './screens/Onboarding'
 import type { Screen } from './types'
@@ -27,7 +26,6 @@ const SCREEN_PARAMS: Record<string, Screen> = {
   week: 'week',
   teachers: 'teachers',
   time: 'time',
-  chat: 'chat',
   settings: 'settings',
 }
 
@@ -154,7 +152,6 @@ export default function App() {
             <TeachersScreen dateISO={dateISO} setDateISO={setDateISO} />
           )}
           {screen === 'time' && <TimeScreen />}
-          {screen === 'chat' && <ChatScreen group={group} />}
           {screen === 'settings' && (
             <SettingsScreen
               group={group}

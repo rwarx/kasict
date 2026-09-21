@@ -65,18 +65,6 @@
           "type": "image/png"
         }
       ]
-    },
-    {
-      "name": "Помощник",
-      "short_name": "Помощник",
-      "url": "./?screen=chat",
-      "icons": [
-        {
-          "src": "./icons/icon-192-spring.png",
-          "sizes": "192x192",
-          "type": "image/png"
-        }
-      ]
     }
   ]
 }
