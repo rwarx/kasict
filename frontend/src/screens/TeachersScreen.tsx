@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { getPairTimes, getParity, getTeacherDay, getTeachers, type TeacherLessonView } from '../services/scheduleService'
+import { getPairTimes, getParity, getTeacherDay, getTeachers, useDataVersion, type TeacherLessonView } from '../services/scheduleService'
 import { getWeekDays, shiftISO, todayISO, weekdayName } from '../lib/date'
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon, SearchIcon, UserIcon, UsersIcon } from '../components/Icons'
 
@@ -38,6 +38,7 @@ export function TeachersScreen({ dateISO, setDateISO }: {
   const names = useMemo(() => Object.keys(teachers).sort((a, b) => a.localeCompare(b, 'ru')), [teachers])
   const filtered = useMemo(() => names.filter(name => matchesTeacher(name, query)), [names, query])
   const entries = selected ? teachers[selected] ?? [] : []
+  const dataVersion = useDataVersion()
   const weekDays = useMemo(() => getWeekDays(dateISO), [dateISO])
   const weekStart = new Date(weekDays[0] + 'T12:00:00')
   const weekEnd = new Date(weekDays[6] + 'T12:00:00')
@@ -51,7 +52,7 @@ export function TeachersScreen({ dateISO, setDateISO }: {
       map.set(date, getTeacherDay(selected, new Date(date + 'T12:00:00')))
     }
     return map
-  }, [selected, weekDays])
+  }, [selected, weekDays, dataVersion])
 
   return (
     <>

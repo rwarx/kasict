@@ -147,6 +147,21 @@ export const DownloadIcon = (p: IconProps) => (
   </Icon>
 )
 
+export const ShareIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 3v12" />
+    <path d="M7 8l5-5 5 5" />
+    <path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" />
+  </Icon>
+)
+
+export const NoteIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M5 4h14a1 1 0 0 1 1 1v9l-6 6H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" />
+    <path d="M20 14h-5v6" />
+  </Icon>
+)
+
 export const BellIcon = (p: IconProps) => (
   <Icon {...p}>
     <path d="M18 9a6 6 0 1 0-12 0c0 6-2.5 7-2.5 7h17S18 15 18 9Z" />

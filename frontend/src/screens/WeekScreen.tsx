@@ -1,8 +1,9 @@
 // Экран недели: все дни выбранной недели.
 
 import { useMemo } from 'react'
-import { getDay } from '../services/scheduleService'
+import { getDay, useDataVersion } from '../services/scheduleService'
 import { getWeekDays, shiftISO, todayISO, weekdayName } from '../lib/date'
+import { FreshnessIndicator } from '../components/Freshness'
 import { ChevronLeftIcon, ChevronRightIcon } from '../components/Icons'
 
 export function WeekScreen({ group, dateISO, setDateISO }: {
@@ -10,6 +11,7 @@ export function WeekScreen({ group, dateISO, setDateISO }: {
   dateISO: string
   setDateISO: (s: string) => void
 }) {
+  const dataVersion = useDataVersion()
   const weekDays = useMemo(() => getWeekDays(dateISO), [dateISO])
   const today = todayISO()
 
@@ -19,7 +21,7 @@ export function WeekScreen({ group, dateISO, setDateISO }: {
       day: getDay(group, new Date(d + 'T12:00:00')),
       isToday: d === today,
     }))
-  }, [weekDays, group, today])
+  }, [weekDays, group, today, dataVersion])
 
   const weekStart = new Date(weekDays[0] + 'T12:00:00')
   const monthGen = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
@@ -116,6 +118,8 @@ export function WeekScreen({ group, dateISO, setDateISO }: {
           )
         })}
       </div>
+
+      <FreshnessIndicator updatedAt={weekData[0]?.day?.updated_at} />
     </>
   )
 }

@@ -1,5 +1,6 @@
 // Загрузка и кэширование данных расписания.
 
+import { useEffect, useState } from 'react'
 import type { MetaJSON, ReplacementBlockJSON, ScheduleJSON } from '../parser/types'
 import { createResolverFromBlocks, type ParityResolver } from './parity'
 import { applyDay, type DaySchedule, type LessonStatus } from './replacementEngine'
@@ -47,39 +48,90 @@ let _replacements: ReplacementBlockJSON[] | null = null
 let _meta: MetaJSON | null = null
 let _resolver: ParityResolver | null = null
 let _lastChanges: DataChangeSummary | null = null
+const _dataListeners = new Set<() => void>()
+
+/** Подписка на фоновые обновления данных (stale-while-revalidate). */
+export function subscribeData(callback: () => void): () => void {
+  _dataListeners.add(callback)
+  return () => { _dataListeners.delete(callback) }
+}
+
+/** Версия данных: растёт при каждом фоновом обновлении — заставляет экраны перечитаться. */
+export function useDataVersion(): number {
+  const [version, setVersion] = useState(0)
+  useEffect(() => subscribeData(() => setVersion(value => value + 1)), [])
+  return version
+}
+
+function commitData(sched: ScheduleJSON, reps: ReplacementBlockJSON[], meta: MetaJSON): void {
+  _schedule = sched
+  _replacements = reps
+  _meta = meta
+  _resolver = createResolverFromBlocks(reps)
+  cacheSet('schedule', sched)
+  cacheSet('replacements', reps)
+  cacheSet('meta', meta)
+}
+
+function applyCache(): boolean {
+  const sched = cacheGet<ScheduleJSON>('schedule')
+  const reps = cacheGet<ReplacementBlockJSON[]>('replacements')
+  const meta = cacheGet<MetaJSON>('meta')
+  if (sched && reps && meta) {
+    _schedule = sched
+    _replacements = reps
+    _meta = meta
+    _resolver = createResolverFromBlocks(reps)
+    return true
+  }
+  return false
+}
+
+/**
+ * Фоновая сверка замен: качаем только meta.json (300 Б вместо 750 КБ).
+ * Полные файлы — только если updated_at изменился.
+ */
+async function revalidateInBackground(): Promise<void> {
+  try {
+    const meta = await fetchJSON<MetaJSON>(`${DATA_BASE}/meta.json`)
+    if (!meta?.updated_at || meta.updated_at === _meta?.updated_at) return
+
+    const previousSchedule = _schedule
+    const previousReplacements = _replacements
+    const [sched, reps] = await Promise.all([
+      fetchJSON<ScheduleJSON>(`${DATA_BASE}/schedule.json`),
+      fetchJSON<ReplacementBlockJSON[]>(`${DATA_BASE}/replacements.json`),
+    ])
+    _lastChanges = summarizeScheduleChanges(previousSchedule, sched, previousReplacements, reps)
+    commitData(sched, reps, meta)
+    saveSnapshot(sched, reps, meta).catch(() => {})
+    _dataListeners.forEach(listener => listener())
+  } catch {
+    // сеть недоступна или сервер не отвечает — молча остаёмся на кэше
+  }
+}
 
 export async function loadData(): Promise<void> {
-  // Network-first: всегда тянем свежие данные; кэш — офлайн-фолбэк.
+  // Мгновенный старт: рендерим из localStorage, свежесть сверяем в фоне.
+  if (applyCache()) {
+    void revalidateInBackground()
+    return
+  }
+
+  // Холодный старт: полная загрузка с сети; кэш — офлайн-фолбэк.
   try {
     const [sched, reps, meta] = await Promise.all([
       fetchJSON<ScheduleJSON>(`${DATA_BASE}/schedule.json`),
       fetchJSON<ReplacementBlockJSON[]>(`${DATA_BASE}/replacements.json`),
       fetchJSON<MetaJSON>(`${DATA_BASE}/meta.json`),
     ])
-    const previousSchedule = cacheGet<ScheduleJSON>('schedule')
-    const previousReplacements = cacheGet<ReplacementBlockJSON[]>('replacements')
-    _lastChanges = summarizeScheduleChanges(previousSchedule, sched, previousReplacements, reps)
-    _schedule = sched
-    _replacements = reps
-    _meta = meta
-    _resolver = createResolverFromBlocks(reps)
-    cacheSet('schedule', sched)
-    cacheSet('replacements', reps)
-    cacheSet('meta', meta)
+    _lastChanges = null
+    commitData(sched, reps, meta)
 
     // Сохраняем снимок в IndexedDB (не блокируя UI)
     saveSnapshot(sched, reps, meta).catch(() => {})
   } catch {
-    const sched = cacheGet<ScheduleJSON>('schedule')
-    const reps = cacheGet<ReplacementBlockJSON[]>('replacements')
-    const meta = cacheGet<MetaJSON>('meta')
-    if (sched && reps && meta) {
-      _schedule = sched
-      _replacements = reps
-      _meta = meta
-      _resolver = createResolverFromBlocks(reps)
-      return
-    }
+    if (applyCache()) return
     throw new Error('Нет данных: сеть недоступна, локальный кэш пуст')
   }
 }

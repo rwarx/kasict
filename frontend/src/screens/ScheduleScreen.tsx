@@ -1,15 +1,19 @@
 // Главный экран: расписание на выбранный день.
 
 import { useEffect, useMemo, useState } from 'react'
-import { getDay } from '../services/scheduleService'
+import { getDay, useDataVersion } from '../services/scheduleService'
 import type { DaySchedule, LessonView } from '../services/replacementEngine'
 import { formatDateFull, formatDateShort, getWeekDays, shiftISO, todayISO, weekdayName } from '../lib/date'
 import { isDayX } from '../lib/specialDays'
 import { computeLive, useNow } from '../lib/lessonLive'
+import { useDayNotes } from '../lib/notes'
+import { shareScheduleText } from '../lib/share'
 import { CalendarSheet } from '../components/CalendarSheet'
 import { LessonCard, ReplacementSheet } from '../components/LessonCard'
+import { NoteSheet } from '../components/NoteSheet'
+import { FreshnessIndicator } from '../components/Freshness'
 import { EmptyDay } from '../components/StateViews'
-import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon, DownloadIcon } from '../components/Icons'
+import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon, DownloadIcon, ShareIcon } from '../components/Icons'
 import { downloadScheduleImage } from '../lib/scheduleImage'
 
 export function ScheduleScreen({ group, dateISO, setDateISO }: {
@@ -19,11 +23,15 @@ export function ScheduleScreen({ group, dateISO, setDateISO }: {
 }) {
   const [day, setDay] = useState<DaySchedule | null>(null)
   const [sheetLesson, setSheetLesson] = useState<LessonView | null>(null)
+  const [noteTarget, setNoteTarget] = useState<LessonView | null>(null)
   const [calendarOpen, setCalendarOpen] = useState(false)
+  const [toast, setToast] = useState('')
+  const dataVersion = useDataVersion()
+  const dayNotes = useDayNotes(group, dateISO)
 
   useEffect(() => {
     setDay(getDay(group, new Date(dateISO + 'T12:00:00')))
-  }, [group, dateISO])
+  }, [group, dateISO, dataVersion])
 
   const today = todayISO()
   const isToday = dateISO === today
@@ -34,6 +42,25 @@ export function ScheduleScreen({ group, dateISO, setDateISO }: {
   const nowMin = useNow(30000)
 
   const eyebrow = isToday ? 'Сегодня' : isTomorrow ? 'Завтра' : isYesterday ? 'Вчера' : weekdayName(dateISO)
+
+  const showToast = (message: string) => {
+    setToast(message)
+    window.setTimeout(() => setToast(current => (current === message ? '' : current)), 2600)
+  }
+
+  const handleShare = () => {
+    if (!day) return
+    void shareScheduleText({
+      date: dateISO,
+      group,
+      weekday: day.weekday,
+      parity: day.parity === 'odd' ? 'Нечётная неделя' : 'Чётная неделя',
+      lessons: visible,
+    }).then(result => {
+      if (result === 'copied') showToast('Расписание скопировано — вставь в чат')
+      if (result === 'failed') showToast('Не удалось поделиться')
+    })
+  }
 
   return (
     <>
@@ -51,6 +78,15 @@ export function ScheduleScreen({ group, dateISO, setDateISO }: {
               aria-label="Открыть календарь"
             >
               <CalendarIcon size={20} />
+            </button>
+            <button
+              type="button"
+              className="icon-btn lg"
+              onClick={handleShare}
+              aria-label="Поделиться расписанием текстом"
+              title="Поделиться"
+            >
+              <ShareIcon size={19} />
             </button>
             <button
               type="button"
@@ -142,6 +178,8 @@ export function ScheduleScreen({ group, dateISO, setDateISO }: {
               <LessonCard
                 lesson={l}
                 live={isToday && l.status !== 'cancelled' ? computeLive(l.time_start, l.time_end, nowMin) : null}
+                note={dayNotes[l.number] ?? null}
+                onOpenNote={() => setNoteTarget(l)}
                 onClick={() => l.status !== 'normal' && setSheetLesson(l)}
               />
             </div>
@@ -149,16 +187,24 @@ export function ScheduleScreen({ group, dateISO, setDateISO }: {
         </div>
       )}
 
-      {day?.updated_at && (
-        <div className="footer-info">
-          Обновлено в {new Date(day.updated_at).toLocaleString('ru-RU', { hour: '2-digit', minute: '2-digit' })}
-        </div>
+      <FreshnessIndicator updatedAt={day?.updated_at} />
+
+      {noteTarget && (
+        <NoteSheet
+          group={group}
+          dateISO={dateISO}
+          pair={noteTarget.number}
+          subject={noteTarget.subject}
+          onClose={() => setNoteTarget(null)}
+        />
       )}
 
       {sheetLesson && <ReplacementSheet lesson={sheetLesson} onClose={() => setSheetLesson(null)} />}
       {calendarOpen && (
         <CalendarSheet dateISO={dateISO} onPick={setDateISO} onClose={() => setCalendarOpen(false)} />
       )}
+
+      {toast && <div className="app-toast" role="status">{toast}</div>}
     </>
   )
 }

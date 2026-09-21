@@ -10,8 +10,73 @@
   "theme_color": "#0E0E12",
   "background_color": "#0E0E12",
   "icons": [
-    { "src": "./icons/icon-192-summer.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "./icons/icon-512-summer.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "./icons/icon-maskable-512-summer.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "./icons/icon-192-summer.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512-summer.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-maskable-512-summer.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Сегодня",
+      "short_name": "Сегодня",
+      "url": "./?screen=today",
+      "icons": [
+        {
+          "src": "./icons/icon-192-summer.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Неделя",
+      "short_name": "Неделя",
+      "url": "./?screen=week",
+      "icons": [
+        {
+          "src": "./icons/icon-192-summer.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Учителя",
+      "short_name": "Учителя",
+      "url": "./?screen=teachers",
+      "icons": [
+        {
+          "src": "./icons/icon-192-summer.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Помощник",
+      "short_name": "Помощник",
+      "url": "./?screen=chat",
+      "icons": [
+        {
+          "src": "./icons/icon-192-summer.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
   ]
 }

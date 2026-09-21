@@ -2,7 +2,7 @@
 
 import type { LessonView } from '../services/replacementEngine'
 import type { LessonLive } from '../lib/lessonLive'
-import { LaptopIcon, PinIcon, SwapIcon, UserIcon } from './Icons'
+import { LaptopIcon, NoteIcon, PinIcon, SwapIcon, UserIcon } from './Icons'
 
 const STATUS_META: Record<string, { label: string; kind: string }> = {
   replaced: { label: 'Замена', kind: 'warn' },
@@ -12,7 +12,13 @@ const STATUS_META: Record<string, { label: string; kind: string }> = {
   added: { label: 'Добавлено', kind: 'success' },
 }
 
-export function LessonCard({ lesson, live, onClick }: { lesson: LessonView; live?: LessonLive | null; onClick: () => void }) {
+export function LessonCard({ lesson, live, note, onOpenNote, onClick }: {
+  lesson: LessonView
+  live?: LessonLive | null
+  note?: string | null
+  onOpenNote?: () => void
+  onClick: () => void
+}) {
   const changed = lesson.status !== 'normal'
   const cancelled = lesson.status === 'cancelled'
   const statusMeta = changed ? STATUS_META[lesson.status] : null
@@ -48,6 +54,17 @@ export function LessonCard({ lesson, live, onClick }: { lesson: LessonView; live
             </span>
           )}
           {statusMeta && <span className={`badge ${statusMeta.kind}`}>{statusMeta.label}</span>}
+          {onOpenNote && (
+            <button
+              type="button"
+              className={`lesson-note-btn ${note ? 'has-note' : ''}`}
+              onClick={(event) => { event.stopPropagation(); onOpenNote() }}
+              aria-label={note ? 'Редактировать заметку к паре' : 'Добавить заметку к паре'}
+              title="Заметка"
+            >
+              <NoteIcon size={15} />
+            </button>
+          )}
         </div>
 
         {cancelled ? (
@@ -85,6 +102,13 @@ export function LessonCard({ lesson, live, onClick }: { lesson: LessonView; live
               )}
             </div>
           </>
+        )}
+
+        {note && (
+          <div className="lesson-note">
+            <NoteIcon size={13} />
+            <span>{note}</span>
+          </div>
         )}
 
         {changed && !cancelled && (
