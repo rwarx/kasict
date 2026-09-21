@@ -48,7 +48,7 @@ export function WeekScreen({ group, dateISO, setDateISO }: {
         </div>
         {parity && (
           <div className="date-tags">
-            <span className={`badge ${parity === 'odd' ? 'accent' : 'blue'}`}>
+            <span className="badge accent">
               {parity === 'odd' ? 'Нечётная неделя' : 'Чётная неделя'}
             </span>
           </div>

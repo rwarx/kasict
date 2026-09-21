@@ -107,7 +107,7 @@ export function ScheduleScreen({ group, dateISO, setDateISO }: {
         </div>
         {day?.parity && (
           <div className="date-tags">
-            <span className={`badge ${day.parity === 'odd' ? 'accent' : 'blue'}`}>
+            <span className="badge accent">
               {day.parity === 'odd' ? 'Нечётная неделя' : 'Чётная неделя'}
             </span>
             {day.has_replacements && !day.day_note && (
