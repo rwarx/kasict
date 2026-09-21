@@ -16,6 +16,8 @@ import { OnboardingFlow } from './screens/Onboarding'
 import type { Screen } from './types'
 import { useTheme } from './lib/theme'
 import { subscribeData } from './services/scheduleService'
+import { updateAppBadge } from './lib/badge'
+import { markWhatsNewSeen, pendingWhatsNew, type WhatsNewEntry } from './lib/whatsNew'
 
 const GROUP_KEY = 'schedule:group'
 const ONBOARDING_KEY = 'schedule:onboarded'
@@ -62,6 +64,7 @@ export default function App() {
   const [groupModal, setGroupModal] = useState(false)
   const [dayXShow, setDayXShow] = useState(false)
   const [toast, setToast] = useState('')
+  const [whatsNew, setWhatsNew] = useState<WhatsNewEntry | null>(null)
   // Сегодняшняя дата не меняется за время жизни страницы — вычисляем один раз
   const [today] = useState(() => {
     const d = new Date()
@@ -83,6 +86,7 @@ export default function App() {
         setLoading(false)
         const meta = getMeta()
         if (meta) void handleNewData(meta, getLastChanges())
+        updateAppBadge(group)
       })
       .catch(() => { setError('Не удалось загрузить данные'); setLoading(false) })
 
@@ -90,6 +94,7 @@ export default function App() {
     const unsubscribe = subscribeData(() => {
       const meta = getMeta()
       if (meta) void handleNewData(meta, getLastChanges())
+      updateAppBadge(group)
       const changes = getLastChanges()
       if (changes && changes.added + changes.cancelled + changes.changed > 0) {
         setToast('Расписание обновлено — показаны свежие данные')
@@ -97,7 +102,26 @@ export default function App() {
       }
     })
     return unsubscribe
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // Бейдж зависит от группы — пересчитываем при её смене
+  useEffect(() => {
+    updateAppBadge(group)
+  }, [group])
+
+  // «Что нового» — один раз на версию, после онбординга, с паузой (уступает экрану загрузке/Дню X)
+  useEffect(() => {
+    if (!onboarded) return
+    if (pendingWhatsNew() === null) return
+    const t = window.setTimeout(() => setWhatsNew(pendingWhatsNew()), 1400)
+    return () => window.clearTimeout(t)
+  }, [onboarded])
+
+  const closeWhatsNew = () => {
+    markWhatsNewSeen()
+    setWhatsNew(null)
+  }
 
   const completeOnboarding = (selectedGroup: string) => {
     localStorage.setItem(GROUP_KEY, selectedGroup)
@@ -176,6 +200,28 @@ export default function App() {
       )}
 
       {dayXShow && <Fireworks onClose={() => setDayXShow(false)} />}
+
+      {whatsNew && (
+        <div className="modal-root" role="dialog" aria-modal="true" aria-label="Что нового">
+          <div className="modal-overlay" onClick={closeWhatsNew} />
+          <div className="dialog-panel whatsnew-panel" onClick={e => e.stopPropagation()}>
+            <div className="whatsnew-head">
+              <h3 className="dialog-title">Что нового</h3>
+              <span className="badge accent">v{whatsNew.version}</span>
+            </div>
+            <ul className="whatsnew-list">
+              {whatsNew.items.map((item, i) => (
+                <li key={i} className="whatsnew-item">{item}</li>
+              ))}
+            </ul>
+            <div className="dialog-buttons">
+              <button type="button" className="btn-solid btn-block" onClick={closeWhatsNew}>
+                Отлично!
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {toast && <div className="app-toast" role="status">{toast}</div>}
     </div>

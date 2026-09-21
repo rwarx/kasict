@@ -183,3 +183,9 @@ export const SparklesIcon = (p: IconProps) => (
     <path d="M5 16l.7 1.8L7.5 18.5l-1.8.7L5 21l-.7-1.8L2.5 18.5l1.8-.7L5 16Z" />
   </Icon>
 )
+
+export const BarChartIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M5 20V10M12 20V4M19 20v-7" />
+  </Icon>
+)

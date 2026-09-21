@@ -1,4 +1,5 @@
 // Индикатор свежести данных: «Обновлено 5 мин назад» + статус (свежие/устаревшие).
+// Тап по индикатору — ручная проверка замен (если передан onRefresh).
 
 import { useEffect, useState } from 'react'
 
@@ -21,14 +22,29 @@ function relativeLabel(updated: Date, now: Date): string {
   return `${date} в ${time}`
 }
 
-export function FreshnessIndicator({ updatedAt }: { updatedAt: string | null | undefined }) {
+export function FreshnessIndicator({ updatedAt, onRefresh }: {
+  updatedAt: string | null | undefined
+  onRefresh?: () => Promise<void> | void
+}) {
   const [now, setNow] = useState(() => new Date())
+  const [checking, setChecking] = useState(false)
 
   // Раз в минуту обновляем относительное время
   useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 60_000)
     return () => clearInterval(timer)
   }, [])
+
+  // Минимальная длительность состояния «Проверяем…», чтобы тап был заметен
+  const runCheck = () => {
+    if (!onRefresh || checking) return
+    setChecking(true)
+    const started = Date.now()
+    void Promise.resolve(onRefresh()).finally(() => {
+      const wait = Math.max(0, 700 - (Date.now() - started))
+      window.setTimeout(() => setChecking(false), wait)
+    })
+  }
 
   if (!updatedAt) return null
 
@@ -41,14 +57,34 @@ export function FreshnessIndicator({ updatedAt }: { updatedAt: string | null | u
     day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit',
   })
 
+  const label = checking
+    ? 'Проверяем замены…'
+    : `Обновлено ${relativeLabel(updated, now)}`
+
   return (
     <div className="freshness-wrap">
       <span
-        className={`freshness ${stale ? 'stale' : ''}`}
-        title={stale ? `Последнее обновление: ${exact}. Данные могут быть устаревшими` : `Последнее обновление: ${exact}`}
+        className={`freshness ${stale ? 'stale' : ''} ${onRefresh ? 'clickable' : ''}`}
+        title={stale
+          ? `Последнее обновление: ${exact}. Данные могут быть устаревшими${onRefresh ? '. Нажмите, чтобы проверить' : ''}`
+          : `Последнее обновление: ${exact}${onRefresh ? '. Нажмите, чтобы проверить замены' : ''}`}
+        {...(onRefresh
+          ? {
+              role: 'button',
+              tabIndex: 0,
+              'aria-label': checking ? 'Проверяем замены' : 'Проверить обновления расписания',
+              onClick: runCheck,
+              onKeyDown: (e: React.KeyboardEvent) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  runCheck()
+                }
+              },
+            }
+          : {})}
       >
-        <span className="dot" aria-hidden="true" />
-        Обновлено {relativeLabel(updated, now)}
+        <span className={`dot ${checking ? 'checking' : ''}`} aria-hidden="true" />
+        {label}
       </span>
     </div>
   )

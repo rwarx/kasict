@@ -6,6 +6,7 @@ import { disableNotifications, enableNotifications, isNotifEnabled, isNotifSuppo
 import { getAllSnapshots, clearHistory, getSnapshotCount, type ScheduleSnapshot } from '../services/history'
 import type { Season, ThemePref } from '../lib/theme'
 import { SEASONS } from '../lib/theme'
+import { APP_VERSION } from '../lib/whatsNew'
 import { ChevronRightIcon, RefreshIcon, UserIcon } from '../components/Icons'
 
 export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemePref, season, onViewSchedule }: {
@@ -185,7 +186,7 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
         <div className="settings-card">
           <div className="info-row">
             <span className="info-label">Версия</span>
-            <span className="info-value">3.0.0</span>
+            <span className="info-value">{APP_VERSION}</span>
           </div>
           <div className="info-row">
             <span className="info-label">Источник данных</span>

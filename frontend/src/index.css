@@ -806,6 +806,23 @@ button {
   font-size: 12px;
   font-weight: 600;
   color: var(--text-2);
+  font-family: inherit;
+}
+
+.freshness.clickable {
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.freshness.clickable:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.freshness.clickable:active {
+  transform: scale(0.96);
 }
 
 .freshness .dot {
@@ -814,6 +831,15 @@ button {
   border-radius: 50%;
   background: var(--green);
   box-shadow: 0 0 8px var(--green);
+}
+
+.freshness .dot.checking {
+  animation: freshnessCheck 0.8s ease-in-out infinite;
+}
+
+@keyframes freshnessCheck {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.45; }
 }
 
 .freshness.stale .dot {
@@ -2463,6 +2489,134 @@ button.settings-row:hover {
   font-size: 13.5px;
   color: var(--text-3);
   font-weight: 500;
+}
+
+/* ---------- Итоги недели ---------- */
+
+.week-stats {
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.week-stats-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.week-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.week-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  text-align: center;
+  min-width: 0;
+}
+
+.week-stat-num {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.week-stat-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.week-stats-note {
+  margin-top: 10px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-2);
+  text-align: center;
+}
+
+.week-stats-note strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* ---------- «Что нового» ---------- */
+
+.whatsnew-panel {
+  width: min(92vw, 360px);
+}
+
+.whatsnew-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.whatsnew-head .dialog-title {
+  margin: 0;
+}
+
+.whatsnew-list {
+  list-style: none;
+  margin: 0 0 6px;
+  padding: 0;
+  max-height: 46vh;
+  overflow-y: auto;
+}
+
+.whatsnew-item {
+  position: relative;
+  padding: 7px 0 7px 18px;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--text-2);
+  border-top: 1px solid var(--border);
+}
+
+.whatsnew-item:first-child {
+  border-top: none;
+}
+
+.whatsnew-item::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent-glow);
 }
 
 .week-lesson {

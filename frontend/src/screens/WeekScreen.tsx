@@ -1,10 +1,39 @@
-// Экран недели: все дни выбранной недели.
+// Экран недели: все дни выбранной недели + итоги (пары, окна, часы).
 
 import { useMemo } from 'react'
-import { getDay, useDataVersion } from '../services/scheduleService'
+import { getDay, revalidateInBackground, useDataVersion } from '../services/scheduleService'
 import { getWeekDays, shiftISO, todayISO, weekdayName } from '../lib/date'
 import { FreshnessIndicator } from '../components/Freshness'
-import { ChevronLeftIcon, ChevronRightIcon } from '../components/Icons'
+import { BarChartIcon, ChevronLeftIcon, ChevronRightIcon } from '../components/Icons'
+
+interface WeekStats {
+  lessons: number
+  cancelled: number
+  windows: number
+  minutes: number
+  busiest: string | null
+}
+
+function toMinutes(hhmm: string): number {
+  const [h, m] = hhmm.split(':').map(Number)
+  return (h || 0) * 60 + (m || 0)
+}
+
+function plural(n: number, one: string, few: string, many: string): string {
+  const mod10 = n % 10
+  const mod100 = n % 100
+  if (mod10 === 1 && mod100 !== 11) return one
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return few
+  return many
+}
+
+function formatHours(minutes: number): string {
+  if (minutes < 60) return `${minutes} мин`
+  const hours = minutes / 60
+  // 28,5 ч — компактнее «28 ч 30 мин» и всегда влезает в плитку
+  const rounded = Math.round(hours * 10) / 10
+  return `${String(rounded).replace('.', ',')} ч`
+}
 
 export function WeekScreen({ group, dateISO, setDateISO }: {
   group: string
@@ -29,6 +58,38 @@ export function WeekScreen({ group, dateISO, setDateISO }: {
   const weekEnd = new Date(weekDays[6] + 'T12:00:00')
   const parity = weekData[0]?.day?.parity
   const isCurrentWeek = weekDays.includes(today)
+
+  // Итоги недели: пары без отмен, окна между парами, время в аудитории
+  const stats: WeekStats | null = useMemo(() => {
+    let lessons = 0
+    let cancelled = 0
+    let windows = 0
+    let minutes = 0
+    let busiest: string | null = null
+    let busiestCount = 0
+
+    for (const { date, day } of weekData) {
+      const active = (day?.lessons ?? []).filter(l => l.status !== 'cancelled' && l.subject)
+      cancelled += (day?.lessons ?? []).filter(l => l.status === 'cancelled').length
+      lessons += active.length
+      if (active.length > busiestCount) {
+        busiestCount = active.length
+        busiest = weekdayName(date)
+      }
+
+      const numbers = active.map(l => l.number).sort((a, b) => a - b)
+      for (let i = 1; i < numbers.length; i++) {
+        if (numbers[i] - numbers[i - 1] > 1) windows++
+      }
+
+      for (const l of active) {
+        minutes += Math.max(0, toMinutes(l.time_end) - toMinutes(l.time_start))
+      }
+    }
+
+    if (lessons === 0) return null
+    return { lessons, cancelled, windows, minutes, busiest }
+  }, [weekData])
 
   function formatPairCount(count: number) {
     if (count === 0) return 'пар нет'
@@ -119,7 +180,44 @@ export function WeekScreen({ group, dateISO, setDateISO }: {
         })}
       </div>
 
-      <FreshnessIndicator updatedAt={weekData[0]?.day?.updated_at} />
+      {stats && (
+        <section className="week-stats" aria-label="Итоги недели">
+          <div className="week-stats-title">
+            <BarChartIcon size={15} />
+            Итоги недели
+          </div>
+          <div className="week-stats-grid">
+            <div className="week-stat">
+              <span className="week-stat-num">{stats.lessons}</span>
+              <span className="week-stat-label">{plural(stats.lessons, 'пара', 'пары', 'пар')}</span>
+            </div>
+            <div className="week-stat">
+              <span className="week-stat-num">{stats.windows}</span>
+              <span className="week-stat-label">{plural(stats.windows, 'окно', 'окна', 'окон')}</span>
+            </div>
+            <div className="week-stat">
+              <span className="week-stat-num">{formatHours(stats.minutes)}</span>
+              <span className="week-stat-label">в аудитории</span>
+            </div>
+            {stats.cancelled > 0 && (
+              <div className="week-stat">
+                <span className="week-stat-num">{stats.cancelled}</span>
+                <span className="week-stat-label">{plural(stats.cancelled, 'отмена', 'отмены', 'отмен')}</span>
+              </div>
+            )}
+          </div>
+          {stats.busiest && (
+            <div className="week-stats-note">
+              Самый загруженный день — <strong>{stats.busiest}</strong>
+            </div>
+          )}
+        </section>
+      )}
+
+      <FreshnessIndicator
+        updatedAt={weekData[0]?.day?.updated_at}
+        onRefresh={() => revalidateInBackground()}
+      />
     </>
   )
 }

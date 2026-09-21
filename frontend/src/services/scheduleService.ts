@@ -91,7 +91,7 @@ function applyCache(): boolean {
  * Фоновая сверка замен: качаем только meta.json (300 Б вместо 750 КБ).
  * Полные файлы — только если updated_at изменился.
  */
-async function revalidateInBackground(): Promise<void> {
+export async function revalidateInBackground(): Promise<void> {
   try {
     const meta = await fetchJSON<MetaJSON>(`${DATA_BASE}/meta.json`)
     if (!meta?.updated_at || meta.updated_at === _meta?.updated_at) return

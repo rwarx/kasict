@@ -1,7 +1,7 @@
 // Главный экран: расписание на выбранный день.
 
 import { useEffect, useMemo, useState } from 'react'
-import { getDay, useDataVersion } from '../services/scheduleService'
+import { getDay, revalidateInBackground, useDataVersion } from '../services/scheduleService'
 import type { DaySchedule, LessonView } from '../services/replacementEngine'
 import { formatDateFull, formatDateShort, getWeekDays, shiftISO, todayISO, weekdayName } from '../lib/date'
 import { isDayX } from '../lib/specialDays'
@@ -187,7 +187,7 @@ export function ScheduleScreen({ group, dateISO, setDateISO }: {
         </div>
       )}
 
-      <FreshnessIndicator updatedAt={day?.updated_at} />
+      <FreshnessIndicator updatedAt={day?.updated_at} onRefresh={() => revalidateInBackground()} />
 
       {noteTarget && (
         <NoteSheet
