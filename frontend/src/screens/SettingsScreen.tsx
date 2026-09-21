@@ -6,7 +6,7 @@ import { disableNotifications, enableNotifications, isNotifEnabled, isNotifSuppo
 import { getAllSnapshots, clearHistory, getSnapshotCount, type ScheduleSnapshot } from '../services/history'
 import type { Season, ThemePref } from '../lib/theme'
 import { SEASONS } from '../lib/theme'
-import { ChevronRightIcon, GitHubIcon, RefreshIcon, UserIcon } from '../components/Icons'
+import { ChevronRightIcon, RefreshIcon, UserIcon } from '../components/Icons'
 
 export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemePref, season, onViewSchedule }: {
   group: string | null
@@ -199,7 +199,7 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
         Обновить данные
       </button>
 
-      <div className="author-row" aria-label="Автор и исходный код">
+      <div className="author-row" aria-label="Автор приложения">
         <a
           className="author-btn"
           href="https://github.com/rwarx"
@@ -210,20 +210,7 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
           <span className="author-btn-icon"><UserIcon size={18} /></span>
           <span className="author-btn-text">
             <span className="author-btn-title">rwarx</span>
-            <span className="author-btn-sub">Автор</span>
-          </span>
-        </a>
-        <a
-          className="author-btn"
-          href="https://github.com/rwarx/kasict"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Исходный код проекта на GitHub"
-        >
-          <span className="author-btn-icon"><GitHubIcon size={18} /></span>
-          <span className="author-btn-text">
-            <span className="author-btn-title">GitHub</span>
-            <span className="author-btn-sub">Исходный код</span>
+            <span className="author-btn-sub">Автор приложения</span>
           </span>
         </a>
       </div>
