@@ -33,8 +33,9 @@ const PAIR_NUMBERS = [1, 2, 3, 4, 5, 6]
 
 const DAY_NAMES = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье']
 
-function isRemote(classroom: string): boolean {
-  return /^(до|do\.?)$/i.test(classroom.trim())
+/** Кабинет «ДО» / «дистанционно» — пара идёт дистанционно. */
+export function isRemote(classroom: string): boolean {
+  return /^(до|дистанционн\w*|дист\.?|do)\.?$/i.test(classroom.trim())
 }
 
 function classify(base: LessonData | null, rep: ReplacementEntry): LessonStatus {

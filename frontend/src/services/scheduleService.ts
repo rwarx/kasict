@@ -175,6 +175,7 @@ export interface TeacherLessonView {
   time_end: string
   subject: string
   classroom: string
+  is_remote: boolean
   group: string
   status: LessonStatus
   original: { subject: string; teacher: string; classroom: string } | null
@@ -205,6 +206,7 @@ export function getTeacherDay(teacher: string, d: Date): TeacherLessonView[] {
         time_end: lesson.time_end,
         subject: lesson.status === 'cancelled' ? (lesson.original?.subject || '') : lesson.subject,
         classroom: lesson.classroom,
+        is_remote: lesson.status !== 'cancelled' && lesson.is_remote,
         group,
         status: lesson.status,
         original: lesson.original,

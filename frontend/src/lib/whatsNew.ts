@@ -1,6 +1,6 @@
 // «Что нового»: показывается один раз при обновлении на новую версию.
 
-export const APP_VERSION = '3.1.0'
+export const APP_VERSION = '3.2.0'
 
 export interface WhatsNewEntry {
   version: string
@@ -10,6 +10,13 @@ export interface WhatsNewEntry {
 export const WHATS_NEW: WhatsNewEntry[] = [
   {
     version: APP_VERSION,
+    items: [
+      '💻 Дистанционные пары: «ДО» теперь показывается как «Дистанционно» — в расписании, на неделе, у преподавателей и в заменах',
+      '⏱ В итогах недели дистанционные пары не считаются часами в аудитории',
+    ],
+  },
+  {
+    version: '3.1.0',
     items: [
       '📌 Заметки и домашка к парам — кнопка на карточке',
       '📊 Итоги недели: пары, окна, часы и самый загруженный день',

@@ -83,6 +83,7 @@ export function WeekScreen({ group, dateISO, setDateISO }: {
       }
 
       for (const l of active) {
+        if (l.is_remote) continue // дистанционные пары — не часы в аудитории
         minutes += Math.max(0, toMinutes(l.time_end) - toMinutes(l.time_start))
       }
     }
@@ -161,7 +162,7 @@ export function WeekScreen({ group, dateISO, setDateISO }: {
                       <div className="week-lesson-meta">
                         {l.status === 'cancelled' ? 'Отменено' : (
                           <>
-                            {l.classroom && `${l.classroom} каб.`}
+                            {l.is_remote ? 'Дистанционно' : l.classroom && `${l.classroom} каб.`}
                             {l.teacher && ` · ${l.teacher}`}
                           </>
                         )}

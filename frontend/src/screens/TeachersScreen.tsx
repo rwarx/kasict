@@ -175,7 +175,7 @@ export function TeachersScreen({ dateISO, setDateISO }: {
                               <strong>{cancelled ? <s>{row.original?.subject || row.subject || '—'}</s> : row.subject}</strong>
                               <span>
                                 {row.group}
-                                {cancelled ? ' · Отменено' : row.classroom ? ` · ${row.classroom} каб.` : ''}
+                                {cancelled ? ' · Отменено' : row.is_remote ? ' · Дистанционно' : row.classroom ? ` · ${row.classroom} каб.` : ''}
                               </span>
                             </div>
                             {statusMeta && !cancelled ? (

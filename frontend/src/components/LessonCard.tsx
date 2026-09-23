@@ -1,6 +1,6 @@
 // Карточка пары + нижний лист с деталями замены.
 
-import type { LessonView } from '../services/replacementEngine'
+import { isRemote, type LessonView } from '../services/replacementEngine'
 import type { LessonLive } from '../lib/lessonLive'
 import { LaptopIcon, NoteIcon, PinIcon, SwapIcon, UserIcon } from './Icons'
 
@@ -164,7 +164,7 @@ export function ReplacementSheet({ lesson, onClose }: { lesson: LessonView; onCl
               <div className="change-block-subject">{lesson.original.subject || '—'}</div>
               <div className="change-block-meta">
                 {lesson.original.teacher && <span>{lesson.original.teacher}</span>}
-                {lesson.original.classroom && <span> · {lesson.original.classroom} каб.</span>}
+                {lesson.original.classroom && <span> · {isRemote(lesson.original.classroom) ? 'дистанционно' : `${lesson.original.classroom} каб.`}</span>}
               </div>
             </div>
             <div className="change-arrow" aria-hidden="true">↓</div>
@@ -177,7 +177,7 @@ export function ReplacementSheet({ lesson, onClose }: { lesson: LessonView; onCl
                   <div className="change-block-subject">{lesson.subject}</div>
                   <div className="change-block-meta">
                     {lesson.teacher && <span>{lesson.teacher}</span>}
-                    {lesson.classroom && <span> · {lesson.classroom} каб.</span>}
+                    {lesson.classroom && <span> · {lesson.is_remote ? 'дистанционно' : `${lesson.classroom} каб.`}</span>}
                   </div>
                 </>
               )}
@@ -189,7 +189,7 @@ export function ReplacementSheet({ lesson, onClose }: { lesson: LessonView; onCl
             <div className="change-block-subject">{lesson.subject || '—'}</div>
             <div className="change-block-meta">
               {lesson.teacher && <span>{lesson.teacher}</span>}
-              {lesson.classroom && <span> · {lesson.classroom} каб.</span>}
+              {lesson.classroom && <span> · {lesson.is_remote ? 'дистанционно' : `${lesson.classroom} каб.`}</span>}
             </div>
           </div>
         )}
