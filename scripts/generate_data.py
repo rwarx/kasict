@@ -23,6 +23,7 @@ from app.parsers.html_utils import decode_bytes
 from app.parsers.replacement_parser import parse_replacements
 from app.parsers.schedule_parser import parse_schedule
 from app.services.parity import ParityResolver
+from app.services.remote_hints import apply_teacher_remote_hints
 from app.models.domain import (
     PAIR_NUMBERS, PAIR_TIMES, BaseSchedule, ReplacementBlock,
 )
@@ -159,6 +160,9 @@ def main() -> None:
     resolver = ParityResolver()
     for block in blocks:
         resolver.calibrate(block.date, block.parity)
+
+    # 4.5 Секция «Кабинеты»: преподаватель с кабинетом «ДО» -> замена кабинета на «до»
+    apply_teacher_remote_hints(blocks, schedule, resolver)
 
     # 5. Generate JSON
     schedule_json = build_schedule_json(schedule, resolver)

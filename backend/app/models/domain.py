@@ -91,12 +91,21 @@ class Replacement:
 
 
 @dataclass
+class TeacherRoom:
+    """Строка секции «Кабинеты»: где работает преподаватель («ДО» = дистанционно)."""
+    teacher: str
+    pairs: list[int]              # [] => весь день
+    classroom: str
+
+
+@dataclass
 class ReplacementBlock:
     """Блок замен на одну дату (по заголовку файла)."""
     date: date
     parity: str | None            # "odd" | "even" | None
     day_word: str = ""            # напр. "нечетная пятница"
     replacements: list[Replacement] = field(default_factory=list)
+    teacher_rooms: list[TeacherRoom] = field(default_factory=list)
 
 
 @dataclass

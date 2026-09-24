@@ -12,7 +12,7 @@ from datetime import date
 
 from bs4 import BeautifulSoup
 
-from ..models.domain import Replacement, ReplacementBlock
+from ..models.domain import Replacement, ReplacementBlock, TeacherRoom
 from .html_utils import clean_cell, decode_bytes, expand_table_to_grid
 
 log = logging.getLogger("parser.replacement")
@@ -23,6 +23,9 @@ HEADER_RE = re.compile(
 )
 _CANCEL_RE = re.compile(r"нет\s+пары|нет\s+занятий", re.IGNORECASE)
 _FROM_PAIR_RE = re.compile(r"с\s+(\d)\s*пары", re.IGNORECASE)
+_CAB_SECTION_RE = re.compile(r"кабинеты?", re.IGNORECASE)
+_NAME_RE = re.compile(r"[а-яa-zё]", re.IGNORECASE)
+_PAIRS_CELL_RE = re.compile(r"[\d\s,;]+")
 
 
 def _parse_date(s: str) -> date | None:
@@ -61,18 +64,21 @@ def parse_replacements(data: bytes) -> list[ReplacementBlock]:
     soup = BeautifulSoup(decode_bytes(data), "lxml")
     blocks: list[ReplacementBlock] = []
     current: ReplacementBlock | None = None
+    section = "groups"  # groups | cabinets — секция внутри текущего блока
     skipped_rows = 0
 
     for table in soup.find_all("table"):
         grid = expand_table_to_grid(table)
         for row in grid:
-            joined = " ".join(c for c in row if c)
+            cells = [clean_cell(c) for c in row]
+            joined = " ".join(c for c in cells if c)
             m = HEADER_RE.search(joined)
             if m:
                 d = _parse_date(m.group(1))
                 if d is None:
                     log.warning("Не распознана дата в заголовке блока замен: %r", joined[:80])
                     current = None
+                    section = "groups"
                     continue
                 paren = clean_cell(m.group(2) or "").lower()
                 if "нечет" in paren:
@@ -89,14 +95,32 @@ def parse_replacements(data: bytes) -> list[ReplacementBlock]:
                     continue
                 current = ReplacementBlock(date=d, parity=parity, day_word=paren)
                 blocks.append(current)
+                section = "groups"
                 continue
 
             if current is None:
                 continue
 
+            # секция «Кабинеты»: пары | преподаватель | кабинет (может быть «ДО»)
+            first = cells[0] if cells else ""
+            if _CAB_SECTION_RE.fullmatch(first):
+                section = "cabinets"
+                continue
+
+            if section == "cabinets":
+                nn = [c for c in cells if c]
+                if len(nn) >= 2 and _NAME_RE.search(nn[-2]):
+                    room = nn[-1]
+                    teacher = nn[-2]
+                    pairs_raw = next((c for c in nn[:-2] if _PAIRS_CELL_RE.fullmatch(c)), "")
+                    pairs, _whole = parse_pairs_cell(pairs_raw)
+                    current.teacher_rooms.append(TeacherRoom(
+                        teacher=teacher, pairs=pairs, classroom=room,
+                    ))
+                continue
+
             # строка данных: первая ячейка — № (число), вторая — название группы
-            first = clean_cell(row[0]) if row else ""
-            name = clean_cell(row[1]) if len(row) > 1 else ""
+            name = clean_cell(cells[1]) if len(cells) > 1 else ""
             if not re.fullmatch(r"\d{1,3}", first):
                 continue
             if not name:
