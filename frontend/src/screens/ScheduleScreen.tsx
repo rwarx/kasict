@@ -5,6 +5,7 @@ import { getDay, revalidateInBackground, useDataVersion } from '../services/sche
 import type { DaySchedule, LessonView } from '../services/replacementEngine'
 import { formatDateFull, formatDateShort, getWeekDays, shiftISO, todayISO, weekdayName } from '../lib/date'
 import { isDayX } from '../lib/specialDays'
+import { useShortened } from '../lib/shortened'
 import { computeLive, useNow } from '../lib/lessonLive'
 import { useDayNotes } from '../lib/notes'
 import { shareScheduleText } from '../lib/share'
@@ -28,10 +29,11 @@ export function ScheduleScreen({ group, dateISO, setDateISO }: {
   const [toast, setToast] = useState('')
   const dataVersion = useDataVersion()
   const dayNotes = useDayNotes(group, dateISO)
+  const [shortened] = useShortened()
 
   useEffect(() => {
     setDay(getDay(group, new Date(dateISO + 'T12:00:00')))
-  }, [group, dateISO, dataVersion])
+  }, [group, dateISO, dataVersion, shortened])
 
   const today = todayISO()
   const isToday = dateISO === today
@@ -115,6 +117,9 @@ export function ScheduleScreen({ group, dateISO, setDateISO }: {
             )}
             {isDayX(dateISO) && (
               <span className="badge dayx">День X</span>
+            )}
+            {shortened && (
+              <span className="badge short">Сокращённые пары</span>
             )}
           </div>
         )}

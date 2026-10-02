@@ -1,8 +1,9 @@
 // Экран «Время»: что идёт сейчас, обратный отсчёт, таймлайн дня.
 // Логика слотов и отсчёта перенесена из исходного App.tsx без изменений.
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
+import { useShortened } from '../lib/shortened'
 
 function toMin(h: number, m: number) { return h * 60 + m }
 
@@ -14,15 +15,29 @@ interface Slot {
   pairNum?: number
 }
 
-const TIMELINE: Slot[] = (() => {
-  const PAIRS: [number, number, number, number][] = [
-    [8, 0, 9, 35],
-    [9, 45, 11, 20],
-    [11, 45, 13, 20],
-    [13, 45, 15, 20],
-    [15, 30, 17, 5],
-    [17, 15, 18, 50],
-  ]
+/**
+ * Таймлайн учебного дня.
+ * Обычный график: пары по 95 минут (2×45+перемена 5), обед после 2-й и 3-й пар.
+ * Сокращённый график: пары по 60 минут, перемены по 10 минут (график колледжа).
+ */
+function buildTimeline(shortened: boolean): Slot[] {
+  const PAIRS: [number, number, number, number][] = shortened
+    ? [
+        [8, 0, 9, 0],
+        [9, 10, 10, 10],
+        [10, 20, 11, 20],
+        [11, 30, 12, 30],
+        [12, 40, 13, 40],
+        [13, 50, 14, 50],
+      ]
+    : [
+        [8, 0, 9, 35],
+        [9, 45, 11, 20],
+        [11, 45, 13, 20],
+        [13, 45, 15, 20],
+        [15, 30, 17, 5],
+        [17, 15, 18, 50],
+      ]
   const LUNCH_AFTER = [2, 3]
   const PAIR_BREAK_MIN = 5
   const result: Slot[] = []
@@ -32,21 +47,27 @@ const TIMELINE: Slot[] = (() => {
     const [sh, sm, eh, em] = PAIRS[i]
     const startMin = toMin(sh, sm)
     const endMin = toMin(eh, em)
-    const totalMin = endMin - startMin
-    const halfMin = (totalMin - PAIR_BREAK_MIN) / 2
 
-    // Первая половина пары
-    result.push({ type: 'pair', label: `${num} пара`, startMin, endMin: startMin + halfMin, pairNum: num })
-    // 5-минутная перемена внутри пары
-    result.push({ type: 'pair_break', label: 'Перемена', startMin: startMin + halfMin, endMin: startMin + halfMin + PAIR_BREAK_MIN, pairNum: num })
-    // Вторая половина пары
-    result.push({ type: 'pair', label: `${num} пара`, startMin: startMin + halfMin + PAIR_BREAK_MIN, endMin, pairNum: num })
+    if (shortened) {
+      // Короткая пара идёт сплошные 60 минут — без внутреннего «звонка»
+      result.push({ type: 'pair', label: `${num} пара`, startMin, endMin, pairNum: num })
+    } else {
+      const totalMin = endMin - startMin
+      const halfMin = (totalMin - PAIR_BREAK_MIN) / 2
+
+      // Первая половина пары
+      result.push({ type: 'pair', label: `${num} пара`, startMin, endMin: startMin + halfMin, pairNum: num })
+      // 5-минутная перемена внутри пары
+      result.push({ type: 'pair_break', label: 'Перемена', startMin: startMin + halfMin, endMin: startMin + halfMin + PAIR_BREAK_MIN, pairNum: num })
+      // Вторая половина пары
+      result.push({ type: 'pair', label: `${num} пара`, startMin: startMin + halfMin + PAIR_BREAK_MIN, endMin, pairNum: num })
+    }
 
     if (i < PAIRS.length - 1) {
       const [nh, nm] = [PAIRS[i + 1][0], PAIRS[i + 1][1]]
       const breakStart = endMin
       const breakEnd = toMin(nh, nm)
-      if (LUNCH_AFTER.includes(num)) {
+      if (!shortened && LUNCH_AFTER.includes(num)) {
         result.push({ type: 'lunch', label: 'Обед', startMin: breakStart, endMin: breakEnd })
       } else {
         result.push({ type: 'break', label: 'Перемена', startMin: breakStart, endMin: breakEnd })
@@ -54,7 +75,7 @@ const TIMELINE: Slot[] = (() => {
     }
   }
   return result
-})()
+}
 
 function fmtTime(m: number) {
   const h = Math.floor(m / 60)
@@ -126,7 +147,7 @@ interface TimeStatus {
   totalMs: number
 }
 
-function getTimeStatus(): TimeStatus {
+function getTimeStatus(timeline: Slot[]): TimeStatus {
   const now = new Date()
   const nowMs = (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) * 1000
   const day = now.getDay()
@@ -135,7 +156,7 @@ function getTimeStatus(): TimeStatus {
   let current: Slot | null = null
   let next: Slot | null = null
 
-  for (const slot of TIMELINE) {
+  for (const slot of timeline) {
     const s = slotMs(slot.startMin)
     const e = slotMs(slot.endMin)
     if (nowMs >= s && nowMs < e) {
@@ -154,7 +175,7 @@ function getTimeStatus(): TimeStatus {
     const startMs = slotMs(current.startMin)
     const remainingMs = Math.max(0, endMs - nowMs)
     const totalMs = endMs - startMs
-    const nxt = TIMELINE.find(s => s.startMin >= current!.endMin) ?? null
+    const nxt = timeline.find(s => s.startMin >= current!.endMin) ?? null
     return { status: 'active', current, next: nxt, remainingMs, totalMs }
   }
 
@@ -261,15 +282,47 @@ function Hourglass({ progress }: { progress: number }) {
   )
 }
 
+/** Тумблер «Сокращённые пары» — режим по осведомлённости пользователя. */
+function ShortenedToggle({ shortened, onChange }: { shortened: boolean; onChange: (on: boolean) => void }) {
+  return (
+    <section className="time-mode" aria-label="Режим расписания">
+      <div className="time-mode-card">
+        <div className="time-mode-info">
+          <span className="time-mode-title">Сокращённые пары</span>
+          <span className="time-mode-value">
+            {shortened
+              ? 'Включены: 6 пар по 60 мин, перемены по 10 мин'
+              : 'Выключены: обычный график звонков'}
+          </span>
+        </div>
+        <label className="toggle">
+          <input
+            type="checkbox"
+            checked={shortened}
+            onChange={(e) => onChange(e.target.checked)}
+            aria-label="Сокращённые пары"
+          />
+          <span className="toggle-track" />
+        </label>
+      </div>
+      <p className="time-mode-hint">
+        О сокращёнке колледж пишет в чатах — если объявили, включай сами: время пар пересчитается во всём приложении.
+      </p>
+    </section>
+  )
+}
+
 export function TimeScreen() {
   const [, setTick] = useState(0)
+  const [shortened, setShortened] = useShortened()
 
   useEffect(() => {
     const id = setInterval(() => setTick(t => t + 1), 50)
     return () => clearInterval(id)
   }, [])
 
-  const ts = getTimeStatus()
+  const timeline = useMemo(() => buildTimeline(shortened), [shortened])
+  const ts = getTimeStatus(timeline)
   const now = new Date()
   const nowMs = (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) * 1000
   const hourglassProgress = ts.status === 'active' ? 1 - ts.remainingMs / ts.totalMs : 0
@@ -289,7 +342,8 @@ export function TimeScreen() {
           <div className="time-big">{clockTime}</div>
           <div className="time-subtitle">Выходной — пар нет</div>
         </div>
-        <DayTimeline nowMs={-1} />
+        <DayTimeline nowMs={-1} timeline={timeline} />
+        <ShortenedToggle shortened={shortened} onChange={setShortened} />
       </>
     )
   }
@@ -307,7 +361,8 @@ export function TimeScreen() {
           <div className="time-big">{clockTime}</div>
           <div className="time-subtitle">Пары закончились</div>
         </div>
-        <DayTimeline nowMs={nowMs} />
+        <DayTimeline nowMs={nowMs} timeline={timeline} />
+        <ShortenedToggle shortened={shortened} onChange={setShortened} />
       </>
     )
   }
@@ -316,7 +371,7 @@ export function TimeScreen() {
     const diff = slotMs(ts.next.startMin) - nowMs
     // Прогресс «до звонка»: доля времени от конца предыдущего слота до начала следующего
     let prevEnd = DAY_START_MS
-    for (const s of TIMELINE) {
+    for (const s of timeline) {
       const e = slotMs(s.endMin)
       if (e <= nowMs && e > prevEnd) prevEnd = e
     }
@@ -335,7 +390,8 @@ export function TimeScreen() {
           <div className="time-big">{fmtCountdown(Math.max(0, diff))}</div>
           <div className="time-current-label">{beforeLabel}</div>
         </div>
-        <DayTimeline nowMs={nowMs} />
+        <DayTimeline nowMs={nowMs} timeline={timeline} />
+        <ShortenedToggle shortened={shortened} onChange={setShortened} />
       </>
     )
   }
@@ -372,15 +428,16 @@ export function TimeScreen() {
         )}
       </div>
 
-      <DayTimeline nowMs={nowMs} currentStartMin={current.startMin} />
+      <DayTimeline nowMs={nowMs} timeline={timeline} currentStartMin={current.startMin} />
+      <ShortenedToggle shortened={shortened} onChange={setShortened} />
     </>
   )
 }
 
-function DayTimeline({ nowMs, currentStartMin }: { nowMs: number; currentStartMin?: number }) {
+function DayTimeline({ nowMs, currentStartMin, timeline }: { nowMs: number; currentStartMin?: number; timeline: Slot[] }) {
   return (
     <div className="time-timeline">
-      {TIMELINE.map((slot, i) => {
+      {timeline.map((slot, i) => {
         const isCurrent = currentStartMin !== undefined && slot.startMin === currentStartMin
         const isPast = nowMs >= slotMs(slot.endMin)
         const isFuture = nowMs >= 0 && nowMs < slotMs(slot.startMin) && !isCurrent

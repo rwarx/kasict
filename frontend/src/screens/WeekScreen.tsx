@@ -3,6 +3,7 @@
 import { useMemo } from 'react'
 import { getDay, revalidateInBackground, useDataVersion } from '../services/scheduleService'
 import { getWeekDays, shiftISO, todayISO, weekdayName } from '../lib/date'
+import { useShortened } from '../lib/shortened'
 import { FreshnessIndicator } from '../components/Freshness'
 import { BarChartIcon, ChevronLeftIcon, ChevronRightIcon } from '../components/Icons'
 
@@ -41,6 +42,7 @@ export function WeekScreen({ group, dateISO, setDateISO }: {
   setDateISO: (s: string) => void
 }) {
   const dataVersion = useDataVersion()
+  const [shortened] = useShortened()
   const weekDays = useMemo(() => getWeekDays(dateISO), [dateISO])
   const today = todayISO()
 
@@ -50,7 +52,7 @@ export function WeekScreen({ group, dateISO, setDateISO }: {
       day: getDay(group, new Date(d + 'T12:00:00')),
       isToday: d === today,
     }))
-  }, [weekDays, group, today, dataVersion])
+  }, [weekDays, group, today, dataVersion, shortened])
 
   const weekStart = new Date(weekDays[0] + 'T12:00:00')
   const monthGen = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
@@ -113,6 +115,9 @@ export function WeekScreen({ group, dateISO, setDateISO }: {
             <span className="badge accent">
               {parity === 'odd' ? 'Нечётная неделя' : 'Чётная неделя'}
             </span>
+            {shortened && (
+              <span className="badge short">Сокращённые пары</span>
+            )}
           </div>
         )}
       </section>

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { getPairTimes, getParity, getTeacherDay, getTeachers, useDataVersion, type TeacherLessonView } from '../services/scheduleService'
 import { getWeekDays, shiftISO, todayISO, weekdayName } from '../lib/date'
+import { activePairTimes, useShortened } from '../lib/shortened'
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon, SearchIcon, UserIcon, UsersIcon } from '../components/Icons'
 
 const MONTHS_GEN = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
@@ -39,6 +40,8 @@ export function TeachersScreen({ dateISO, setDateISO }: {
   const filtered = useMemo(() => names.filter(name => matchesTeacher(name, query)), [names, query])
   const entries = selected ? teachers[selected] ?? [] : []
   const dataVersion = useDataVersion()
+  const [shortened] = useShortened()
+  const pairTimes = activePairTimes(getPairTimes())
   const weekDays = useMemo(() => getWeekDays(dateISO), [dateISO])
   const weekStart = new Date(weekDays[0] + 'T12:00:00')
   const weekEnd = new Date(weekDays[6] + 'T12:00:00')
@@ -52,7 +55,7 @@ export function TeachersScreen({ dateISO, setDateISO }: {
       map.set(date, getTeacherDay(selected, new Date(date + 'T12:00:00')))
     }
     return map
-  }, [selected, weekDays, dataVersion])
+  }, [selected, weekDays, dataVersion, shortened])
 
   return (
     <>
@@ -169,7 +172,7 @@ export function TeachersScreen({ dateISO, setDateISO }: {
                           <div key={`${row.group}-${row.number}-${rowIndex}`} className={`teacher-lesson ${cancelled ? 'cancelled' : ''}`}>
                             <div className="teacher-lesson-time">
                               <strong>#{row.number}</strong>
-                              <span>{pairTime(row.number)}</span>
+                              <span>{pairTime(row.number, pairTimes)}</span>
                             </div>
                             <div className="teacher-lesson-copy">
                               <strong>{cancelled ? <s>{row.original?.subject || row.subject || '—'}</s> : row.subject}</strong>
@@ -198,7 +201,7 @@ export function TeachersScreen({ dateISO, setDateISO }: {
   )
 }
 
-function pairTime(pair: number) {
-  const times = getPairTimes()[String(pair)]
-  return times ? `${times[0]}–${times[1]}` : 'Время уточняется'
+function pairTime(pair: number, times: Record<string, [string, string]>) {
+  const t = times[String(pair)]
+  return t ? `${t[0]}–${t[1]}` : 'Время уточняется'
 }

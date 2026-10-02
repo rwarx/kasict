@@ -1,6 +1,7 @@
 // Replacement Engine: применение замен к основному расписанию.
 
 import type { LessonData, PairData, ReplacementBlockJSON, ReplacementEntry, ScheduleJSON } from '../parser/types'
+import { activePairTimes } from '../lib/shortened'
 
 export type LessonStatus = 'normal' | 'replaced' | 'teacher_changed' | 'room_changed' | 'cancelled' | 'added'
 
@@ -69,7 +70,8 @@ export function applyDay(
   const groupLessons = schedule.lessons[group]
   const dayPairs = groupLessons?.[String(weekdayNum)] || {}
 
-  const pairTimes = schedule.pair_times
+  // Режим сокращённых пар подменяет времена во всём приложении (решает пользователь)
+  const pairTimes = activePairTimes(schedule.pair_times)
   const daySchedule: DaySchedule = {
     group,
     date: d.toISOString().slice(0, 10),
