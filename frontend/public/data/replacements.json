@@ -1,359 +1,5 @@
 [
   {
-    "date": "2026-10-02",
-    "parity": "odd",
-    "day_word": "нечетная пятница",
-    "replacements": [
-      {
-        "group": "А 26-1",
-        "lesson_numbers": [
-          2
-        ],
-        "subject": "физ-ра",
-        "teacher": "Фомичев",
-        "classroom": "004",
-        "is_cancel": false,
-        "raw_pairs": "2"
-      },
-      {
-        "group": "А 26-1",
-        "lesson_numbers": [
-          3
-        ],
-        "subject": "",
-        "teacher": "",
-        "classroom": "",
-        "is_cancel": true,
-        "raw_pairs": "3"
-      },
-      {
-        "group": "СЗС 26-3",
-        "lesson_numbers": [
-          1
-        ],
-        "subject": "ип",
-        "teacher": "Михеева",
-        "classroom": "115",
-        "is_cancel": false,
-        "raw_pairs": "1"
-      },
-      {
-        "group": "ПСК 26-1",
-        "lesson_numbers": [
-          4
-        ],
-        "subject": "ин.яз",
-        "teacher": "Мелещенко",
-        "classroom": "411",
-        "is_cancel": false,
-        "raw_pairs": "4"
-      },
-      {
-        "group": "СЗС 25-2",
-        "lesson_numbers": [
-          2
-        ],
-        "subject": "итпд",
-        "teacher": "Вострикова",
-        "classroom": "418",
-        "is_cancel": false,
-        "raw_pairs": "2"
-      },
-      {
-        "group": "СЗС 25-3",
-        "lesson_numbers": [
-          2
-        ],
-        "subject": "",
-        "teacher": "",
-        "classroom": "",
-        "is_cancel": true,
-        "raw_pairs": "2"
-      },
-      {
-        "group": "Д 25-2",
-        "lesson_numbers": [
-          2
-        ],
-        "subject": "",
-        "teacher": "",
-        "classroom": "",
-        "is_cancel": true,
-        "raw_pairs": "2"
-      },
-      {
-        "group": "Д 25-3",
-        "lesson_numbers": [
-          3
-        ],
-        "subject": "",
-        "teacher": "",
-        "classroom": "",
-        "is_cancel": true,
-        "raw_pairs": "3"
-      },
-      {
-        "group": "ТЭСМО 25-1П",
-        "lesson_numbers": [
-          4
-        ],
-        "subject": "уптс",
-        "teacher": "Волостных",
-        "classroom": "113",
-        "is_cancel": false,
-        "raw_pairs": "4"
-      },
-      {
-        "group": "ТЭСМО 25-1П",
-        "lesson_numbers": [
-          5
-        ],
-        "subject": "",
-        "teacher": "",
-        "classroom": "",
-        "is_cancel": true,
-        "raw_pairs": "5"
-      },
-      {
-        "group": "СП 25-1П",
-        "lesson_numbers": [],
-        "subject": "УП 01.01",
-        "teacher": "Вахрамеев",
-        "classroom": "114",
-        "is_cancel": false,
-        "raw_pairs": "8:00"
-      },
-      {
-        "group": "СП 25-2П",
-        "lesson_numbers": [],
-        "subject": "УП 01.01",
-        "teacher": "Сергиченко",
-        "classroom": "маст. 101",
-        "is_cancel": false,
-        "raw_pairs": "12:00"
-      },
-      {
-        "group": "Э 25-1",
-        "lesson_numbers": [
-          4
-        ],
-        "subject": "физ-ра",
-        "teacher": "Пастух",
-        "classroom": "225",
-        "is_cancel": false,
-        "raw_pairs": "4"
-      },
-      {
-        "group": "СЗС 24-1",
-        "lesson_numbers": [
-          1
-        ],
-        "subject": "",
-        "teacher": "",
-        "classroom": "",
-        "is_cancel": true,
-        "raw_pairs": "1"
-      },
-      {
-        "group": "СЗС 24-1",
-        "lesson_numbers": [
-          3
-        ],
-        "subject": "физ-ра",
-        "teacher": "Плюснин",
-        "classroom": "226",
-        "is_cancel": false,
-        "raw_pairs": "3"
-      },
-      {
-        "group": "СЗС 24-2",
-        "lesson_numbers": [],
-        "subject": "УП 05.01",
-        "teacher": "Седельникова",
-        "classroom": "маст. 204",
-        "is_cancel": false,
-        "raw_pairs": ""
-      },
-      {
-        "group": "СЗС 24-3",
-        "lesson_numbers": [
-          5
-        ],
-        "subject": "пзс1",
-        "teacher": "Назарова",
-        "classroom": "313",
-        "is_cancel": false,
-        "raw_pairs": "5"
-      },
-      {
-        "group": "А 24-1",
-        "lesson_numbers": [],
-        "subject": "УП 01.02",
-        "teacher": "Булычева",
-        "classroom": "304",
-        "is_cancel": false,
-        "raw_pairs": ""
-      },
-      {
-        "group": "Д 24-1",
-        "lesson_numbers": [
-          1
-        ],
-        "subject": "",
-        "teacher": "",
-        "classroom": "",
-        "is_cancel": true,
-        "raw_pairs": "1"
-      },
-      {
-        "group": "Д 24-1",
-        "lesson_numbers": [
-          5
-        ],
-        "subject": "физ-ра",
-        "teacher": "Митькин",
-        "classroom": "002",
-        "is_cancel": false,
-        "raw_pairs": "5"
-      },
-      {
-        "group": "ПСК 24-1",
-        "lesson_numbers": [
-          2
-        ],
-        "subject": "",
-        "teacher": "",
-        "classroom": "",
-        "is_cancel": true,
-        "raw_pairs": "2"
-      },
-      {
-        "group": "ТЭСМО 24-1П",
-        "lesson_numbers": [],
-        "subject": "Производственная практика 14.09-22.11",
-        "teacher": "Волостных",
-        "classroom": "",
-        "is_cancel": false,
-        "raw_pairs": ""
-      },
-      {
-        "group": "СП 24-1П",
-        "lesson_numbers": [],
-        "subject": "Производственная практика 14.09-06.12",
-        "teacher": "Сапожникова",
-        "classroom": "",
-        "is_cancel": false,
-        "raw_pairs": ""
-      },
-      {
-        "group": "Э 24-1",
-        "lesson_numbers": [],
-        "subject": "Производственная практика 14.09-13.12",
-        "teacher": "Старцева",
-        "classroom": "",
-        "is_cancel": false,
-        "raw_pairs": ""
-      },
-      {
-        "group": "Э 24-2",
-        "lesson_numbers": [],
-        "subject": "Производственная практика 14.09-13.12",
-        "teacher": "Старцева",
-        "classroom": "",
-        "is_cancel": false,
-        "raw_pairs": ""
-      },
-      {
-        "group": "А 23-1",
-        "lesson_numbers": [],
-        "subject": "Производственная практика 14.09-20.12",
-        "teacher": "Булычева",
-        "classroom": "",
-        "is_cancel": false,
-        "raw_pairs": ""
-      },
-      {
-        "group": "А 23-2",
-        "lesson_numbers": [],
-        "subject": "Производственная практика 14.09-20.12",
-        "teacher": "Михеенко",
-        "classroom": "",
-        "is_cancel": false,
-        "raw_pairs": ""
-      },
-      {
-        "group": "Д 23-1",
-        "lesson_numbers": [
-          4
-        ],
-        "subject": "",
-        "teacher": "",
-        "classroom": "",
-        "is_cancel": true,
-        "raw_pairs": "4"
-      },
-      {
-        "group": "Д 23-2",
-        "lesson_numbers": [
-          2,
-          3
-        ],
-        "subject": "",
-        "teacher": "",
-        "classroom": "",
-        "is_cancel": true,
-        "raw_pairs": "2,3"
-      },
-      {
-        "group": "ТЭСМО 23-1",
-        "lesson_numbers": [],
-        "subject": "Производственная практика 14.09-06.12",
-        "teacher": "Черкасова",
-        "classroom": "",
-        "is_cancel": false,
-        "raw_pairs": ""
-      },
-      {
-        "group": "ИС 23-1",
-        "lesson_numbers": [],
-        "subject": "Производственная практика 07.09-29.11",
-        "teacher": "Логинова",
-        "classroom": "",
-        "is_cancel": false,
-        "raw_pairs": ""
-      },
-      {
-        "group": "ИС 23-2",
-        "lesson_numbers": [],
-        "subject": "Производственная практика 07.09-29.11",
-        "teacher": "Куранова",
-        "classroom": "",
-        "is_cancel": false,
-        "raw_pairs": ""
-      },
-      {
-        "group": "ИБ 23-1",
-        "lesson_numbers": [
-          2
-        ],
-        "subject": "тзи",
-        "teacher": "Куранова",
-        "classroom": "415",
-        "is_cancel": false,
-        "raw_pairs": "2"
-      },
-      {
-        "group": "Э 23-1",
-        "lesson_numbers": [],
-        "subject": "Производственная практика 14.09-13.12",
-        "teacher": "Старцева",
-        "classroom": "",
-        "is_cancel": false,
-        "raw_pairs": ""
-      }
-    ]
-  },
-  {
     "date": "2026-10-05",
     "parity": "even",
     "day_word": "четный понедельник",
@@ -617,6 +263,459 @@
         "classroom": "303",
         "is_cancel": false,
         "raw_pairs": "со 2 пары"
+      },
+      {
+        "group": "ТЭСМО 23-1",
+        "lesson_numbers": [],
+        "subject": "Производственная практика 14.09-06.12",
+        "teacher": "Черкасова",
+        "classroom": "",
+        "is_cancel": false,
+        "raw_pairs": ""
+      },
+      {
+        "group": "ИС 23-1",
+        "lesson_numbers": [],
+        "subject": "Производственная практика 07.09-29.11",
+        "teacher": "Логинова",
+        "classroom": "",
+        "is_cancel": false,
+        "raw_pairs": ""
+      },
+      {
+        "group": "ИС 23-2",
+        "lesson_numbers": [],
+        "subject": "Производственная практика 07.09-29.11",
+        "teacher": "Куранова",
+        "classroom": "",
+        "is_cancel": false,
+        "raw_pairs": ""
+      },
+      {
+        "group": "Э 23-1",
+        "lesson_numbers": [],
+        "subject": "Производственная практика 14.09-13.12",
+        "teacher": "Старцева",
+        "classroom": "",
+        "is_cancel": false,
+        "raw_pairs": ""
+      }
+    ]
+  },
+  {
+    "date": "2026-10-06",
+    "parity": "even",
+    "day_word": "четный вторник",
+    "replacements": [
+      {
+        "group": "Э 26-2",
+        "lesson_numbers": [
+          2
+        ],
+        "subject": "ин.яз.",
+        "teacher": "Ясюкевич",
+        "classroom": "чит.зал",
+        "is_cancel": false,
+        "raw_pairs": "2"
+      },
+      {
+        "group": "РУПО 26-1",
+        "lesson_numbers": [
+          5
+        ],
+        "subject": "",
+        "teacher": "",
+        "classroom": "",
+        "is_cancel": true,
+        "raw_pairs": "5"
+      },
+      {
+        "group": "СП 26-2П",
+        "lesson_numbers": [
+          1
+        ],
+        "subject": "",
+        "teacher": "",
+        "classroom": "",
+        "is_cancel": true,
+        "raw_pairs": "1"
+      },
+      {
+        "group": "Д 26-1",
+        "lesson_numbers": [
+          1,
+          2
+        ],
+        "subject": "",
+        "teacher": "",
+        "classroom": "",
+        "is_cancel": true,
+        "raw_pairs": "1,2"
+      },
+      {
+        "group": "Д 26-1",
+        "lesson_numbers": [
+          5
+        ],
+        "subject": "обзр",
+        "teacher": "Лисьев",
+        "classroom": "011",
+        "is_cancel": false,
+        "raw_pairs": "5"
+      },
+      {
+        "group": "Д 26-2",
+        "lesson_numbers": [
+          2,
+          3
+        ],
+        "subject": "",
+        "teacher": "",
+        "classroom": "",
+        "is_cancel": true,
+        "raw_pairs": "2,3"
+      },
+      {
+        "group": "Д 26-2",
+        "lesson_numbers": [
+          5
+        ],
+        "subject": "ист.",
+        "teacher": "Мельчакова",
+        "classroom": "212",
+        "is_cancel": false,
+        "raw_pairs": "5"
+      },
+      {
+        "group": "ЭК 26-1",
+        "lesson_numbers": [
+          4
+        ],
+        "subject": "",
+        "teacher": "",
+        "classroom": "",
+        "is_cancel": true,
+        "raw_pairs": "4"
+      },
+      {
+        "group": "СЗС 25-1",
+        "lesson_numbers": [
+          2
+        ],
+        "subject": "ист. России",
+        "teacher": "Мельчакова",
+        "classroom": "212",
+        "is_cancel": false,
+        "raw_pairs": "2"
+      },
+      {
+        "group": "СЗС 25-2",
+        "lesson_numbers": [
+          6
+        ],
+        "subject": "",
+        "teacher": "",
+        "classroom": "",
+        "is_cancel": true,
+        "raw_pairs": "6"
+      },
+      {
+        "group": "Д 25-1",
+        "lesson_numbers": [
+          3
+        ],
+        "subject": "врпф",
+        "teacher": "Саблина",
+        "classroom": "217",
+        "is_cancel": false,
+        "raw_pairs": "3"
+      },
+      {
+        "group": "Д 25-1",
+        "lesson_numbers": [
+          5
+        ],
+        "subject": "",
+        "teacher": "",
+        "classroom": "",
+        "is_cancel": true,
+        "raw_pairs": "5"
+      },
+      {
+        "group": "Д 25-2",
+        "lesson_numbers": [
+          3,
+          4
+        ],
+        "subject": "",
+        "teacher": "",
+        "classroom": "",
+        "is_cancel": true,
+        "raw_pairs": "3,4"
+      },
+      {
+        "group": "Д 25-3",
+        "lesson_numbers": [
+          3
+        ],
+        "subject": "инф.",
+        "teacher": "Деменцова",
+        "classroom": "218",
+        "is_cancel": false,
+        "raw_pairs": "3"
+      },
+      {
+        "group": "ТЭСМО 25-1П",
+        "lesson_numbers": [
+          2
+        ],
+        "subject": "мв",
+        "teacher": "Сапожникова",
+        "classroom": "219",
+        "is_cancel": false,
+        "raw_pairs": "2"
+      },
+      {
+        "group": "ТЭСМО 25-2П",
+        "lesson_numbers": [
+          3
+        ],
+        "subject": "врпсв",
+        "teacher": "Сапожникова",
+        "classroom": "219",
+        "is_cancel": false,
+        "raw_pairs": "3"
+      },
+      {
+        "group": "ИС 25-1",
+        "lesson_numbers": [
+          4
+        ],
+        "subject": "",
+        "teacher": "",
+        "classroom": "",
+        "is_cancel": true,
+        "raw_pairs": "4"
+      },
+      {
+        "group": "СП 25-1П",
+        "lesson_numbers": [],
+        "subject": "УП 01.01",
+        "teacher": "Вахрамеев",
+        "classroom": "114",
+        "is_cancel": false,
+        "raw_pairs": "8:00"
+      },
+      {
+        "group": "СП 25-2П",
+        "lesson_numbers": [],
+        "subject": "УП 01.01",
+        "teacher": "Сергиченко",
+        "classroom": "маст. 101",
+        "is_cancel": false,
+        "raw_pairs": "12:00"
+      },
+      {
+        "group": "Э 25-1",
+        "lesson_numbers": [
+          3
+        ],
+        "subject": "элт",
+        "teacher": "Бибин",
+        "classroom": "417",
+        "is_cancel": false,
+        "raw_pairs": "3"
+      },
+      {
+        "group": "Э 25-1",
+        "lesson_numbers": [
+          4
+        ],
+        "subject": "эи",
+        "teacher": "Бибин",
+        "classroom": "417",
+        "is_cancel": false,
+        "raw_pairs": "4"
+      },
+      {
+        "group": "Э 25-2",
+        "lesson_numbers": [
+          3
+        ],
+        "subject": "мэс",
+        "teacher": "Старцева",
+        "classroom": "421",
+        "is_cancel": false,
+        "raw_pairs": "3"
+      },
+      {
+        "group": "Э 25-2",
+        "lesson_numbers": [
+          5
+        ],
+        "subject": "элт",
+        "teacher": "Бибин",
+        "classroom": "417",
+        "is_cancel": false,
+        "raw_pairs": "5"
+      },
+      {
+        "group": "СЗС 24-1",
+        "lesson_numbers": [
+          2
+        ],
+        "subject": "пзс1",
+        "teacher": "Назарова",
+        "classroom": "313",
+        "is_cancel": false,
+        "raw_pairs": "2"
+      },
+      {
+        "group": "СЗС 24-3",
+        "lesson_numbers": [],
+        "subject": "УП 05.01",
+        "teacher": "Седельникова",
+        "classroom": "маст. 204",
+        "is_cancel": false,
+        "raw_pairs": ""
+      },
+      {
+        "group": "А 24-1",
+        "lesson_numbers": [
+          1
+        ],
+        "subject": "ог",
+        "teacher": "Мозговая",
+        "classroom": "202",
+        "is_cancel": false,
+        "raw_pairs": "1"
+      },
+      {
+        "group": "Д 24-1",
+        "lesson_numbers": [
+          4
+        ],
+        "subject": "дп",
+        "teacher": "Кулешова",
+        "classroom": "411",
+        "is_cancel": false,
+        "raw_pairs": "4"
+      },
+      {
+        "group": "ТЭСМО 24-1П",
+        "lesson_numbers": [],
+        "subject": "Производственная практика 14.09-22.11",
+        "teacher": "Волостных",
+        "classroom": "",
+        "is_cancel": false,
+        "raw_pairs": ""
+      },
+      {
+        "group": "ТЭСМО 24-2П",
+        "lesson_numbers": [
+          1
+        ],
+        "subject": "итпд",
+        "teacher": "Затонская",
+        "classroom": "221",
+        "is_cancel": false,
+        "raw_pairs": "1"
+      },
+      {
+        "group": "ТЭСМО 24-2П",
+        "lesson_numbers": [
+          2
+        ],
+        "subject": "врпсв",
+        "teacher": "Затонская",
+        "classroom": "221",
+        "is_cancel": false,
+        "raw_pairs": "2"
+      },
+      {
+        "group": "ТЭСМО 24-2П",
+        "lesson_numbers": [
+          4,
+          5
+        ],
+        "subject": "",
+        "teacher": "",
+        "classroom": "",
+        "is_cancel": true,
+        "raw_pairs": "4,5"
+      },
+      {
+        "group": "СП 24-1П",
+        "lesson_numbers": [],
+        "subject": "Производственная практика 14.09-06.12",
+        "teacher": "Сапожникова",
+        "classroom": "",
+        "is_cancel": false,
+        "raw_pairs": ""
+      },
+      {
+        "group": "Э 24-1",
+        "lesson_numbers": [],
+        "subject": "Производственная практика 14.09-13.12",
+        "teacher": "Старцева",
+        "classroom": "",
+        "is_cancel": false,
+        "raw_pairs": ""
+      },
+      {
+        "group": "Э 24-2",
+        "lesson_numbers": [],
+        "subject": "Производственная практика 14.09-13.12",
+        "teacher": "Старцева",
+        "classroom": "",
+        "is_cancel": false,
+        "raw_pairs": ""
+      },
+      {
+        "group": "А 23-1",
+        "lesson_numbers": [],
+        "subject": "Производственная практика 14.09-20.12",
+        "teacher": "Булычева",
+        "classroom": "",
+        "is_cancel": false,
+        "raw_pairs": ""
+      },
+      {
+        "group": "А 23-2",
+        "lesson_numbers": [],
+        "subject": "Производственная практика 14.09-20.12",
+        "teacher": "Михеенко",
+        "classroom": "",
+        "is_cancel": false,
+        "raw_pairs": ""
+      },
+      {
+        "group": "Д 23-1",
+        "lesson_numbers": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "subject": "УП 01.04",
+        "teacher": "Ряпосов",
+        "classroom": "310",
+        "is_cancel": false,
+        "raw_pairs": "с 3 пары"
+      },
+      {
+        "group": "Д 23-2",
+        "lesson_numbers": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "subject": "УП 01.04",
+        "teacher": "Рудых",
+        "classroom": "303",
+        "is_cancel": false,
+        "raw_pairs": "с 3 пары"
       },
       {
         "group": "ТЭСМО 23-1",
