@@ -12,7 +12,18 @@ from bs4 import BeautifulSoup
 
 
 def decode_bytes(data: bytes) -> str:
-    for enc in ("windows-1251", "utf-8"):
+    """Кодировка kasict.ru — windows-1251, но экспорт может смениться на UTF-8.
+
+    Пробуем строгий UTF-8 первым: кириллица windows-1251 невалидна в UTF-8,
+    поэтому порядок безопасен — cp1251-файл упадёт в свою ветку, а UTF-8-файл
+    даст правильный текст вместо молчаливого mojibake.
+    """
+    if data.startswith(b"\xef\xbb\xbf"):  # UTF-8 BOM
+        try:
+            return data.decode("utf-8-sig")
+        except UnicodeDecodeError:
+            pass
+    for enc in ("utf-8", "windows-1251"):
         try:
             return data.decode(enc)
         except UnicodeDecodeError:

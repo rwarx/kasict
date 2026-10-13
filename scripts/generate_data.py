@@ -21,7 +21,7 @@ sys.path.insert(0, str(BACKEND))
 
 from app.parsers.html_utils import decode_bytes
 from app.parsers.replacement_parser import parse_replacements
-from app.parsers.schedule_parser import parse_schedule
+from app.parsers.schedule_parser import _norm_group, normalized_group_names, parse_schedule
 from app.services.parity import ParityResolver
 from app.services.remote_hints import apply_teacher_remote_hints
 from app.models.domain import (
@@ -113,6 +113,29 @@ def build_replacements_json(blocks: list[ReplacementBlock]) -> list:
     return result
 
 
+def canonicalize_replacement_groups(blocks: list[ReplacementBlock], schedule: BaseSchedule) -> dict:
+    """Сопоставление названий групп в заменах с расписанием ('ИС24-3' -> 'ИС 24-3').
+
+    Раньше замена с именем группы, отличающимся пробелом/дефисом/регистром от
+    schedule.json, молча не применялась. Теперь приводим имя к каноническому;
+    без совпадения — оставляем как есть и фиксируем в отчёте.
+    """
+    canon = normalized_group_names(schedule)
+    fixed = 0
+    unmatched: set[str] = set()
+    for block in blocks:
+        for rep in block.replacements:
+            key = _norm_group(rep.group)
+            if key in canon:
+                if canon[key] != rep.group:
+                    log.info("Группа «%s» -> каноническая «%s»", rep.group, canon[key])
+                    rep.group = canon[key]
+                    fixed += 1
+            else:
+                unmatched.add(rep.group)
+    return {"groups_fixed": fixed, "groups_without_schedule": sorted(unmatched)}
+
+
 def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -153,8 +176,15 @@ def main() -> None:
 
     # 3. Fetch & parse replacements
     zamena_bytes = fetch_url(zamena_url)
-    blocks = parse_replacements(zamena_bytes)
+    parse_report: dict = {}
+    blocks = parse_replacements(zamena_bytes, parse_report)
     log.info("Parsed %d replacement blocks", len(blocks))
+
+    # 3.5 Названия групп в заменах -> канонические имена расписания
+    parse_report.update(canonicalize_replacement_groups(blocks, schedule))
+    if parse_report.get("groups_without_schedule"):
+        log.info("Группы замен без пары в расписании: %s",
+                 ", ".join(parse_report["groups_without_schedule"]))
 
     # 4. Parity resolver
     resolver = ParityResolver()
@@ -162,7 +192,7 @@ def main() -> None:
         resolver.calibrate(block.date, block.parity)
 
     # 4.5 Секция «Кабинеты»: преподаватель с кабинетом «ДО» -> замена кабинета на «до»
-    apply_teacher_remote_hints(blocks, schedule, resolver)
+    parse_report["synthesized_remote"] = apply_teacher_remote_hints(blocks, schedule, resolver)
 
     # 5. Generate JSON
     schedule_json = build_schedule_json(schedule, resolver)
@@ -193,6 +223,7 @@ def main() -> None:
             "replacement_dates": [b.date.isoformat() for b in blocks],
             "raspisanie_url": raspisanie_url,
             "zamena_url": zamena_url,
+            "parse_report": parse_report,
         }
         meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
         log.info("Data changed, meta updated")

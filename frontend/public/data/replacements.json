@@ -6,15 +6,6 @@
     "replacements": [
       {
         "group": "СЗС 26-3",
-        "lesson_numbers": [],
-        "subject": "поднятие флага",
-        "teacher": "Кузнецова Т.Г",
-        "classroom": "217",
-        "is_cancel": false,
-        "raw_pairs": "7:50"
-      },
-      {
-        "group": "СЗС 26-3",
         "lesson_numbers": [
           3
         ],
@@ -23,15 +14,6 @@
         "classroom": "214",
         "is_cancel": false,
         "raw_pairs": "3"
-      },
-      {
-        "group": "ПСК 26-1",
-        "lesson_numbers": [],
-        "subject": "поднятие флага",
-        "teacher": "Зинченко",
-        "classroom": "217",
-        "is_cancel": false,
-        "raw_pairs": "7:50"
       },
       {
         "group": "ПСК 26-1",

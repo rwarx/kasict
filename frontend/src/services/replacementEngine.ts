@@ -39,6 +39,13 @@ export function isRemote(classroom: string): boolean {
   return /^(до|дистанционн\w*|дист\.?|do)\.?$/i.test(classroom.trim())
 }
 
+/** Сравнение названий групп без учёта пробелов, дефисов, точек и регистра
+ *  (страховка от расхождений написания между заменами и расписанием). */
+export function sameGroup(a: string, b: string): boolean {
+  const norm = (s: string) => s.replace(/[\s\-.–—]+/g, '').toUpperCase().replace(/Ё/g, 'Е')
+  return norm(a) === norm(b)
+}
+
 function classify(base: LessonData | null, rep: ReplacementEntry): LessonStatus {
   if (!base || !base.subject) return 'added'
   const changed: string[] = []
@@ -112,7 +119,7 @@ export function applyDay(
 
   for (const block of dayBlocks) {
     for (const rep of block.replacements) {
-      if (rep.group !== group) continue
+      if (!sameGroup(rep.group, group)) continue
 
       const targets = rep.lesson_numbers.length > 0 ? rep.lesson_numbers : PAIR_NUMBERS
       let groupChanged = false
