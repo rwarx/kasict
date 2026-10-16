@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getLastChanges, getMeta, loadData } from './services/scheduleService'
+import { getLastChanges, getMeta, loadData, startAutoRevalidation } from './services/scheduleService'
 import { handleNewData } from './services/notifications'
 import { AppHeader } from './components/AppHeader'
 import { Fireworks } from './components/Fireworks'
@@ -97,13 +97,20 @@ export default function App() {
       updateAppBadge(group)
       const changes = getLastChanges()
       if (changes && changes.added + changes.cancelled + changes.changed > 0) {
-        setToast('Расписание обновлено — показаны свежие данные')
+        // Без дат замен изменилось только основное расписание — скажем точно
+        setToast(changes.dates.length > 0
+          ? 'Расписание обновлено — показаны свежие данные'
+          : 'Основное расписание обновлено — показаны свежие данные')
         window.setTimeout(() => setToast(''), 4000)
       }
     })
     return unsubscribe
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // Автопроверка обновлений, пока приложение открыто: возврат из фона,
+  // появление сети, раз в 15 минут. Основное расписание тоже меняют в семестре.
+  useEffect(() => startAutoRevalidation(), [])
 
   // Бейдж зависит от группы — пересчитываем при её смене
   useEffect(() => {

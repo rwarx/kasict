@@ -31,6 +31,18 @@ from app.models.domain import (
 OUTPUT_DIR = ROOT / "frontend" / "public" / "data"
 
 
+def lessons_count(schedule_json: dict | None) -> int:
+    """Число заполненных слотов расписания (odd/even с предметом) — санити-метрика."""
+    total = 0
+    for days in (schedule_json or {}).get("lessons", {}).values():
+        for pairs in days.values():
+            for entry in pairs.values():
+                for parity in ("odd", "even"):
+                    if (entry.get(parity) or {}).get("subject"):
+                        total += 1
+    return total
+
+
 def fetch_url(url: str) -> bytes:
     """Download a URL and return raw bytes."""
     import httpx
@@ -136,8 +148,22 @@ def canonicalize_replacement_groups(blocks: list[ReplacementBlock], schedule: Ba
     return {"groups_fixed": fixed, "groups_without_schedule": sorted(unmatched)}
 
 
+def lessons_count_from_text(text: str | None) -> int:
+    """lessons_count для прошлого schedule.json (из файла)."""
+    if not text:
+        return 0
+    try:
+        return lessons_count(json.loads(text))
+    except Exception:
+        return 0
+
+
 def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    def read_existing(name: str) -> str | None:
+        p = OUTPUT_DIR / name
+        return p.read_text(encoding="utf-8") if p.exists() else None
 
     # 1. Discover links from schedule page
     import httpx
@@ -167,51 +193,103 @@ def main() -> None:
     except Exception as e:
         log.warning("Failed to discover links, using fallbacks: %s", e)
 
-    # 2. Fetch & parse schedule
-    schedule_bytes = fetch_url(raspisanie_url)
-    schedule = parse_schedule(schedule_bytes)
-    log.info("Parsed %d groups, schedule days=%d",
-             len(schedule.groups),
-             sum(len(d) for d in schedule.lessons.values()))
+    # 2. Fetch & parse schedule.
+    # Устойчивость: если колледж сменил файл или формат расписания, не роняем
+    # весь запуск — замены должны обновляться. Сломанное расписание не
+    # публикуем: вместо него остаётся предыдущий schedule.json.
+    schedule_report: dict = {"url": raspisanie_url}
+    schedule = None
+    try:
+        schedule_bytes = fetch_url(raspisanie_url)
+        schedule = parse_schedule(schedule_bytes)
+        log.info("Parsed %d groups, schedule days=%d",
+                 len(schedule.groups),
+                 sum(len(d) for d in schedule.lessons.values()))
+    except Exception as e:
+        schedule_report["error"] = str(e)
+        log.warning("Schedule parse failed: %s", e)
 
-    # 3. Fetch & parse replacements
-    zamena_bytes = fetch_url(zamena_url)
+    old_schedule = read_existing("schedule.json")
+
+    # 3. Fetch & parse replacements — тоже устойчиво: сбой не должен мешать
+    # публикации обновлённого расписания.
+    old_replacements = read_existing("replacements.json")
     parse_report: dict = {}
-    blocks = parse_replacements(zamena_bytes, parse_report)
-    log.info("Parsed %d replacement blocks", len(blocks))
+    blocks: list[ReplacementBlock] | None = None
+    try:
+        zamena_bytes = fetch_url(zamena_url)
+        blocks = parse_replacements(zamena_bytes, parse_report)
+        log.info("Parsed %d replacement blocks", len(blocks))
+    except Exception as e:
+        parse_report["error"] = str(e)
+        log.warning("Replacements parse failed: %s", e)
 
-    # 3.5 Названия групп в заменах -> канонические имена расписания
-    parse_report.update(canonicalize_replacement_groups(blocks, schedule))
-    if parse_report.get("groups_without_schedule"):
-        log.info("Группы замен без пары в расписании: %s",
-                 ", ".join(parse_report["groups_without_schedule"]))
+    if blocks is not None:
+        # 3.5 Названия групп в заменах -> канонические имена расписания
+        if schedule is not None:
+            parse_report.update(canonicalize_replacement_groups(blocks, schedule))
+            if parse_report.get("groups_without_schedule"):
+                log.info("Группы замен без пары в расписании: %s",
+                         ", ".join(parse_report["groups_without_schedule"]))
+        else:
+            parse_report["groups_canonicalized"] = False
 
     # 4. Parity resolver
     resolver = ParityResolver()
-    for block in blocks:
-        resolver.calibrate(block.date, block.parity)
+    if blocks is not None:
+        for block in blocks:
+            resolver.calibrate(block.date, block.parity)
 
-    # 4.5 Секция «Кабинеты»: преподаватель с кабинетом «ДО» -> замена кабинета на «до»
-    parse_report["synthesized_remote"] = apply_teacher_remote_hints(blocks, schedule, resolver)
+        # 4.5 Секция «Кабинеты»: преподаватель с кабинетом «ДО» -> замена кабинета на «до»
+        if schedule is not None:
+            parse_report["synthesized_remote"] = apply_teacher_remote_hints(blocks, schedule, resolver)
 
-    # 5. Generate JSON
-    schedule_json = build_schedule_json(schedule, resolver)
-    replacements_json = build_replacements_json(blocks)
+    # 5. Generate JSON + санити-проверка расписания.
+    # Публикуем расписание только если оно непустое и не просело вдвое
+    # против текущего (иначе, например, спарсился не тот файл).
+    new_schedule_text: str | None = None
+    if schedule is not None and len(schedule.groups) > 0:
+        candidate = build_schedule_json(schedule, resolver)
+        slots = lessons_count(candidate)
+        old_slots = lessons_count_from_text(old_schedule)
+        schedule_report["groups"] = len(schedule.groups)
+        schedule_report["lesson_slots"] = slots
+        if slots == 0:
+            schedule_report["kept_old"] = "parsed 0 lesson slots"
+            log.warning("Schedule sanity failed: 0 lesson slots, keeping old schedule")
+        elif old_slots and slots < old_slots * 0.5:
+            schedule_report["kept_old"] = f"lesson slots dropped {old_slots} -> {slots}"
+            log.warning("Schedule sanity failed: %d -> %d slots, keeping old schedule",
+                        old_slots, slots)
+        else:
+            new_schedule_text = json.dumps(candidate, ensure_ascii=False, indent=2)
+    elif schedule is not None:
+        schedule_report["kept_old"] = "parsed 0 groups"
+        log.warning("Schedule sanity failed: 0 groups, keeping old schedule")
+
+    if new_schedule_text is None:
+        if old_schedule is None:
+            log.error("Расписание не спарсено и прошлого schedule.json нет — публиковать нечего")
+            sys.exit(1)
+        new_schedule_text = old_schedule
+        log.info("Keeping previous schedule.json")
+
+    if blocks is not None:
+        new_replacements_text = json.dumps(
+            build_replacements_json(blocks), ensure_ascii=False, indent=2)
+    elif old_replacements is not None:
+        new_replacements_text = old_replacements
+        log.info("Keeping previous replacements.json")
+    else:
+        new_replacements_text = "[]"
 
     # 6. Write files
-    new_schedule_text = json.dumps(schedule_json, ensure_ascii=False, indent=2)
-    new_replacements_text = json.dumps(replacements_json, ensure_ascii=False, indent=2)
-
-    def read_existing(name: str) -> str | None:
-        p = OUTPUT_DIR / name
-        return p.read_text(encoding="utf-8") if p.exists() else None
-
-    old_schedule = read_existing("schedule.json")
-    old_replacements = read_existing("replacements.json")
     changed = new_schedule_text != old_schedule or new_replacements_text != old_replacements
 
     (OUTPUT_DIR / "schedule.json").write_text(new_schedule_text, encoding="utf-8")
     (OUTPUT_DIR / "replacements.json").write_text(new_replacements_text, encoding="utf-8")
+
+    parse_report["schedule"] = schedule_report
 
     # meta.updated_at и коммит меняются только при реальном изменении данных —
     # иначе частые запуски создают пустые коммиты и лишние деплои
@@ -219,8 +297,8 @@ def main() -> None:
     if changed or not meta_path.exists():
         meta = {
             "updated_at": datetime.now().isoformat(),
-            "groups_count": len(schedule.groups),
-            "replacement_dates": [b.date.isoformat() for b in blocks],
+            "groups_count": schedule_report.get("groups", len(schedule.groups) if schedule else 0),
+            "replacement_dates": [b.date.isoformat() for b in (blocks or [])],
             "raspisanie_url": raspisanie_url,
             "zamena_url": zamena_url,
             "parse_report": parse_report,

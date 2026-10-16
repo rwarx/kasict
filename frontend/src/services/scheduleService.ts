@@ -111,6 +111,37 @@ export async function revalidateInBackground(): Promise<void> {
   }
 }
 
+let _lastAutoRevalidate = 0
+
+/** Ревалидация с троттлингом — для авто-проверок, чтобы не дёргать сервер. */
+export function maybeRevalidate(minGapMs = 3 * 60_000): void {
+  const now = Date.now()
+  if (now - _lastAutoRevalidate < minGapMs) return
+  _lastAutoRevalidate = now
+  void revalidateInBackground()
+}
+
+/**
+ * Автопроверка данных, пока приложение открыто: возврат из фона,
+ * появление сети и раз в 15 минут. Основное расписание меняют посреди
+ * семестра так же, как и замены — ждать ручной проверки нельзя.
+ */
+export function startAutoRevalidation(): () => void {
+  const onWake = () => {
+    if (document.visibilityState === 'visible') maybeRevalidate()
+  }
+  document.addEventListener('visibilitychange', onWake)
+  window.addEventListener('online', onWake)
+  const timer = window.setInterval(() => {
+    if (document.visibilityState === 'visible') maybeRevalidate(10 * 60_000)
+  }, 5 * 60_000)
+  return () => {
+    document.removeEventListener('visibilitychange', onWake)
+    window.removeEventListener('online', onWake)
+    window.clearInterval(timer)
+  }
+}
+
 export async function loadData(): Promise<void> {
   // Мгновенный старт: рендерим из localStorage, свежесть сверяем в фоне.
   if (applyCache()) {
