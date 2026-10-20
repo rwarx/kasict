@@ -829,13 +829,14 @@
       {
         "group": "А 26-1",
         "lesson_numbers": [
-          3
+          3,
+          4
         ],
         "subject": "школа актива",
         "teacher": "",
         "classroom": "актовый зал",
         "is_cancel": false,
-        "raw_pairs": "3"
+        "raw_pairs": "3,4"
       },
       {
         "group": "А 26-2",
@@ -899,13 +900,14 @@
       {
         "group": "СЗС 26-3",
         "lesson_numbers": [
-          3
+          3,
+          4
         ],
         "subject": "школа актива",
         "teacher": "",
         "classroom": "актовый зал",
         "is_cancel": false,
-        "raw_pairs": "3"
+        "raw_pairs": "3,4"
       },
       {
         "group": "ПСК 26-1",
@@ -917,6 +919,18 @@
         "classroom": "114",
         "is_cancel": false,
         "raw_pairs": "1"
+      },
+      {
+        "group": "ПСК 26-1",
+        "lesson_numbers": [
+          3,
+          4
+        ],
+        "subject": "школа актива",
+        "teacher": "",
+        "classroom": "актовый зал",
+        "is_cancel": false,
+        "raw_pairs": "3,4"
       },
       {
         "group": "РУПО 26-3",
@@ -954,13 +968,14 @@
       {
         "group": "Д 26-1",
         "lesson_numbers": [
-          3
+          3,
+          4
         ],
         "subject": "школа актива",
         "teacher": "",
         "classroom": "актовый зал",
         "is_cancel": false,
-        "raw_pairs": "3"
+        "raw_pairs": "3,4"
       },
       {
         "group": "Д 26-2",

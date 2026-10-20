@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-20T05:47:54.080997",
+  "updated_at": "2026-10-20T11:15:30.699509",
   "groups_count": 56,
   "replacement_dates": [
     "2026-10-20",
@@ -9,12 +9,12 @@
   "zamena_url": "https://kasict.ru/students/schedule/files/zamena1.htm",
   "parse_report": {
     "blocks_found": 2,
-    "rows_total": 136,
+    "rows_total": 137,
     "cabinets_entries": 34,
     "blocks": 2,
     "rows_by_date": {
       "2026-10-20": 73,
-      "2026-10-21": 63
+      "2026-10-21": 64
     },
     "groups_fixed": 0,
     "groups_without_schedule": [
