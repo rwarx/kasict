@@ -1,21 +1,20 @@
 {
-  "updated_at": "2026-10-19T10:10:38.298859",
+  "updated_at": "2026-10-20T05:47:54.080997",
   "groups_count": 56,
   "replacement_dates": [
-    "2026-10-19",
-    "2026-10-20"
+    "2026-10-20",
+    "2026-10-21"
   ],
   "raspisanie_url": "https://kasict.ru/students/schedule/files/Raspisanie_2026-2027.htm",
   "zamena_url": "https://kasict.ru/students/schedule/files/zamena1.htm",
   "parse_report": {
     "blocks_found": 2,
-    "rows_total": 111,
-    "duty_rows_skipped": 2,
-    "cabinets_entries": 17,
+    "rows_total": 136,
+    "cabinets_entries": 34,
     "blocks": 2,
     "rows_by_date": {
-      "2026-10-19": 38,
-      "2026-10-20": 73
+      "2026-10-20": 73,
+      "2026-10-21": 63
     },
     "groups_fixed": 0,
     "groups_without_schedule": [
@@ -25,15 +24,16 @@
       "ИС 23-1",
       "ИС 23-2",
       "М 24-1П",
-      "ПКС 24-1",
       "СП 24-1П",
       "ТЭСМО 23-1",
       "ТЭСМО 24-1П",
+      "ТЭСМО 25-1",
+      "ТЭСМО 25-2",
       "Э 23-1",
       "Э 24-1",
       "Э 24-2"
     ],
-    "synthesized_remote": 6,
+    "synthesized_remote": 2,
     "schedule": {
       "url": "https://kasict.ru/students/schedule/files/Raspisanie_2026-2027.htm",
       "groups": 56,
