@@ -186,6 +186,11 @@ export function getMeta(): MetaJSON | null {
   return _meta
 }
 
+/** График дежурств (из meta.json); отсортирован по дате. */
+export function getDuties(): import('../parser/types').DutyJSON[] {
+  return _meta?.duties ?? []
+}
+
 export function getLastChanges(): DataChangeSummary | null {
   return _lastChanges
 }

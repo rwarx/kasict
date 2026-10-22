@@ -1,11 +1,11 @@
-// Экран недели: все дни выбранной недели + итоги (пары, окна, часы).
+// Экран недели: все дни выбранной недели + дежурство + итоги (пары, окна, часы).
 
 import { useMemo } from 'react'
-import { getDay, revalidateInBackground, useDataVersion } from '../services/scheduleService'
+import { getDay, getDuties, revalidateInBackground, useDataVersion } from '../services/scheduleService'
 import { getWeekDays, shiftISO, todayISO, weekdayName } from '../lib/date'
 import { useShortened } from '../lib/shortened'
 import { FreshnessIndicator } from '../components/Freshness'
-import { BarChartIcon, ChevronLeftIcon, ChevronRightIcon } from '../components/Icons'
+import { BarChartIcon, ChevronLeftIcon, ChevronRightIcon, ShieldIcon } from '../components/Icons'
 
 interface WeekStats {
   lessons: number
@@ -36,6 +36,13 @@ function formatHours(minutes: number): string {
   return `${String(rounded).replace('.', ',')} ч`
 }
 
+const MONTHS_SHORT = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек']
+
+function formatDutyDate(iso: string): string {
+  const d = new Date(iso + 'T12:00:00')
+  return `${d.getDate()} ${MONTHS_SHORT[d.getMonth()]}`
+}
+
 export function WeekScreen({ group, dateISO, setDateISO }: {
   group: string
   dateISO: string
@@ -60,6 +67,18 @@ export function WeekScreen({ group, dateISO, setDateISO }: {
   const weekEnd = new Date(weekDays[6] + 'T12:00:00')
   const parity = weekData[0]?.day?.parity
   const isCurrentWeek = weekDays.includes(today)
+
+  // Дежурство: график из meta.json (адаптивный парсер замена-файла),
+  // фильтр по группе; в displayed-неделе — список, иначе ближайшая дата
+  const dutyView = useMemo(() => {
+    const norm = (s: string) => s.replace(/\s+/g, ' ').trim().toUpperCase()
+    const all = getDuties()
+    if (all.length === 0) return null
+    const mine = all.filter(d => norm(d.group) === norm(group))
+    const week = mine.filter(d => weekDays.includes(d.date))
+    const next = mine.find(d => d.date >= today) ?? null
+    return { hasAny: mine.length > 0, week, next }
+  }, [group, weekDays, today, dataVersion])
 
   // Итоги недели: пары без отмен, окна между парами, время в аудитории
   const stats: WeekStats | null = useMemo(() => {
@@ -185,6 +204,35 @@ export function WeekScreen({ group, dateISO, setDateISO }: {
           )
         })}
       </div>
+
+      {dutyView && (
+        <section className="duty-block" aria-label="Дежурство">
+          <div className="duty-title">
+            <ShieldIcon size={15} />
+            Дежурство
+          </div>
+          {dutyView.week.length > 0 ? (
+            <div className="duty-list">
+              {dutyView.week.map(d => (
+                <div key={d.date + d.time} className="duty-row">
+                  <span className="duty-date">{weekdayName(d.date)}, {formatDutyDate(d.date)}</span>
+                  <span className="duty-time">{d.time.replace('-', '–')}</span>
+                  {d.date === today && <span className="badge accent">Сегодня</span>}
+                </div>
+              ))}
+            </div>
+          ) : !dutyView.hasAny ? (
+            <div className="duty-empty">Для группы дежурств не запланировано</div>
+          ) : dutyView.next ? (
+            <div className="duty-next">
+              Ближайшее дежурство — {' '}<strong>{weekdayName(dutyView.next.date)}, {formatDutyDate(dutyView.next.date)}</strong>{' '}
+              · {dutyView.next.time.replace('-', '–')}
+            </div>
+          ) : (
+            <div className="duty-empty">В этой неделе дежурств нет</div>
+          )}
+        </section>
+      )}
 
       {stats && (
         <section className="week-stats" aria-label="Итоги недели">

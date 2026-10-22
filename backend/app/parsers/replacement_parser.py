@@ -13,7 +13,10 @@
   * ячейка «Пары»: '1,2', '1-2', '1; 2', 'с 4 пары', '' (весь день);
   * секция «Кабинеты»: строки «пары | преподаватель | кабинет», устойчиво
     к пустым номерам пар и названиям «Кабинет/Кабинеты/Кабинеты замен»;
-  * «График дежурств» закрывает секцию кабинетов (защита от прилипания);
+  * «График дежурств» (v3.6.0) не просто отбрасывается, а парсится: правые
+    колонки «Дата | Группа | Время проведения работ» находятся АДАПТИВНО —
+    по шапке, а не по фиксированным позициям; из них собираются DutyEntry
+    (см. parse_replacements_with_duties);
   * отчёт парсинга (report) для meta.json и диагностики «почему замены нет».
 """
 from __future__ import annotations
@@ -24,7 +27,7 @@ from datetime import date
 
 from bs4 import BeautifulSoup
 
-from ..models.domain import Replacement, ReplacementBlock, TeacherRoom
+from ..models.domain import DutyEntry, Replacement, ReplacementBlock, TeacherRoom
 from .html_utils import clean_cell, decode_bytes, expand_table_to_grid
 
 log = logging.getLogger("parser.replacement")
@@ -50,6 +53,13 @@ _DUTY_SECTION_RE = re.compile(r"график\s+дежурств", re.IGNORECASE)
 _DUTY_SUBJECT_RE = re.compile(r"поднятие\s+флага|дежурств\w*", re.IGNORECASE)
 # шапка правых колонок той же таблицы («Дата | Группа | Время проведения работ»)
 _DUTY_HEADER_TIME_RE = re.compile(r"время\s+проведения", re.IGNORECASE)
+# ячейки «Графика дежурств» (v3.6.0): дата DD.MM.YYYY (или YY), группа
+# с буквами и цифрами, время «15:25-16:45» (тире любого вида)
+_DUTY_DATE_CELL_RE = re.compile(r"^\d{1,2}\.\d{1,2}\.\d{2,4}$")
+_DUTY_TIME_CELL_RE = re.compile(r"^\d{1,2}:\d{2}\s*[-–—]\s*\d{1,2}:\d{2}$")
+_DUTY_GROUP_CELL_RE = re.compile(
+    r"^(?=.*\d)(?=.*[а-яёa-z])[а-яёa-z0-9 .\-]{2,30}$", re.IGNORECASE,
+)
 _NAME_RE = re.compile(r"[а-яa-zё]", re.IGNORECASE)
 _PAIRS_CELL_RE = re.compile(r"[\d\s,;\-–—]+")
 _PAIR_RANGE_RE = re.compile(r"^(\d)\s*[-–—]\s*(\d)$")
@@ -146,9 +156,43 @@ def _handle_header(joined: str, blocks: list[ReplacementBlock], current: Replace
     return block, True
 
 
-def _parse_text(text: str, report: dict) -> list[ReplacementBlock]:
+def _find_duty_columns(grid: list[list[str]]) -> tuple[set[int], dict[int, str]]:
+    """Шапка дежурств -> (колонки для бланкирования, {колонка: роль}).
+
+    Ищем строку с «Время проведения работ»; в ней же по тексту шапки
+    определяем колонки «Дата» и «Группа». Адаптивно: если колледж
+    передвинет/переименует колонки — роли определяются по заголовкам,
+    а не по фиксированным позициям. Если шапка неполная — колонки
+    бланкируем (защита замен), но не парсим.
+    """
+    for row in grid:
+        if not any(_DUTY_HEADER_TIME_RE.search(c) for c in row):
+            continue
+        duty_cols: set[int] = set()
+        roles: dict[int, str] = {}
+        for j, cc in enumerate(row):
+            if j < 6 or not cc:
+                continue
+            low = cc.lower()
+            if _DUTY_HEADER_TIME_RE.search(cc):
+                duty_cols.add(j)
+                roles.setdefault(j, "time")
+            elif low.startswith("дат"):
+                duty_cols.add(j)
+                roles.setdefault(j, "date")
+            elif low.startswith("групп"):
+                duty_cols.add(j)
+                roles.setdefault(j, "group")
+        if {"date", "group", "time"} <= set(roles.values()):
+            return duty_cols, roles
+        return duty_cols, {}
+    return set(), {}
+
+
+def _parse_text(text: str, report: dict) -> tuple[list[ReplacementBlock], list[DutyEntry]]:
     soup = BeautifulSoup(text, "lxml")
     blocks: list[ReplacementBlock] = []
+    duties_raw: list[DutyEntry] = []
     current: ReplacementBlock | None = None
     section = "groups"  # groups | cabinets — секция внутри текущего блока
 
@@ -158,19 +202,31 @@ def _parse_text(text: str, report: dict) -> list[ReplacementBlock]:
         # Правые колонки таблицы дежурств («Дата | Группа | Время проведения
         # работ») лежат в ТОЙ ЖЕ таблице, что и замены: находим их шапку и
         # бланкируем эти колонки, иначе дежурства просачиваются в замены.
-        duty_cols: set[int] = set()
-        for row in grid:
-            for idx, c in enumerate(row):
-                if _DUTY_HEADER_TIME_RE.search(c):
-                    duty_cols = {
-                        j for j, cc in enumerate(row)
-                        if j >= 6 and cc and (cc.lower() in ("дата", "группа") or _DUTY_HEADER_TIME_RE.search(cc))
-                    }
-                    break
-            if duty_cols:
-                break
+        # С v3.6.0 те же колонки парсятся в DutyEntry (см. ниже).
+        duty_cols, duty_map = _find_duty_columns(grid)
+
+        idx_date = next((j for j, r in duty_map.items() if r == "date"), -1)
+        idx_group = next((j for j, r in duty_map.items() if r == "group"), -1)
+        idx_time = next((j for j, r in duty_map.items() if r == "time"), -1)
 
         for row in grid:
+            # экстракция дежурств — из НЕбланкнутой строки (дежурство может
+            # идти и в строке без замен, поэтому до всех проверок на замены)
+            if duty_map and len(row) > max(idx_date, idx_group, idx_time):
+                d_raw = clean_cell(row[idx_date])
+                g_raw = clean_cell(row[idx_group])
+                t_raw = clean_cell(row[idx_time])
+                if (_DUTY_DATE_CELL_RE.fullmatch(d_raw)
+                        and _DUTY_GROUP_CELL_RE.fullmatch(g_raw)
+                        and _DUTY_TIME_CELL_RE.fullmatch(t_raw)):
+                    duty_date = _parse_date(d_raw)
+                    if duty_date is not None:
+                        duties_raw.append(DutyEntry(
+                            date=duty_date,
+                            group=g_raw,
+                            time=re.sub(r"\s*[-–—]\s*", "-", t_raw),
+                        ))
+
             if duty_cols:
                 row = [c if j not in duty_cols else "" for j, c in enumerate(row)]
             cells = [clean_cell(c) for c in row]
@@ -249,7 +305,19 @@ def _parse_text(text: str, report: dict) -> list[ReplacementBlock]:
             ))
             report["rows_total"] = report.get("rows_total", 0) + 1
 
-    return blocks
+    # Дежурства повторяются в каждой секционной таблице — дедуплицируем
+    unique: dict[tuple[date, str, str], DutyEntry] = {}
+    for entry in duties_raw:
+        unique.setdefault((entry.date, entry.group, entry.time), entry)
+    duties = sorted(unique.values(), key=lambda e: (e.date, e.group, e.time))
+    if duties_raw:
+        report["duty_rows_raw"] = len(duties_raw)
+    report["duty_rows"] = len(duties)
+    if duties:
+        report["duty_dates"] = sorted({e.date.isoformat() for e in duties})
+        report["duty_groups"] = sorted({e.group for e in duties})
+
+    return blocks, duties
 
 
 def _alternative_decode(data: bytes) -> str | None:
@@ -262,19 +330,24 @@ def _alternative_decode(data: bytes) -> str | None:
     return None
 
 
-def parse_replacements(data: bytes, report: dict | None = None) -> list[ReplacementBlock]:
-    """Файл замен -> блоки. report наполняется метриками парсинга."""
+def parse_replacements_with_duties(
+    data: bytes, report: dict | None = None,
+) -> tuple[list[ReplacementBlock], list[DutyEntry]]:
+    """Файл замен -> (блоки замен, график дежурств).
+
+    report наполняется метриками парсинга (в т.ч. duty_rows/duty_dates).
+    """
     rep = report if report is not None else {}
 
     text = decode_bytes(data)
-    blocks = _parse_text(text, rep)
+    blocks, duties = _parse_text(text, rep)
 
     if not blocks:
         # kasict.ru может сменить кодировку — пробуем альтернативную
         alt = _alternative_decode(data)
         if alt is not None and alt != text:
             log.warning("Блоки замен не найдены — повторный парсинг в другой кодировке")
-            blocks = _parse_text(alt, rep)
+            blocks, duties = _parse_text(alt, rep)
             if blocks:
                 rep["encoding_retried"] = True
 
@@ -284,7 +357,14 @@ def parse_replacements(data: bytes, report: dict | None = None) -> list[Replacem
     }
 
     total = sum(len(b.replacements) for b in blocks)
-    log.info("Parsed %d replacement blocks, %d rows", len(blocks), total)
+    log.info("Parsed %d replacement blocks, %d rows, %d duty entries",
+             len(blocks), total, len(duties))
     if not blocks:
         log.warning("Файл замен не содержит ни одного распознанного блока")
+    return blocks, duties
+
+
+def parse_replacements(data: bytes, report: dict | None = None) -> list[ReplacementBlock]:
+    """Файл замен -> блоки (без дежурств; для них — parse_replacements_with_duties)."""
+    blocks, _duties = parse_replacements_with_duties(data, report)
     return blocks

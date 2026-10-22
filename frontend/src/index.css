@@ -2637,6 +2637,84 @@ button.settings-row:hover {
   font-weight: 700;
 }
 
+/* ---------- Дежурство ---------- */
+
+.duty-block {
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.duty-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.duty-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.duty-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  min-width: 0;
+}
+
+.duty-date {
+  font-weight: 700;
+  color: var(--text);
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.duty-time {
+  margin-left: auto;
+  font-weight: 600;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.duty-row .badge {
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+.duty-next,
+.duty-empty {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+.duty-next strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.duty-empty {
+  color: var(--text-3);
+}
+
 /* ---------- «Что нового» ---------- */
 
 .whatsnew-panel {

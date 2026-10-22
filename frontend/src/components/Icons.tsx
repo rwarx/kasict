@@ -189,3 +189,9 @@ export const BarChartIcon = (p: IconProps) => (
     <path d="M5 20V10M12 20V4M19 20v-7" />
   </Icon>
 )
+
+export const ShieldIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 22s8-3.6 8-9.6V5.5L12 2.5l-8 3v6.9C4 18.4 12 22 12 22Z" />
+  </Icon>
+)

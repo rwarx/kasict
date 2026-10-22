@@ -99,6 +99,14 @@ class TeacherRoom:
 
 
 @dataclass
+class DutyEntry:
+    """Строка «Графика дежурств»: группа дежурит в этот день в это время."""
+    date: date
+    group: str
+    time: str                     # напр. "13:25-14:45"
+
+
+@dataclass
 class ReplacementBlock:
     """Блок замен на одну дату (по заголовку файла)."""
     date: date

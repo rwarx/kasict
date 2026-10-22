@@ -1,20 +1,77 @@
 {
-  "updated_at": "2026-10-21T06:27:06.209060",
+  "updated_at": "2026-10-22T06:18:16.435238",
   "groups_count": 56,
   "replacement_dates": [
-    "2026-10-21",
-    "2026-10-22"
+    "2026-10-22",
+    "2026-10-23"
+  ],
+  "duties": [
+    {
+      "date": "2026-10-06",
+      "group": "ИС 24-3",
+      "time": "15:25-16:45"
+    },
+    {
+      "date": "2026-10-07",
+      "group": "СЗС 23-1",
+      "time": "15:25-16:45"
+    },
+    {
+      "date": "2026-10-13",
+      "group": "СЗС 25-1",
+      "time": "13:25-14:45"
+    },
+    {
+      "date": "2026-10-14",
+      "group": "ИБ 23-1",
+      "time": "15:25-16:45"
+    },
+    {
+      "date": "2026-10-21",
+      "group": "А 25-1",
+      "time": "13:25-14:45"
+    },
+    {
+      "date": "2026-10-27",
+      "group": "А 25-2",
+      "time": "13:25-14:45"
+    },
+    {
+      "date": "2026-10-28",
+      "group": "Д 25-2",
+      "time": "15:25-16:45"
+    }
   ],
   "raspisanie_url": "https://kasict.ru/students/schedule/files/Raspisanie_2026-2027.htm",
   "zamena_url": "https://kasict.ru/students/schedule/files/zamena1.htm",
   "parse_report": {
     "blocks_found": 2,
-    "rows_total": 98,
-    "cabinets_entries": 21,
+    "rows_total": 76,
+    "cabinets_entries": 5,
+    "duty_rows_raw": 14,
+    "duty_rows": 7,
+    "duty_dates": [
+      "2026-10-06",
+      "2026-10-07",
+      "2026-10-13",
+      "2026-10-14",
+      "2026-10-21",
+      "2026-10-27",
+      "2026-10-28"
+    ],
+    "duty_groups": [
+      "А 25-1",
+      "А 25-2",
+      "Д 25-2",
+      "ИБ 23-1",
+      "ИС 24-3",
+      "СЗС 23-1",
+      "СЗС 25-1"
+    ],
     "blocks": 2,
     "rows_by_date": {
-      "2026-10-21": 64,
-      "2026-10-22": 34
+      "2026-10-22": 34,
+      "2026-10-23": 42
     },
     "groups_fixed": 0,
     "groups_without_schedule": [
@@ -27,13 +84,13 @@
       "СП 24-1П",
       "ТЭСМО 23-1",
       "ТЭСМО 24-1П",
-      "ТЭСМО 25-1",
-      "ТЭСМО 25-2",
       "Э 23-1",
       "Э 24-1",
       "Э 24-2"
     ],
-    "synthesized_remote": 8,
+    "duty_groups_fixed": 0,
+    "duty_groups_without_schedule": [],
+    "synthesized_remote": 9,
     "schedule": {
       "url": "https://kasict.ru/students/schedule/files/Raspisanie_2026-2027.htm",
       "groups": 56,

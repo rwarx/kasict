@@ -1,7 +1,8 @@
 """Генерация статических JSON-файлов для PWA.
 
-Скачивает HTML с kasict.ru, парсит расписание и замены,
-записывает JSON в frontend/public/data/.
+Скачивает HTML с kasict.ru, парсит расписание, замены и график дежурств,
+записывает JSON в frontend/public/data/. Дежурства едут в meta.json —
+они маленькие и попадают на клиент даже при фоновой сверке по meta.
 """
 from __future__ import annotations
 
@@ -20,12 +21,12 @@ BACKEND = ROOT / "backend"
 sys.path.insert(0, str(BACKEND))
 
 from app.parsers.html_utils import decode_bytes
-from app.parsers.replacement_parser import parse_replacements
+from app.parsers.replacement_parser import parse_replacements_with_duties
 from app.parsers.schedule_parser import _norm_group, normalized_group_names, parse_schedule
 from app.services.parity import ParityResolver
 from app.services.remote_hints import apply_teacher_remote_hints
 from app.models.domain import (
-    PAIR_NUMBERS, PAIR_TIMES, BaseSchedule, ReplacementBlock,
+    PAIR_NUMBERS, PAIR_TIMES, BaseSchedule, DutyEntry, ReplacementBlock,
 )
 
 OUTPUT_DIR = ROOT / "frontend" / "public" / "data"
@@ -148,6 +149,28 @@ def canonicalize_replacement_groups(blocks: list[ReplacementBlock], schedule: Ba
     return {"groups_fixed": fixed, "groups_without_schedule": sorted(unmatched)}
 
 
+def canonicalize_duty_groups(duties: list[DutyEntry], schedule: BaseSchedule) -> dict:
+    """Названия групп в дежурствах -> канонические имена расписания.
+
+    Аналогично canonicalize_replacement_groups: без этого «ИС24-3» в
+    графике дежурств не совпадёт с «ИС 24-3» на клиенте.
+    """
+    canon = normalized_group_names(schedule)
+    fixed = 0
+    unmatched: set[str] = set()
+    for entry in duties:
+        key = _norm_group(entry.group)
+        if key in canon:
+            if canon[key] != entry.group:
+                log.info("Дежурство: группа «%s» -> каноническая «%s»",
+                         entry.group, canon[key])
+                entry.group = canon[key]
+                fixed += 1
+        else:
+            unmatched.add(entry.group)
+    return {"duty_groups_fixed": fixed, "duty_groups_without_schedule": sorted(unmatched)}
+
+
 def lessons_count_from_text(text: str | None) -> int:
     """lessons_count для прошлого schedule.json (из файла)."""
     if not text:
@@ -214,23 +237,36 @@ def main() -> None:
     # 3. Fetch & parse replacements — тоже устойчиво: сбой не должен мешать
     # публикации обновлённого расписания.
     old_replacements = read_existing("replacements.json")
+    old_meta_text = read_existing("meta.json")
+    old_duties: list | None = None
+    if old_meta_text:
+        try:
+            old_duties = json.loads(old_meta_text).get("duties")
+        except Exception:
+            old_duties = None
     parse_report: dict = {}
     blocks: list[ReplacementBlock] | None = None
+    duties: list[DutyEntry] | None = None
     try:
         zamena_bytes = fetch_url(zamena_url)
-        blocks = parse_replacements(zamena_bytes, parse_report)
-        log.info("Parsed %d replacement blocks", len(blocks))
+        blocks, duties = parse_replacements_with_duties(zamena_bytes, parse_report)
+        log.info("Parsed %d replacement blocks, %d duty entries", len(blocks), len(duties))
     except Exception as e:
         parse_report["error"] = str(e)
         log.warning("Replacements parse failed: %s", e)
 
     if blocks is not None:
-        # 3.5 Названия групп в заменах -> канонические имена расписания
+        # 3.5 Названия групп в заменах и дежурствах -> канонические имена расписания
         if schedule is not None:
             parse_report.update(canonicalize_replacement_groups(blocks, schedule))
             if parse_report.get("groups_without_schedule"):
                 log.info("Группы замен без пары в расписании: %s",
                          ", ".join(parse_report["groups_without_schedule"]))
+            if duties is not None:
+                parse_report.update(canonicalize_duty_groups(duties, schedule))
+                if parse_report.get("duty_groups_without_schedule"):
+                    log.info("Группы дежурств без пары в расписании: %s",
+                             ", ".join(parse_report["duty_groups_without_schedule"]))
         else:
             parse_report["groups_canonicalized"] = False
 
@@ -283,8 +319,19 @@ def main() -> None:
     else:
         new_replacements_text = "[]"
 
+    # Дежурства: сбой парсинга оставляет прошлый график (как и замены)
+    if duties is not None:
+        duties_list = [
+            {"date": d.date.isoformat(), "group": d.group, "time": d.time}
+            for d in duties
+        ]
+    else:
+        duties_list = old_duties if old_duties is not None else []
+
     # 6. Write files
-    changed = new_schedule_text != old_schedule or new_replacements_text != old_replacements
+    changed = (new_schedule_text != old_schedule
+               or new_replacements_text != old_replacements
+               or duties_list != old_duties)
 
     (OUTPUT_DIR / "schedule.json").write_text(new_schedule_text, encoding="utf-8")
     (OUTPUT_DIR / "replacements.json").write_text(new_replacements_text, encoding="utf-8")
@@ -299,6 +346,7 @@ def main() -> None:
             "updated_at": datetime.now().isoformat(),
             "groups_count": schedule_report.get("groups", len(schedule.groups) if schedule else 0),
             "replacement_dates": [b.date.isoformat() for b in (blocks or [])],
+            "duties": duties_list,
             "raspisanie_url": raspisanie_url,
             "zamena_url": zamena_url,
             "parse_report": parse_report,

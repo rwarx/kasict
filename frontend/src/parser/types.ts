@@ -45,10 +45,17 @@ export interface ReplacementBlockJSON {
   replacements: ReplacementEntry[]
 }
 
+export interface DutyJSON {
+  date: string          // ISO yyyy-mm-dd
+  group: string         // каноническое название группы
+  time: string          // "13:25-14:45"
+}
+
 export interface MetaJSON {
   updated_at: string
   groups_count: number
   replacement_dates: string[]
+  duties?: DutyJSON[]
   raspisanie_url: string
   zamena_url: string
 }
