@@ -1,6 +1,7 @@
 // Верхняя панель: бренд KASICT, чип «День X», чип группы, переключатель белой/чёрной темы.
 
 import type { ThemePref } from '../lib/theme'
+import { CollegeLogo } from './CollegeLogo'
 import { ChevronDownIcon, MoonIcon, SparklesIcon, SunIcon } from './Icons'
 
 export function ThemeButton({ pref, onToggle, isDark }: {
@@ -34,7 +35,9 @@ export function AppHeader({ group, onOpenGroup, pref, onToggleTheme, isDark, day
   return (
     <header className="app-header">
       <div className="brand">
-        <span className="brand-mark" aria-hidden="true">K</span>
+        <span className="brand-mark" aria-hidden="true">
+          <CollegeLogo className="brand-mark-logo" />
+        </span>
         <span className="brand-name">KASICT</span>
         {dayX && (
           <span className="dayx-chip" title="Сегодня — День X! (18 сентября)">

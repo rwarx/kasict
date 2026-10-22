@@ -205,6 +205,13 @@ button {
   letter-spacing: -0.02em;
 }
 
+/* Фирменный знак (УК) внутри плитки шапки — вектор, красится темой */
+.brand-mark-logo {
+  width: 74%;
+  height: auto;
+  display: block;
+}
+
 .brand-name {
   font-size: 15px;
   font-weight: 800;
@@ -3208,6 +3215,31 @@ button.settings-row:hover {
   --neon: #BBF7D0;
 }
 
+/* --- Фирменная: фиолетовая в стиле колледжа (логотип #7403FC) --- */
+:root[data-season='brand'] {
+  --accent: #7403FC;
+  --accent-strong: #5E02CC;
+  --on-accent: #FFFFFF;
+  --accent-soft: rgba(116, 3, 252, 0.09);
+  --accent-soft-2: rgba(116, 3, 252, 0.16);
+  --accent-2: #A855F7;
+  --accent-2-soft: rgba(168, 85, 247, 0.11);
+  --accent-glow: rgba(116, 3, 252, 0.30);
+  --neon: #C084FC;
+}
+
+:root[data-theme='dark'][data-season='brand'] {
+  --accent: #C084FC;
+  --accent-strong: #DDB8FE;
+  --on-accent: #22093A;
+  --accent-soft: rgba(192, 132, 252, 0.15);
+  --accent-soft-2: rgba(192, 132, 252, 0.23);
+  --accent-2: #A855F7;
+  --accent-2-soft: rgba(168, 85, 247, 0.17);
+  --accent-glow: rgba(192, 132, 252, 0.40);
+  --neon: #E9D5FF;
+}
+
 /* ============================================================
    Неон-UI + сезонная атмосфера
    ============================================================ */
@@ -3318,4 +3350,62 @@ button.settings-row:hover {
 .fireworks-overlay .fireworks-btn {
   background: linear-gradient(120deg, var(--accent-strong), var(--accent-2));
   color: var(--on-accent);
+}
+
+/* ============================================================
+   Переключатель цветового акцента (Настройки → Оформление)
+   ============================================================ */
+
+.accent-row {
+  padding-bottom: 10px;
+}
+
+.accent-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  padding: 0 2px 4px;
+}
+
+.accent-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 8px 10px;
+  border-radius: 13px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.accent-chip:hover {
+  border-color: var(--border-strong);
+}
+
+.accent-chip.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent), 0 0 12px var(--accent-glow);
+}
+
+.accent-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 360px) {
+  .accent-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

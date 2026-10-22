@@ -71,7 +71,7 @@ export default function App() {
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
   })
   const isDayXToday = shouldCelebrateDayX(today)
-  const { pref, setPref, isDark, season } = useTheme()
+  const { pref, setPref, isDark, season, accentPref, setAccentPref } = useTheme()
 
   // День X: при открытии приложения 18 сентября — салют (всегда включён)
   useEffect(() => {
@@ -190,6 +190,8 @@ export default function App() {
               themePref={pref}
               onThemePref={setPref}
               season={season}
+              accentPref={accentPref}
+              onAccentPref={setAccentPref}
               onViewSchedule={() => setScreen('schedule')}
             />
           )}

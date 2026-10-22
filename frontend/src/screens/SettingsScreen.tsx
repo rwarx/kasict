@@ -4,17 +4,19 @@ import { useEffect, useState } from 'react'
 import { getMeta, loadSnapshotData } from '../services/scheduleService'
 import { disableNotifications, enableNotifications, isNotifEnabled, isNotifSupported, notifStatusText } from '../services/notifications'
 import { getAllSnapshots, clearHistory, getSnapshotCount, type ScheduleSnapshot } from '../services/history'
-import type { Season, ThemePref } from '../lib/theme'
-import { SEASONS } from '../lib/theme'
+import type { AccentPref, AccentScheme, Season, ThemePref } from '../lib/theme'
+import { ACCENT_OPTIONS, SEASONS } from '../lib/theme'
 import { APP_VERSION } from '../lib/whatsNew'
 import { ChevronRightIcon, RefreshIcon, UserIcon } from '../components/Icons'
 
-export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemePref, season, onViewSchedule }: {
+export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemePref, season, accentPref, onAccentPref, onViewSchedule }: {
   group: string | null
   onOpenGroupSelector: () => void
   themePref: ThemePref
   onThemePref: (p: ThemePref) => void
-  season: Season
+  season: AccentScheme
+  accentPref: AccentPref
+  onAccentPref: (p: AccentPref) => void
   onViewSchedule: () => void
 }) {
   const [pendingGroup, setPendingGroup] = useState(false)
@@ -87,12 +89,32 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
       <section className="settings-section">
         <div className="settings-section-title">Оформление</div>
         <div className="settings-card">
-          <div className="settings-row static">
+          <div className="settings-row static accent-row">
             <div className="settings-row-info">
-              <span className="settings-row-label">Сезонная тема</span>
-              <span className="settings-row-value">{SEASONS[season].hint} — включается автоматически</span>
+              <span className="settings-row-label">Цветовой акцент</span>
+              <span className="settings-row-value">
+                {accentPref === 'auto'
+                  ? `${SEASONS[season as Season].hint} — по сезону`
+                  : accentPref === 'brand'
+                    ? 'Фирменный фиолетовый колледжа'
+                    : `${SEASONS[accentPref as Season].hint} — вручную`}
+              </span>
             </div>
-            <span className="season-chip">{SEASONS[season].emoji} {SEASONS[season].label}</span>
+          </div>
+          <div className="accent-grid" role="radiogroup" aria-label="Цветовой акцент оформления">
+            {ACCENT_OPTIONS.map(o => (
+              <button
+                key={o.id}
+                type="button"
+                role="radio"
+                aria-checked={accentPref === o.id}
+                className={`accent-chip ${accentPref === o.id ? 'active' : ''}`}
+                onClick={() => onAccentPref(o.id)}
+              >
+                <span className="accent-dot" style={{ background: o.color }} aria-hidden="true" />
+                {o.label}
+              </button>
+            ))}
           </div>
           <div className="settings-row static">
             <div className="settings-row-info">
