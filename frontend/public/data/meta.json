@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-10-23T05:52:09.302461",
+  "updated_at": "2026-10-23T11:21:29.292017",
   "groups_count": 56,
   "replacement_dates": [
-    "2026-10-22",
-    "2026-10-23"
+    "2026-10-23",
+    "2026-10-26"
   ],
   "duties": [
     {
@@ -27,6 +27,11 @@
       "time": "15:25-16:45"
     },
     {
+      "date": "2026-10-20",
+      "group": "СЗС 25-4",
+      "time": "13:25-14:45"
+    },
+    {
       "date": "2026-10-21",
       "group": "А 25-1",
       "time": "13:25-14:45"
@@ -40,24 +45,32 @@
       "date": "2026-10-28",
       "group": "Д 25-2",
       "time": "15:25-16:45"
+    },
+    {
+      "date": "2026-10-29",
+      "group": "А 25-1",
+      "time": "15:25-16:45"
     }
   ],
   "raspisanie_url": "https://kasict.ru/students/schedule/files/Raspisanie_2026-2027.htm",
   "zamena_url": "https://kasict.ru/students/schedule/files/zamena1.htm",
   "parse_report": {
     "blocks_found": 2,
-    "rows_total": 76,
-    "cabinets_entries": 5,
-    "duty_rows_raw": 14,
-    "duty_rows": 7,
+    "rows_total": 86,
+    "cabinets_entries": 7,
+    "duty_rows_skipped": 2,
+    "duty_rows_raw": 15,
+    "duty_rows": 9,
     "duty_dates": [
       "2026-10-06",
       "2026-10-07",
       "2026-10-13",
       "2026-10-14",
+      "2026-10-20",
       "2026-10-21",
       "2026-10-27",
-      "2026-10-28"
+      "2026-10-28",
+      "2026-10-29"
     ],
     "duty_groups": [
       "А 25-1",
@@ -66,12 +79,13 @@
       "ИБ 23-1",
       "ИС 24-3",
       "СЗС 23-1",
-      "СЗС 25-1"
+      "СЗС 25-1",
+      "СЗС 25-4"
     ],
     "blocks": 2,
     "rows_by_date": {
-      "2026-10-22": 34,
-      "2026-10-23": 42
+      "2026-10-23": 42,
+      "2026-10-26": 44
     },
     "groups_fixed": 0,
     "groups_without_schedule": [
@@ -90,7 +104,7 @@
     ],
     "duty_groups_fixed": 0,
     "duty_groups_without_schedule": [],
-    "synthesized_remote": 9,
+    "synthesized_remote": 4,
     "schedule": {
       "url": "https://kasict.ru/students/schedule/files/Raspisanie_2026-2027.htm",
       "groups": 56,
