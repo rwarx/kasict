@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-10-29T08:16:36.315818",
+  "updated_at": "2026-10-30T13:23:52.888473",
   "groups_count": 56,
   "replacement_dates": [
-    "2026-10-29",
-    "2026-10-30"
+    "2026-10-30",
+    "2026-11-02"
   ],
   "duties": [
     {
@@ -45,16 +45,57 @@
       "date": "2026-10-29",
       "group": "А 25-1",
       "time": "15:25-16:45"
+    },
+    {
+      "date": "2026-11-03",
+      "group": "СП 25-1П",
+      "time": "15:25-16:45"
+    },
+    {
+      "date": "2026-11-05",
+      "group": "ЭК 25-1",
+      "time": "13:25-14:45"
+    },
+    {
+      "date": "2026-11-11",
+      "group": "ИС 25-2",
+      "time": "15:25-16:45"
+    },
+    {
+      "date": "2026-11-12",
+      "group": "ТЭСМО 25-2П",
+      "time": "15:25-16:45"
+    },
+    {
+      "date": "2026-11-17",
+      "group": "СЗС 24-1",
+      "time": "15:25-16:45"
+    },
+    {
+      "date": "2026-11-18",
+      "group": "Д 25-3",
+      "time": "13:25-14:45"
+    },
+    {
+      "date": "2026-11-25",
+      "group": "Д 24-1",
+      "time": "15:25-16:45"
+    },
+    {
+      "date": "2026-11-26",
+      "group": "СЗС 24-2",
+      "time": "13:25-14:45"
     }
   ],
   "raspisanie_url": "https://kasict.ru/students/schedule/files/Raspisanie_2026-2027.htm",
   "zamena_url": "https://kasict.ru/students/schedule/files/zamena1.htm",
   "parse_report": {
     "blocks_found": 2,
-    "rows_total": 114,
-    "cabinets_entries": 10,
+    "rows_total": 93,
+    "cabinets_entries": 5,
+    "duty_rows_skipped": 2,
     "duty_rows_raw": 16,
-    "duty_rows": 8,
+    "duty_rows": 16,
     "duty_dates": [
       "2026-10-06",
       "2026-10-07",
@@ -63,22 +104,38 @@
       "2026-10-20",
       "2026-10-27",
       "2026-10-28",
-      "2026-10-29"
+      "2026-10-29",
+      "2026-11-03",
+      "2026-11-05",
+      "2026-11-11",
+      "2026-11-12",
+      "2026-11-17",
+      "2026-11-18",
+      "2026-11-25",
+      "2026-11-26"
     ],
     "duty_groups": [
       "А 25-1",
       "А 25-2",
+      "Д 24-1",
       "Д 25-2",
+      "Д 25-3",
       "ИБ 23-1",
       "ИС 24-3",
+      "ИС 25-2",
       "СЗС 23-1",
+      "СЗС 24-1",
+      "СЗС 24-2",
       "СЗС 25-1",
-      "СЗС 25-4"
+      "СЗС 25-4",
+      "СП 25-1П",
+      "ТЭСМО 25-2П",
+      "ЭК 25-1"
     ],
     "blocks": 2,
     "rows_by_date": {
-      "2026-10-29": 60,
-      "2026-10-30": 54
+      "2026-10-30": 54,
+      "2026-11-02": 39
     },
     "groups_fixed": 0,
     "groups_without_schedule": [
@@ -97,7 +154,7 @@
     ],
     "duty_groups_fixed": 0,
     "duty_groups_without_schedule": [],
-    "synthesized_remote": 8,
+    "synthesized_remote": 6,
     "schedule": {
       "url": "https://kasict.ru/students/schedule/files/Raspisanie_2026-2027.htm",
       "groups": 56,
