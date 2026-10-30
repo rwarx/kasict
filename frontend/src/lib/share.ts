@@ -74,3 +74,29 @@ export async function shareScheduleText(options: Parameters<typeof buildSchedule
     return 'failed'
   }
 }
+
+// Каноническая ссылка на приложение (для «Пригласить друзей»).
+export const APP_URL = 'https://rwarx.github.io/kasict/'
+
+// Поделиться приложением: нативное меню → буфер обмена.
+export async function shareAppUrl(): Promise<ShareResult> {
+  const title = 'KASICT — расписание колледжа'
+  const text = 'Расписание колледжа с автоматическим учётом замен:'
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ title, text, url: APP_URL })
+      return 'shared'
+    } catch (error) {
+      // AbortError — пользователь закрыл меню; остальное — попытка через буфер
+      if (error instanceof DOMException && error.name === 'AbortError') return 'cancelled'
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(APP_URL)
+    return 'copied'
+  } catch {
+    return 'failed'
+  }
+}

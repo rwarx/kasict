@@ -8,7 +8,8 @@ import type { AccentPref, AccentScheme, Season, ThemePref } from '../lib/theme'
 import { ACCENT_OPTIONS, SEASONS } from '../lib/theme'
 import { APP_VERSION } from '../lib/whatsNew'
 import { fetchTodayVisitors } from '../lib/visitCounter'
-import { ChevronRightIcon, RefreshIcon, UserIcon } from '../components/Icons'
+import { APP_URL, shareAppUrl } from '../lib/share'
+import { ChevronRightIcon, RefreshIcon, ShareIcon, UserIcon } from '../components/Icons'
 
 export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemePref, season, accentPref, onAccentPref, onViewSchedule }: {
   group: string | null
@@ -27,6 +28,8 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
   const [historyCount, setHistoryCount] = useState(0)
   const [showHistory, setShowHistory] = useState(false)
   const [visitors, setVisitors] = useState<number | null>(null)
+  const [shareCopied, setShareCopied] = useState(false)
+  const [showShareFallback, setShowShareFallback] = useState(false)
   const meta = getMeta()
 
   useEffect(() => {
@@ -63,6 +66,16 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
     setHistoryCount(0)
     setHistorySnapshots([])
     setShowHistory(false)
+  }
+
+  const handleShareApp = async () => {
+    const result = await shareAppUrl()
+    if (result === 'copied') {
+      setShareCopied(true)
+      window.setTimeout(() => setShareCopied(false), 2500)
+    } else if (result === 'failed') {
+      setShowShareFallback(true)
+    }
   }
 
   const themeOptions: { id: ThemePref; label: string }[] = [
@@ -226,6 +239,21 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
         </div>
       </section>
 
+      <section className="settings-section">
+        <div className="settings-section-title">Поделиться</div>
+        <div className="settings-card">
+          <button type="button" className="settings-row" onClick={handleShareApp}>
+            <div className="settings-row-info">
+              <span className="settings-row-label">Пригласить друзей</span>
+              <span className="settings-row-value" aria-live="polite">
+                {shareCopied ? 'Ссылка скопирована ✓' : 'Отправить ссылку на приложение'}
+              </span>
+            </div>
+            <ShareIcon size={16} className="settings-row-arrow" />
+          </button>
+        </div>
+      </section>
+
       <button type="button" className="update-btn" onClick={() => window.location.reload()}>
         <RefreshIcon size={16} />
         Обновить данные
@@ -257,6 +285,29 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
             onOpenGroupSelector()
           }}
         />
+      )}
+
+      {showShareFallback && (
+        <div className="modal-root" role="dialog" aria-modal="true" aria-label="Ссылка на приложение">
+          <div className="modal-overlay" onClick={() => setShowShareFallback(false)} />
+          <div className="dialog-panel" onClick={e => e.stopPropagation()}>
+            <h3 className="dialog-title">Ссылка на приложение</h3>
+            <p className="dialog-text">Скопируй и отправь друзьям — откроется прямо в браузере, без установки.</p>
+            <input
+              className="share-link-input"
+              type="text"
+              readOnly
+              value={APP_URL}
+              onFocus={e => e.target.select()}
+              aria-label="Ссылка на приложение"
+            />
+            <div className="dialog-buttons">
+              <button type="button" className="btn-solid btn-block" onClick={() => setShowShareFallback(false)}>
+                Готово
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {showHistory && (
