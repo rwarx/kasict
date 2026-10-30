@@ -7,6 +7,7 @@ import { getAllSnapshots, clearHistory, getSnapshotCount, type ScheduleSnapshot 
 import type { AccentPref, AccentScheme, Season, ThemePref } from '../lib/theme'
 import { ACCENT_OPTIONS, SEASONS } from '../lib/theme'
 import { APP_VERSION } from '../lib/whatsNew'
+import { fetchTodayVisitors } from '../lib/visitCounter'
 import { ChevronRightIcon, RefreshIcon, UserIcon } from '../components/Icons'
 
 export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemePref, season, accentPref, onAccentPref, onViewSchedule }: {
@@ -25,10 +26,12 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
   const [historySnapshots, setHistorySnapshots] = useState<ScheduleSnapshot[]>([])
   const [historyCount, setHistoryCount] = useState(0)
   const [showHistory, setShowHistory] = useState(false)
+  const [visitors, setVisitors] = useState<number | null>(null)
   const meta = getMeta()
 
   useEffect(() => {
     getSnapshotCount().then(setHistoryCount).catch(() => {})
+    fetchTodayVisitors().then(setVisitors).catch(() => {})
   }, [])
 
   const handleToggleNotif = async () => {
@@ -206,6 +209,12 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
       <section className="settings-section">
         <div className="settings-section-title">Приложение</div>
         <div className="settings-card">
+          {visitors !== null && (
+            <div className="info-row" title="Примерно: одно устройство считается один раз в сутки">
+              <span className="info-label">Пользователей сегодня</span>
+              <span className="info-value">{visitors.toLocaleString('ru-RU')}</span>
+            </div>
+          )}
           <div className="info-row">
             <span className="info-label">Версия</span>
             <span className="info-value">{APP_VERSION}</span>

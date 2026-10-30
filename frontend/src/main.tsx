@@ -1,8 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
+import { registerDailyVisit } from './lib/visitCounter'
 import '@fontsource-variable/manrope'
 import './index.css'
+
+// Счётчик посетителей за день: +1 раз в сутки с устройства (fire-and-forget)
+registerDailyVisit()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
