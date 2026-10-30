@@ -4,7 +4,7 @@
 // Персональные данные не собираются — сервис знает только число за дату.
 
 const BASE = 'https://abacus.jasoncameron.dev'
-const NS = 'kasict.proj'
+const NS = 'kasict.app' // чистый namespace: без тестовых хитов периода разработки
 
 const flagKey = (day: string) => `schedule:visit:${day}`
 const valKey = (day: string) => `schedule:visit:value:${day}`
