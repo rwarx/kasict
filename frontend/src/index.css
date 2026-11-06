@@ -1536,22 +1536,12 @@ button {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  text-align: left;
-  padding: 14px 16px;
+  gap: 6px;
+  padding: 5px 8px 5px 0;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--surface);
-  color: var(--text);
-  font-size: 15.5px;
-  font-weight: 700;
-  cursor: pointer;
   transition: border-color 0.15s, background 0.15s, transform 0.1s;
-}
-
-.group-btn:hover {
-  border-color: var(--border-strong);
 }
 
 .group-btn:active {
@@ -1559,9 +1549,57 @@ button {
   background: var(--surface-2);
 }
 
+.group-btn-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  text-align: left;
+  padding: 14px 0 14px 16px;
+  border: none;
+  background: none;
+  color: var(--text);
+  font-size: 15.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.group-btn-fav {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--text-3);
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, transform 0.1s;
+}
+
+.group-btn-fav:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.group-btn-fav:active {
+  transform: scale(0.88);
+}
+
+.group-btn-fav.active {
+  color: var(--accent);
+}
+
 .group-btn.current {
   border-color: var(--accent);
   background: var(--accent-soft);
+}
+
+.group-btn.current .group-btn-main {
   color: var(--accent);
 }
 
@@ -3508,3 +3546,12 @@ button.settings-row:hover {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* Избранные группы: секция целиком видна наверху, без внутреннего скролла
+   (перекрывает flex:1 базового .group-list — правило размещено последним). */
+.group-list.favorites {
+  flex: none;
+  overflow-y: visible;
+  margin-bottom: 20px;
+}
+

@@ -195,3 +195,9 @@ export const ShieldIcon = (p: IconProps) => (
     <path d="M12 22s8-3.6 8-9.6V5.5L12 2.5l-8 3v6.9C4 18.4 12 22 12 22Z" />
   </Icon>
 )
+
+export const StarIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.1 5.9-.8L12 3.5Z" />
+  </Icon>
+)
