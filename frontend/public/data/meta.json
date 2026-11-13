@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-11-12T07:35:30.955627",
+  "updated_at": "2026-11-13T10:45:17.086494",
   "groups_count": 56,
   "replacement_dates": [
-    "2026-11-12",
-    "2026-11-13"
+    "2026-11-13",
+    "2026-11-16"
   ],
   "duties": [
     {
@@ -51,8 +51,9 @@
   "zamena_url": "https://kasict.ru/students/schedule/files/zamena1.htm",
   "parse_report": {
     "blocks_found": 2,
-    "rows_total": 99,
-    "cabinets_entries": 7,
+    "rows_total": 103,
+    "cabinets_entries": 6,
+    "duty_rows_skipped": 2,
     "duty_rows_raw": 16,
     "duty_rows": 8,
     "duty_dates": [
@@ -77,8 +78,8 @@
     ],
     "blocks": 2,
     "rows_by_date": {
-      "2026-11-12": 48,
-      "2026-11-13": 51
+      "2026-11-13": 51,
+      "2026-11-16": 52
     },
     "groups_fixed": 0,
     "groups_without_schedule": [
@@ -99,7 +100,7 @@
     ],
     "duty_groups_fixed": 0,
     "duty_groups_without_schedule": [],
-    "synthesized_remote": 4,
+    "synthesized_remote": 7,
     "schedule": {
       "url": "https://kasict.ru/students/schedule/files/Raspisanie_2026-2027.htm",
       "groups": 56,
