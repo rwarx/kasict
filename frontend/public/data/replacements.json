@@ -603,11 +603,22 @@
         "lesson_numbers": [
           1
         ],
+        "subject": "",
+        "teacher": "",
+        "classroom": "",
+        "is_cancel": true,
+        "raw_pairs": "1"
+      },
+      {
+        "group": "СЗС 26-1",
+        "lesson_numbers": [
+          5
+        ],
         "subject": "ип",
-        "teacher": "Голубева",
+        "teacher": "Захарова",
         "classroom": "301",
         "is_cancel": false,
-        "raw_pairs": "1"
+        "raw_pairs": "5"
       },
       {
         "group": "РУПО 26-1",
@@ -671,7 +682,7 @@
         ],
         "subject": "инф.",
         "teacher": "Самородов",
-        "classroom": "218",
+        "classroom": "301",
         "is_cancel": false,
         "raw_pairs": "3"
       },
@@ -680,11 +691,22 @@
         "lesson_numbers": [
           3
         ],
+        "subject": "инф.",
+        "teacher": "Ташкина",
+        "classroom": "218",
+        "is_cancel": false,
+        "raw_pairs": "3"
+      },
+      {
+        "group": "Д 26-3",
+        "lesson_numbers": [
+          5
+        ],
         "subject": "",
         "teacher": "",
         "classroom": "",
         "is_cancel": true,
-        "raw_pairs": "3"
+        "raw_pairs": "5"
       },
       {
         "group": "ЭК 26-1",

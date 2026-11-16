@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-16T08:29:15.173999",
+  "updated_at": "2026-11-16T18:49:46.113702",
   "groups_count": 56,
   "replacement_dates": [
     "2026-11-16",
@@ -51,9 +51,9 @@
   "zamena_url": "https://kasict.ru/students/schedule/files/zamena1.htm",
   "parse_report": {
     "blocks_found": 2,
-    "rows_total": 109,
+    "rows_total": 111,
     "duty_rows_skipped": 2,
-    "cabinets_entries": 3,
+    "cabinets_entries": 6,
     "duty_rows_raw": 16,
     "duty_rows": 8,
     "duty_dates": [
@@ -79,7 +79,7 @@
     "blocks": 2,
     "rows_by_date": {
       "2026-11-16": 52,
-      "2026-11-17": 57
+      "2026-11-17": 59
     },
     "groups_fixed": 0,
     "groups_without_schedule": [
