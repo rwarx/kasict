@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-11-17T11:00:18.761809",
+  "updated_at": "2026-11-18T10:34:40.091179",
   "groups_count": 56,
   "replacement_dates": [
-    "2026-11-17",
-    "2026-11-18"
+    "2026-11-18",
+    "2026-11-19"
   ],
   "duties": [
     {
@@ -32,11 +32,6 @@
       "time": "15:25-16:45"
     },
     {
-      "date": "2026-11-18",
-      "group": "Д 25-3",
-      "time": "13:25-14:45"
-    },
-    {
       "date": "2026-11-19",
       "group": "Д 25-3",
       "time": "15:25-16:45"
@@ -56,17 +51,16 @@
   "zamena_url": "https://kasict.ru/students/schedule/files/zamena1.htm",
   "parse_report": {
     "blocks_found": 2,
-    "rows_total": 124,
-    "cabinets_entries": 6,
+    "rows_total": 130,
+    "cabinets_entries": 9,
     "duty_rows_raw": 16,
-    "duty_rows": 9,
+    "duty_rows": 8,
     "duty_dates": [
       "2026-11-03",
       "2026-11-10",
       "2026-11-11",
       "2026-11-12",
       "2026-11-17",
-      "2026-11-18",
       "2026-11-19",
       "2026-11-25",
       "2026-11-26"
@@ -83,8 +77,8 @@
     ],
     "blocks": 2,
     "rows_by_date": {
-      "2026-11-17": 59,
-      "2026-11-18": 65
+      "2026-11-18": 65,
+      "2026-11-19": 65
     },
     "groups_fixed": 0,
     "groups_without_schedule": [
@@ -103,7 +97,7 @@
     ],
     "duty_groups_fixed": 0,
     "duty_groups_without_schedule": [],
-    "synthesized_remote": 3,
+    "synthesized_remote": 10,
     "schedule": {
       "url": "https://kasict.ru/students/schedule/files/Raspisanie_2026-2027.htm",
       "groups": 56,
