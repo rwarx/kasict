@@ -669,61 +669,6 @@
         "classroom": "",
         "is_cancel": false,
         "raw_pairs": ""
-      },
-      {
-        "group": "Д 26-2",
-        "lesson_numbers": [
-          1
-        ],
-        "subject": "лит.",
-        "teacher": "Кизимова",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
-      },
-      {
-        "group": "СП 26-1П",
-        "lesson_numbers": [
-          2
-        ],
-        "subject": "лит.",
-        "teacher": "Кизимова",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
-      },
-      {
-        "group": "Д 26-2",
-        "lesson_numbers": [
-          2
-        ],
-        "subject": "общ.",
-        "teacher": "Ушаков",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
-      },
-      {
-        "group": "ЭК 25-1",
-        "lesson_numbers": [
-          4
-        ],
-        "subject": "ист. России",
-        "teacher": "Ушаков",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
-      },
-      {
-        "group": "ЭК 26-1",
-        "lesson_numbers": [
-          3
-        ],
-        "subject": "ист.",
-        "teacher": "Ушаков",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
       }
     ]
   },
@@ -1306,28 +1251,6 @@
         "classroom": "",
         "is_cancel": false,
         "raw_pairs": ""
-      },
-      {
-        "group": "Д 24-2",
-        "lesson_numbers": [
-          5
-        ],
-        "subject": "октод",
-        "teacher": "Ряпосов",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
-      },
-      {
-        "group": "Д 24-2",
-        "lesson_numbers": [
-          6
-        ],
-        "subject": "октод",
-        "teacher": "Ряпосов",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
       }
     ]
   }
