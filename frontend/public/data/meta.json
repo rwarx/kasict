@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-11-23T01:29:28.154979",
-  "groups_count": 0,
+  "updated_at": "2026-11-23T09:38:26.444205",
+  "groups_count": 57,
   "replacement_dates": [
-    "2026-11-20",
-    "2026-11-23"
+    "2026-11-23",
+    "2026-11-24"
   ],
   "duties": [
     {
@@ -47,13 +47,13 @@
       "time": "13:25-14:45"
     }
   ],
-  "raspisanie_url": "https://kasict.ru/students/schedule/files/Raspisanie_2025-2026.htm",
+  "raspisanie_url": "https://kasict.ru/students/schedule/files/Raspisanie_2026-2027.htm",
   "zamena_url": "https://kasict.ru/students/schedule/files/zamena1.htm",
   "parse_report": {
     "blocks_found": 2,
-    "rows_total": 118,
-    "cabinets_entries": 7,
+    "rows_total": 123,
     "duty_rows_skipped": 2,
+    "cabinets_entries": 5,
     "duty_rows_raw": 16,
     "duty_rows": 8,
     "duty_dates": [
@@ -78,13 +78,30 @@
     ],
     "blocks": 2,
     "rows_by_date": {
-      "2026-11-20": 63,
-      "2026-11-23": 55
+      "2026-11-23": 55,
+      "2026-11-24": 68
     },
-    "groups_canonicalized": false,
+    "groups_fixed": 0,
+    "groups_without_schedule": [
+      "А 23-1",
+      "А 23-2",
+      "А 24-1",
+      "ИС 23-1",
+      "ИС 23-2",
+      "М 24-1П",
+      "СП 24-1П",
+      "ТЭСМО 23-1",
+      "Э 23-1",
+      "Э 24-1",
+      "Э 24-2"
+    ],
+    "duty_groups_fixed": 0,
+    "duty_groups_without_schedule": [],
+    "synthesized_remote": 9,
     "schedule": {
-      "url": "https://kasict.ru/students/schedule/files/Raspisanie_2025-2026.htm",
-      "error": "Client error '404 Not Found' for url 'https://kasict.ru/students/schedule/files/Raspisanie_2025-2026.htm'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"
+      "url": "https://kasict.ru/students/schedule/files/Raspisanie_2026-2027.htm",
+      "groups": 57,
+      "lesson_slots": 2124
     }
   }
 }
