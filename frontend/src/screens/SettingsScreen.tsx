@@ -7,9 +7,10 @@ import { getAllSnapshots, clearHistory, getSnapshotCount, type ScheduleSnapshot 
 import type { AccentPref, AccentScheme, Season, ThemePref } from '../lib/theme'
 import { ACCENT_OPTIONS, SEASONS } from '../lib/theme'
 import { APP_VERSION } from '../lib/whatsNew'
+import { TELEGRAM_URL } from '../lib/appLinks'
 import { fetchTodayVisitors } from '../lib/visitCounter'
 import { APP_URL, shareAppUrl } from '../lib/share'
-import { ChevronRightIcon, RefreshIcon, ShareIcon, UserIcon } from '../components/Icons'
+import { ChevronRightIcon, DownloadIcon, RefreshIcon, ShareIcon, UserIcon } from '../components/Icons'
 
 export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemePref, season, accentPref, onAccentPref, onViewSchedule }: {
   group: string | null
@@ -271,6 +272,22 @@ export function SettingsScreen({ group, onOpenGroupSelector, themePref, onThemeP
           <span className="author-btn-text">
             <span className="author-btn-title">rwarx</span>
             <span className="author-btn-sub">Автор приложения</span>
+          </span>
+        </a>
+      </div>
+
+      <div className="author-row" aria-label="Telegram приложения">
+        <a
+          className="author-btn"
+          href={TELEGRAM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Скачать приложение для Android в Telegram"
+        >
+          <span className="author-btn-icon"><DownloadIcon size={18} /></span>
+          <span className="author-btn-text">
+            <span className="author-btn-title">Telegram</span>
+            <span className="author-btn-sub">Скачать для Android</span>
           </span>
         </a>
       </div>

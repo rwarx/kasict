@@ -223,8 +223,19 @@ export default function App() {
                 <li key={i} className="whatsnew-item">{item}</li>
               ))}
             </ul>
-            <div className="dialog-buttons">
-              <button type="button" className="btn-solid btn-block" onClick={closeWhatsNew}>
+            <div className={`dialog-buttons${whatsNew.action ? ' whatsnew-actions' : ''}`}>
+              {whatsNew.action && (
+                <a
+                  className="btn-solid btn-block"
+                  href={whatsNew.action.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={closeWhatsNew}
+                >
+                  {whatsNew.action.label}
+                </a>
+              )}
+              <button type="button" className={`${whatsNew.action ? 'btn-ghost' : 'btn-solid'} btn-block`} onClick={closeWhatsNew}>
                 Отлично!
               </button>
             </div>

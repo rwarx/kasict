@@ -2780,6 +2780,14 @@ button.settings-row:hover {
   width: min(92vw, 360px);
 }
 
+.whatsnew-actions {
+  flex-direction: column;
+}
+
+.whatsnew-actions a {
+  text-decoration: none;
+}
+
 .whatsnew-head {
   display: flex;
   align-items: center;

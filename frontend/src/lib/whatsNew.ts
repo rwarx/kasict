@@ -1,15 +1,32 @@
 // «Что нового»: показывается один раз при обновлении на новую версию.
 
-export const APP_VERSION = '3.9.0'
+import { TELEGRAM_URL } from './appLinks'
+
+export const APP_VERSION = '3.10.0'
 
 export interface WhatsNewEntry {
   version: string
   items: string[]
+  action?: {
+    label: string
+    href: string
+  }
 }
 
 export const WHATS_NEW: WhatsNewEntry[] = [
   {
     version: APP_VERSION,
+    items: [
+      'Появилось приложение расписания для Android. Скачать его можно в Telegram.',
+      'Ссылка на Telegram всегда доступна в самом низу настроек.',
+    ],
+    action: {
+      label: 'Скачать в Telegram',
+      href: TELEGRAM_URL,
+    },
+  },
+  {
+    version: '3.9.0',
     items: [
       '⭐ Избранные группы: нажмите звёздочку рядом с группой — она закрепится наверху списка',
       'Раздел «Популярные» убрали — список групп стал проще и чище',
