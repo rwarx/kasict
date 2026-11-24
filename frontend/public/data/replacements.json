@@ -578,28 +578,6 @@
         "classroom": "",
         "is_cancel": false,
         "raw_pairs": ""
-      },
-      {
-        "group": "Д 24-2",
-        "lesson_numbers": [
-          5
-        ],
-        "subject": "октод",
-        "teacher": "Ряпосов",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
-      },
-      {
-        "group": "Д 24-2",
-        "lesson_numbers": [
-          6
-        ],
-        "subject": "октод",
-        "teacher": "Ряпосов",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
       }
     ]
   },
@@ -1326,83 +1304,6 @@
         "classroom": "",
         "is_cancel": false,
         "raw_pairs": ""
-      },
-      {
-        "group": "ИС 23-1",
-        "lesson_numbers": [
-          1
-        ],
-        "subject": "Производственная практика 07.09-29.11",
-        "teacher": "Логинова",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
-      },
-      {
-        "group": "ИС 23-1",
-        "lesson_numbers": [
-          2
-        ],
-        "subject": "Производственная практика 07.09-29.11",
-        "teacher": "Логинова",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
-      },
-      {
-        "group": "ИС 23-1",
-        "lesson_numbers": [
-          3
-        ],
-        "subject": "Производственная практика 07.09-29.11",
-        "teacher": "Логинова",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
-      },
-      {
-        "group": "ИС 23-1",
-        "lesson_numbers": [
-          4
-        ],
-        "subject": "Производственная практика 07.09-29.11",
-        "teacher": "Логинова",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
-      },
-      {
-        "group": "ИС 23-1",
-        "lesson_numbers": [
-          5
-        ],
-        "subject": "Производственная практика 07.09-29.11",
-        "teacher": "Логинова",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
-      },
-      {
-        "group": "ИС 23-1",
-        "lesson_numbers": [
-          6
-        ],
-        "subject": "Производственная практика 07.09-29.11",
-        "teacher": "Логинова",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
-      },
-      {
-        "group": "ИС 25-2",
-        "lesson_numbers": [
-          3
-        ],
-        "subject": "эвм",
-        "teacher": "Логинова",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
       }
     ]
   }
