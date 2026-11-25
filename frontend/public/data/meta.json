@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-11-24T17:21:57.202430",
+  "updated_at": "2026-11-25T10:18:28.523021",
   "groups_count": 0,
   "replacement_dates": [
-    "2026-11-24",
-    "2026-11-25"
+    "2026-11-25",
+    "2026-11-26"
   ],
   "duties": [
     {
@@ -52,7 +52,7 @@
   "parse_report": {
     "blocks_found": 2,
     "rows_total": 139,
-    "cabinets_entries": 3,
+    "cabinets_entries": 8,
     "duty_rows_raw": 16,
     "duty_rows": 8,
     "duty_dates": [
@@ -77,8 +77,8 @@
     ],
     "blocks": 2,
     "rows_by_date": {
-      "2026-11-24": 68,
-      "2026-11-25": 71
+      "2026-11-25": 71,
+      "2026-11-26": 68
     },
     "groups_canonicalized": false,
     "schedule": {
