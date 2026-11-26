@@ -1407,28 +1407,6 @@
         "classroom": "",
         "is_cancel": false,
         "raw_pairs": ""
-      },
-      {
-        "group": "Д 25-3",
-        "lesson_numbers": [
-          1
-        ],
-        "subject": "врпф",
-        "teacher": "Саблина",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
-      },
-      {
-        "group": "Д 25-3",
-        "lesson_numbers": [
-          2
-        ],
-        "subject": "врпф",
-        "teacher": "Саблина",
-        "classroom": "ДО",
-        "is_cancel": false,
-        "raw_pairs": "до"
       }
     ]
   }
